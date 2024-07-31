@@ -1,0 +1,1 @@
+{"version":2,"languages":{"nodejs-npm":{"specfileHash":"8604d89ca1ffcfeff919d1b8829792b4","lockfileHash":"33cb648981e9eeaeb4cb51c90eb6dfb3","guessedImports":["axios","bs58","dotenv","telegraf","pdfkit","@solana/web3.js","express","xlsx","mongodb"],"guessedImportsHash":"7323402bc7e1774e1beaadf72100a7e4"}}}
