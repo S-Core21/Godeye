@@ -1,6 +1,5 @@
-const apiUrl = 'https://8e4f0308-cc20-41aa-a4d3-91b9b953c19b-00-2knv53lxz0mvl.worf.replit.dev/users/'
-const refUrl = 'https://8e4f0308-cc20-41aa-a4d3-91b9b953c19b-00-2knv53lxz0mvl.worf.replit.dev/'
-https://8e4f0308-cc20-41aa-a4d3-91b9b953c19b-00-2knv53lxz0mvl.worf.replit.dev/
+const apiUrl = 'https://godeyedb-6fcfc52eb9b0.herokuapp.com//users/'
+const refUrl = 'https://godeyedb-6fcfc52eb9b0.herokuapp.com/'
 
 
 module.exports = {apiUrl, refUrl}
