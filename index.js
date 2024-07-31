@@ -87,7 +87,7 @@ async function main() {
 
     await axios
       .post(
-        `${apiUrl}users`,
+        `${apiUrl}`,
         user,
       )
       .then((res) => {
