@@ -5,7 +5,7 @@ const axios = require("axios");
 const { Transaction } = require("mongodb");
 
 const {apiUrl} = require('./api')
-const { editWebhook, removeWalletWebhook} = require("./webhook");
+const { editWebhook, removeWalletWebhook, editWebhookurl} = require("./webhook");
 const userCache = new Map(); // Use a Map to store user data
 const fetchAllUsers = require("./users");
 const {
@@ -110,7 +110,7 @@ async function main() {
     const chatID = ctx.update.callback_query.message.chat.id
     addNewWallets = true;
     deleteWallets = false;
-    await editWebhook()
+    await editWebhookurl()
     ctx.reply(addMessage, {
       parse_mode: "HTML",
       reply_markup: {

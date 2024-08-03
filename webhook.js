@@ -55,6 +55,58 @@ const editWebhook = async (wallet) => {
   }
 };
 
+
+const editWebhookurl = async () => {
+  try {
+    // Fetch the current webhook details
+    const getResponse = await fetch(
+      `https://api.helius.xyz/v0/webhooks/9f5b398e-99b1-4a3c-911e-6593f0630943?api-key=${process.env.API_KEY}`
+    );
+    const webhookData = await getResponse.json();
+
+    // Update the webhook with the combined addresses
+    const response = await fetch(
+      `https://api.helius.xyz/v0/webhooks/9f5b398e-99b1-4a3c-911e-6593f0630943?api-key=${process.env.API_KEY}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          webhookURL:
+            "https://telegrambot.godeyenetwork.org/webhook",
+          transactionTypes: [
+            "TRANSFER",
+            "SWAP",
+            "ADD_LIQUIDITY",
+            "BURN",
+            "BURN_NFT",
+            "SELL_NFT",
+            "STAKE_SOL",
+            "STAKE_TOKEN",
+            "TOKEN_MINT",
+            "UNSTAKE_SOL",
+            "UNSTAKE_TOKEN",
+            "NFT_LISTING",
+            "NFT_SALE",
+            "NFT_CANCEL_LISTING",
+            "NFT_MINT",
+            "COMPRESSED_NFT_BURN",
+            "WITHDRAW_LIQUIDITY",
+            "ADD_LIQUIDITY"
+          ],
+          accountAddresses: webhookData.accountAddresses,
+          webhookType: "enhanced",
+        }),
+      }
+    );
+    const data = await response.json();
+    console.log({ data });
+  } catch (e) {
+    console.error("error", e);
+  }
+};
+
 const removeWalletWebhook = async (wallet) => {
   try {
     // Fetch the current webhook details
@@ -210,4 +262,4 @@ async function haltWallets(chatID, pro){
 //   }
 // }
 
-module.exports = { editWebhook, removeWalletWebhook, haltWallets }
+module.exports = { editWebhook, removeWalletWebhook, haltWallets, editWebhookurl }
