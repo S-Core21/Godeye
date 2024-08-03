@@ -22,7 +22,7 @@ const editWebhook = async (wallet) => {
         },
         body: JSON.stringify({
           webhookURL:
-            "https://telegrambot.godeyenetwork.org/webhook",
+            "https://godeye-3d8a522e85b5.herokuapp.com/webhook",
           transactionTypes: [
             "TRANSFER",
             "SWAP",
@@ -74,7 +74,7 @@ const editWebhookurl = async () => {
         },
         body: JSON.stringify({
           webhookURL:
-            "https://telegrambot.godeyenetwork.org/webhook",
+            "https://godeye-3d8a522e85b5.herokuapp.com/webhook",
           transactionTypes: [
             "TRANSFER",
             "SWAP",
@@ -129,7 +129,7 @@ const removeWalletWebhook = async (wallet) => {
         },
         body: JSON.stringify({
           webhookURL:
-            "https://telegrambot.godeyenetwork.org/webhook",
+            "https://godeye-3d8a522e85b5.herokuapp.com/webhook",
           transactionTypes: [
             "TRANSFER",
             "SWAP",
@@ -182,7 +182,7 @@ async function haltWallets(chatID, pro){
           },
           body: JSON.stringify({
             webhookURL:
-              "https://telegrambot.godeyenetwork.org/webhook",
+              "https://godeye-3d8a522e85b5.herokuapp.com/webhook",
             transactionTypes: [
               "TRANSFER",
               "SWAP",

@@ -25,7 +25,7 @@ async function checkWallets(amt, myAddress){
           },
           body: JSON.stringify({
             webhookURL:
-              "https://telegrambot.godeyenetwork.org/webhook",
+              "https://godeye-3d8a522e85b5.herokuapp.com/webhook",
             transactionTypes: [
               "TRANSFER",
               "SWAP",
