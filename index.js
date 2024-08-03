@@ -39,7 +39,7 @@ async function main() {
   const app = express();
   app.use(express.json());
   const bot = new Telegraf(process.env.BOT_TOKEN);
-  const PORT = 7000;
+  const PORT = process.env.PORT;
   console.log("running");
 
   let addNewWallets;
