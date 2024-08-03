@@ -110,6 +110,7 @@ async function main() {
     const chatID = ctx.update.callback_query.message.chat.id
     addNewWallets = true;
     deleteWallets = false;
+    await editWebhook()
     ctx.reply(addMessage, {
       parse_mode: "HTML",
       reply_markup: {
