@@ -262,4 +262,4 @@ async function haltWallets(chatID, pro){
 //   }
 // }
 
-module.exports = { editWebhook, removeWalletWebhook, haltWallets, editWebhookurl }
+module.exports = { editWebhook, removeWalletWebhook, haltWallets }
