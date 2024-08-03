@@ -1,5 +1,5 @@
-const apiUrl = 'https://godeyedb-6fcfc52eb9b0.herokuapp.com/users/'
-const refUrl = 'https://godeyedb-6fcfc52eb9b0.herokuapp.com/'
+const apiUrl = 'http://godeyenetwork.org/users/'
+const refUrl = 'http://godeyenetwork.org/'
 
 
 module.exports = {apiUrl, refUrl}
