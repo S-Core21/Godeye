@@ -82,7 +82,7 @@ function walletgroup(walletData) {
   return groupname;
 }
 
-async function planName(walletLimit){
+function planName(walletLimit){
   try{
     const walletName = walletLimit === 20 ? 'Free' : 
                      walletLimit === 100 ? '🐦‍🔥 Phoenix' : 
