@@ -84,11 +84,12 @@ function walletgroup(walletData) {
 
 function planName(walletLimit){
   try{
-    const walletName = walletLimit === 20 ? 'Free' : 
-                     walletLimit === 100 ? '🐦‍🔥 Phoenix' : 
-                     walletLimit === 200 ? '🎠 Valkyrie' : 
-                     walletLimit === 400 ? '🪬 Odin' : 
-                     walletLimit === 600 ? '⚡️ Zeus' : 
+    console.log(walletLimit)
+    const walletName = walletLimit == 20 ? 'Free' : 
+                     walletLimit == 100 ? '🐦‍🔥 Phoenix' : 
+                     walletLimit == 200 ? '🎠 Valkyrie' : 
+                     walletLimit == 400 ? '🪬 Odin' : 
+                     walletLimit == 600 ? '⚡️ Zeus' : 
                      'Free';
   return walletName;
   }catch(e){
