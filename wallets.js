@@ -141,7 +141,7 @@ async function addRemoveWallet(
               );
               console.log("Wallet added");
               ctx.reply(
-                `${walletgroup(wallet.group)} Wallet ${wallet.address} named as ${wallet.name} saved successfully`,
+                `${walletgroup(wallet.group)} Wallet ${wallet.address} named as ${wallet.name} saved successfully🎊 \n\nTo add multiple wallets, send /tutorials`,
               );
 
               // Update the cache
