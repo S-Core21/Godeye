@@ -64,10 +64,11 @@ async function walletsLimitplan(chatID){
     const plan = planName(WalletLimitData)
     console.log(WalletLimitData, 'limit plan')
     console.log('limit plan', plan)
-    const proMessage =`Current plan: ${10} \n🏦 All wallets: x/${WalletLimitData}\n❌ Expires: May 20, 2024\n\n📝 How to upgrade \n\nOnce you have transferred the funds, then select a plan. A fee of 0.2 SOL will be deducted from your account, and your wallet limit will be automatically increased.\n\nChoose a plan 👇`
+    // const proMessage =`Current plan: ${10} \n🏦 All wallets: x/${WalletLimitData}\n❌ Expires: May 20, 2024\n\n📝 How to upgrade \n\nOnce you have transferred the funds, then select a plan. A fee of 0.2 SOL will be deducted from your account, and your wallet limit will be automatically increased.\n\nChoose a plan 👇`
+    const proMessage = 'Your plan'
       return proMessage
   }catch(e){
-    console.log('error')
+    console.log('error in wallets')
   }
 }
 
