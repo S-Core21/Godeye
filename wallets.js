@@ -82,7 +82,7 @@ function walletgroup(walletData) {
   return groupname;
 }
 
-function planName(walletLimit){
+async function planName(walletLimit){
   const walletName = walletLimit === 20 ? 'Free' : walletLimit === 100 ? '🐦‍🔥 Phoenix' : walletLimit === 200 ? '🎠 Valkyrie' : walletLimit === 400 ? '🪬 Odin' : walletLimit === 600 ? '⚡️ Zeus' : 'Free' 
   return walletName
 }
