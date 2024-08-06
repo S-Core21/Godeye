@@ -3,30 +3,39 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 const axios = require("axios");
 const {isPro} = require('./countdown')
 const {apiUrl} = require('./api')
+const {planName} = require('./wallets')
 
 const startMessage =
-  "TheiaBot | Wallet Tracker\n\n <b>Welcome to THEIA</b>\n\nThis bot helps you monitor transactions across your Solana wallets. After adding wallets, you'll receive immediate notifications for any activity.\n\n You are currently tracking 0/1000 wallets\n Click PRO to get more wallets! \n\n<b><a href='t.me/devvv_s'>Official THEIABOT support</a></b>";
+  "<b>Listen, 100x is more easier than you think, the secret is to get in early.</b>\n\n <b>I can help you monitor transactions accross your solana wallets. Simply 'ADD' wallets and you'll receive notifications for any activity performed by the wallets</b>";
 const addMessage =
-  "Great! You can now add multiple wallets at once.\n\nSimply send me each wallet address on a new line. If you'd like to assign a nickname (40 characters max) to any wallet, add it after a space following the wallet address. For example:\n\nWalletAddress1 Name1\nWalletAddress2 Name2\nWalletAddress3 Name3\n\nTip: It might take up to 2 min to start receiving notifications for new wallets!";
+  'Yay! A new wallet. Now send me your wallet details in this format👇\n\n“Wallet nickname group”\nExample:\n“HsDjdEk8RdyZqHCj9x2RLZuQxG6VW5Bugstcb1QXYDSR Sixth✅ A”\n\n“4Be9CvxqHW6BYiRAxW9Q3xu1ycTMWaL5z8NX4HR3ha7t Mitch🤡 B”\n\n📥Grouping helps categorize good or bad wallets,groups include: \nALPHA,BETA,DELTA,GAMMA with abbreviations A,B,D,G.';
+const deleteMessage = 'send me the wallet you want to unalive?☠️\n\nTo unalive multiple wallets send me each wallet on a new line in this format👇 \n\nWallet 1\nWallet 2\nWallet 3'
+const transferKeyMsg = 'You can move your wallet data to a new Telegram account if you lose your device or your telegram gets banned\n\nTips: We would never ask for your transfer key via phone, email, or text. Protect yourself from scams because anyone who has this key can access your wallets.\n\n➡️Import wallet\n⬅️Export wallet'
+const supportMessage = 'For complaints, support, or feedback, kindly contact\n\n[kaiju](https://t.me/Division_3) [Dev S](https://t.me/Devvv_S)'
+
+const socialsMessage = `Connect with us on social media for the latest updates and insights.\n\n🤖Bot: Godeye_wallet_tracker\n\n🦅Twitter: https://x.com/godeye_network?s=21 \n\n😎Lounge: https://t.me/Godeye_olympus \n\n🚨Channel: https://t.me/Godeye_news_channel \n\n🌐Website: https://Godeyenetwork.org`
 
 const inlineKeys = [
   [
-    { text: "Add", callback_data: "Add" },
-    { text: "Manage", callback_data: "manage" },
+    { text: "⚡️ Add", callback_data: "Add" },
+    { text: "🏦 Saved wallets", callback_data: "manage" },
   ],
   [
-    { text: "Settings", callback_data: "Settings" },
-    { text: "Delete", callback_data: "Delete" },
-    { text: "Referrals", callback_data: "Referrals" },
+    { text: "🚮 Delete", callback_data: "Delete" },
+    { text: "👤 My Account", callback_data: "Wallets" },
+    { text: "🔼 Upgrade", callback_data: "Pro" },
   ],
   [
-    { text: "PRO", callback_data: "Pro" },
-    { text: "My Wallets", callback_data: "Wallets" },
-    { text: "Links", callback_data: "Links" },
+    { text: "🫂 Refer & Earn", callback_data: "Referrals" },
+    { text: "🌐 Socials", callback_data: "Socials" },
+    { text: "🔍 Tutorials", callback_data: "Tutorials" },
   ],
   [
-    { text: "Download Wallets", callback_data: "walletpdf" },
-    { text: "Tutorials", callback_data: "Tutorials" },
+    { text: "📥 Download Wallets", callback_data: "walletpdf" },
+    { text: "🔄 Transfer Wallets", callback_data: "TransferAccount" }
+  ],
+  [
+    { text: "💬 Customer support", callback_data: "support" }
   ],
 ];
 
@@ -52,7 +61,8 @@ async function walletsLimitplan(chatID){
       `${apiUrl}${chatID}/walletLimit`,
     );
     const WalletLimitData = response.data.walletLimit;
-    const proMessage = WalletLimitData ? `Your current wallet limit is ${WalletLimitData}` : `Your current wallet limit is 20`
+    const plan = planName(WalletLimitData)
+    const proMessage =`Current plan: ${plan} \n🏦 All wallets: x/${WalletLimitData}\n❌ Expires: May 20, 2024\n\n📝 How to upgrade \n\nOnce you've transferred the funds, then select a plan. A fee of 0.2 SOL will be deducted from your account, and your wallet limit will be automatically increased.\n\nChoose a plan 👇`
       return proMessage
   }catch(e){
     console.log('error')
@@ -71,24 +81,40 @@ async function upgradePro(chatID){
       if(WalletLimitData === 100){
         const proinlineKeys = [
           [
-            {text: 'Upgrade 200 Wallets/0.5/1 month', callback_data: 'pro2'}
+            {text: '🎠 Valkyrie 0.3 SOL 1M/200W', callback_data: 'pro2'}
           ],
           [
-            {text: 'Upgrade 500 Wallets/1/1 month', callback_data: 'pro3'}
+            {text: '🪬 Odin 0.5 SOL 1M/400W', callback_data: 'pro3'}
           ],
+          [
+            {text: '⚡️ Zeus 1 SOL 1M/600W', callback_data: 'pro4'}
+          ]
         ] 
         return proinlineKeys
       }else if(WalletLimitData === 200){
         const proinlineKeys = [
           [
-            {text: 'Upgrade 500 Wallets/1/1 month', callback_data: 'pro3'}
+            {text: '🪬 Odin 0.5 SOL 1M/400W', callback_data: 'pro3'}
+          ],
+          [
+            {text: '⚡️ Zeus 1 SOL 1M/600W', callback_data: 'pro4'}
           ],
           [
             {text: 'Back', callback_data: 'Back'}
           ]
         ] 
         return proinlineKeys
-      }else if(WalletLimitData === 500){
+      }else if(WalletLimitData === 400){
+        const proinlineKeys = [
+          [
+            {text: '⚡️ Zeus 1 SOL 1M/600W', callback_data: 'pro4'}
+          ],
+          [
+            {text: 'Back', callback_data: 'Back'}
+          ]
+        ] 
+        return proinlineKeys
+      }else if(WalletLimitData === 600){
         const proinlineKeys = [
           [
             {text: 'Back', callback_data: 'Back'}
@@ -98,30 +124,46 @@ async function upgradePro(chatID){
       }else if(pro === false){
         const proinlineKeys = [
           [
-            {text: 'Pay 0.3 SOL for 1 month/100 wallets', callback_data: 'pro1'},
-            {text: 'Pay 0.5 SOL for 1 month/200 wallets', callback_data: 'pro2'}
+            {text: '🐦‍🔥 Phoenix 0.2 SOL 1M/100W', callback_data: 'pro1'}
           ],
           [
-            {text: 'Pay 1 SOL for 1 month/500 wallets', callback_data: 'pro3'}
+            {text: '🎠 Valkyrie 0.3 SOL 1M/200W', callback_data: 'pro2'}
+          ],
+          [
+            {text: '🪬 Odin 0.5 SOL 1M/400W', callback_data: 'pro3'}
+          ],
+          [
+            {text: '⚡️ Zeus 1 SOL 1M/600W', callback_data: 'pro4'}
           ]
         ] 
         return proinlineKeys
       }
     }else{
-      const proinlineKeys = [
-        [
-          {text: 'Pay 0.3 SOL for 1 month/100 wallets', callback_data: 'pro1'},
-          {text: 'Pay 0.5 SOL for 1 month/200 wallets', callback_data: 'pro2'}
-        ],
-        [
-          {text: 'Pay 1 SOL for 1 month/500 wallets', callback_data: 'pro3'}
-        ]
-      ] 
-      return proinlineKeys
+     const proinlineKeys = [
+          [
+            {text: '🐦‍🔥 Phoenix 0.2 SOL 1M/100W', callback_data: 'pro1'}
+          ],
+          [
+            {text: '🎠 Valkyrie 0.3 SOL 1M/200W', callback_data: 'pro2'}
+          ],
+          [
+            {text: '🪬 Odin 0.5 SOL 1M/400W', callback_data: 'pro3'}
+          ],
+          [
+            {text: '⚡️ Zeus 1 SOL 1M/600W', callback_data: 'pro4'}
+          ]
+        ] 
+        return proinlineKeys
     }
   }catch(e){
     console.log('error')
   }
 }
 
-module.exports = {startMessage, addMessage, inlineKeys, buyButtons, walletsLimitplan, upgradePro}
+function deleteResponse(){
+  const responseArray = ["That wallet? Yeah, it's history. Ancient history.", "Your wallet has been vaporized! No trace left behind.", "That wallet is toast! Crispy and gone. Forever!", "Wallet successfully sent to the digital graveyard. RIP."]
+  const randomIndex = Math.floor(Math.random() * responseArray.length);
+    return responseArray[randomIndex];
+}
+
+module.exports = {startMessage, addMessage, deleteMessage, socialsMessage, transferKeyMsg, supportMessage, inlineKeys, buyButtons, walletsLimitplan, upgradePro, deleteResponse}

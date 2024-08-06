@@ -17,6 +17,10 @@ const {
 const {
   startMessage,
   addMessage,
+  deleteMessage,
+  socialsMessage,
+  transferKeyMsg, 
+  supportMessage,
   inlineKeys,
   buyButtons,
   walletsLimitplan,
@@ -27,7 +31,7 @@ const { createWallet, payFee, generatePrivateKey } = require("./WalletCreate");
 const { getCountdown, sendReminder } = require("./countdown");
 const {fetchData, nftMetaData, tokenMintData} = require("./metadata");
 const soldollarvalue = require("./dollarvalue");
-const {checkreferrals, createReferralLink} = require('./referral')
+const {checkreferrals, createReferralLink, generateTransferCode} = require('./referral')
 const {swapMessage} = require('./swap')
 const {transferMessage} = require('./transfer')
 const {nftSaleMessage, nftMintMessage, nftListMessage, nftCanListMessage, addLiquidityMessage, removeLiquidityMessage} = require('./nft')
@@ -135,7 +139,7 @@ async function main() {
     const chatID = ctx.update.callback_query.message.chat.id
     deleteWallets = true;
     addNewWallets = false;
-    ctx.reply(addMessage, {
+    ctx.reply(deleteMessage, {
       parse_mode: "HTML",
       reply_markup: {
         inline_keyboard: [[{ text: "Back", callback_data: "Back" }]],
@@ -146,7 +150,7 @@ async function main() {
     ctx.deleteMessage();
     deleteWallets = true;
     addNewWallets = false;
-    sendMessage(ctx.message.chat.id, addMessage, {
+    sendMessage(ctx.message.chat.id, deleteMessage, {
       parse_mode: "HTML",
     });
   });
@@ -198,6 +202,49 @@ async function main() {
       },
     });
   });
+
+  bot.action("TransferAccount", async (ctx) => {
+    ctx.deleteMessage();
+    const chatID = ctx.update.callback_query.message.chat.id
+    console.log(ctx.from.username)
+    ctx.reply(transferKeyMsg, {
+      parse_mode: "Markdown",
+      disable_web_page_preview: true,
+      reply_markup: {
+        inline_keyboard: [
+          [
+            {
+              text: 'Import Wallet', callback_data: 'import'
+            }
+          ],
+          [
+            {
+              text: 'Export wallet', callback_data: 'export'
+            }
+          ]
+        ],
+      },
+    });
+  });
+  bot.action("import", async (ctx) => {
+    ctx.deleteMessage();
+    const chatID = ctx.update.callback_query.message.chat.id
+    console.log(ctx.from.username)
+    ctx.reply('Send me the transfer key of the account you want to import', {
+      parse_mode: "Markdown",
+      disable_web_page_preview: true,
+    });
+  });
+  bot.action("export", async (ctx) => {
+    ctx.deleteMessage();
+    const chatID = ctx.update.callback_query.message.chat.id
+    const key = generateTransferCode()
+    console.log(ctx.from.username)
+    ctx.reply(key, {
+      parse_mode: "Markdown",
+      disable_web_page_preview: true,
+    });
+  });
   // add payments options
   bot.action("pro1", async (ctx) => {
     ctx.deleteMessage();
@@ -210,6 +257,11 @@ async function main() {
     await payFee(0.002, ctx, chatID);
   });
   bot.action("pro3", async (ctx) => {
+    ctx.deleteMessage();
+    const chatID = ctx.update.callback_query.message.chat.id
+    await payFee(0.003, ctx, chatID);
+  });
+  bot.action("pro4", async (ctx) => {
     ctx.deleteMessage();
     const chatID = ctx.update.callback_query.message.chat.id
     await payFee(0.003, ctx, chatID);
@@ -232,6 +284,28 @@ async function main() {
     ctx.deleteMessage();
     const chatID = ctx.update.callback_query.message.chat.id
     ctx.reply('How to use Theia \n\n Theia A \n\n Theia B', {
+      parse_mode: "Markdown",
+      disable_web_page_preview: true,
+      reply_markup: {
+        inline_keyboard: [[{ text: "Back", callback_data: "Back" }]],
+      },
+    });
+  });
+  bot.action("Socials", async (ctx) => {
+    ctx.deleteMessage();
+    const chatID = ctx.update.callback_query.message.chat.id
+    ctx.reply(socialsMessage, {
+      parse_mode: "Markdown",
+      disable_web_page_preview: true,
+      reply_markup: {
+        inline_keyboard: [[{ text: "Back", callback_data: "Back" }]],
+      },
+    });
+  });
+  bot.action("support", async (ctx) => {
+    ctx.deleteMessage();
+    const chatID = ctx.update.callback_query.message.chat.id
+    ctx.reply(supportMessage, {
       parse_mode: "Markdown",
       disable_web_page_preview: true,
       reply_markup: {

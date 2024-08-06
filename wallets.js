@@ -3,6 +3,7 @@ const fs = require('fs');
 const xlsx = require('xlsx');
 const PDFDocument = require('pdfkit');
 const {apiUrl} = require('./api')
+const {deleteResponse} = require('./messages')
 
 
 async function getAllWalletsbyUser(chatID) {
@@ -70,15 +71,20 @@ function parseAddressesAndNames(input, ctx) {
 function walletgroup(walletData) {
   const groupname =
     walletData === "A"
-      ? "ALPHA"
+      ? "🟢 ALPHA"
       : walletData === "B"
-        ? "BETA"
+        ? "🔵 BETA"
         : walletData === "D"
-          ? "DELTA"
+          ? "🟡 DELTA"
           : walletData === "G"
-            ? "GAMMA"
+            ? "🔴 GAMMA"
             : "DEFAULT";
   return groupname;
+}
+
+function planName(walletLimit){
+  const walletName = walletLimit === 20 ? 'Free' : walletLimit === 100 ? '🐦‍🔥 Phoenix' : walletLimit === 200 ? '🎠 Valkyrie' : walletLimit === 400 ? '🪬 Odin' : walletLimit === 600 ? '⚡️ Zeus' : 'Free' 
+  return walletName
 }
 
 async function addRemoveWallet(
@@ -135,7 +141,7 @@ async function addRemoveWallet(
               );
               console.log("Wallet added");
               ctx.reply(
-                `${groupname} Wallet ${wallet.address} named as ${wallet.name} saved successfully`,
+                `${walletgroup(wallet.group)} Wallet ${wallet.address} named as ${wallet.name} saved successfully`,
               );
 
               // Update the cache
@@ -160,7 +166,7 @@ async function addRemoveWallet(
           }
 
         } else {
-          ctx.reply("Invalid address or name");
+          ctx.reply("Invalid address/name or Incomplete data");
         }
       }
     } else if (deleteWallets) {
@@ -176,7 +182,7 @@ async function addRemoveWallet(
           }
 
           if (!walletExists) {
-            ctx.reply(`Wallet ${address} does not exist`);
+            ctx.reply(`I've searched high and low, but that wallet is nowhere to be found. It's like it never existed!`);
           } else {
             // Make the DELETE request to remove the wallet
             await axios.delete(
@@ -187,7 +193,7 @@ async function addRemoveWallet(
                 },
               },
             );
-            ctx.reply("Wallet vanished into thin air, what is next");
+            ctx.reply(deleteResponse());
 
             // Update the cache
             const user = userCache.get(ctx.from.username);
@@ -246,6 +252,7 @@ module.exports = {
   getAllWalletsbyUser,
   parseAddressesAndNames,
   walletgroup,
+  planName,
   addRemoveWallet,
   walletPdf
 };
