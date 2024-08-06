@@ -62,7 +62,8 @@ async function walletsLimitplan(chatID){
     );
     const WalletLimitData = response.data.walletLimit;
     const plan = planName(WalletLimitData)
-    console.log(WalletLimitData, plan)
+    console.log(WalletLimitData, 'limit plan')
+    console.log('limit plan', plan)
     const proMessage =`Current plan: ${10} \n🏦 All wallets: x/${WalletLimitData}\n❌ Expires: May 20, 2024\n\n📝 How to upgrade \n\nOnce you have transferred the funds, then select a plan. A fee of 0.2 SOL will be deducted from your account, and your wallet limit will be automatically increased.\n\nChoose a plan 👇`
       return proMessage
   }catch(e){
