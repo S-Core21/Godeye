@@ -83,8 +83,18 @@ function walletgroup(walletData) {
 }
 
 async function planName(walletLimit){
-  const walletName = walletLimit === 20 ? 'Free' : walletLimit === 100 ? '🐦‍🔥 Phoenix' : walletLimit === 200 ? '🎠 Valkyrie' : walletLimit === 400 ? '🪬 Odin' : walletLimit === 600 ? '⚡️ Zeus' : 'Free' 
-  return walletName
+  try{
+    const walletName = walletLimit === 20 ? 'Free' : 
+                     walletLimit === 100 ? '🐦‍🔥 Phoenix' : 
+                     walletLimit === 200 ? '🎠 Valkyrie' : 
+                     walletLimit === 400 ? '🪬 Odin' : 
+                     walletLimit === 600 ? '⚡️ Zeus' : 
+                     'Free';
+  return walletName;
+  }catch(e){
+    console.log('error in plan')
+    return 100
+  }
 }
 
 async function addRemoveWallet(
