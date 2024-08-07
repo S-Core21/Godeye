@@ -3,7 +3,7 @@ const fs = require('fs');
 const xlsx = require('xlsx');
 const PDFDocument = require('pdfkit');
 const {apiUrl} = require('./api')
-const {deleteResponse} = require('./messages')
+const {deleteResponse, walletsLimitplan} = require('./messages')
 
 
 async function getAllWalletsbyUser(chatID) {
@@ -26,7 +26,67 @@ async function getAllWalletsbyUser(chatID) {
     };
     return groupData;
   } catch (e) {
-    console.log('errrrrrrrrrrr', e);
+    console.log('errrrrrrrrrrr');
+  }
+}
+
+async function getActiveWalletsbyUser(chatID) {
+  try {
+    const res = await axios.get(
+      `${apiUrl}${chatID}`,
+    );
+    const response = await axios.get(
+      `${apiUrl}${chatID}/walletLimit`,
+    );
+    const WalletLimitData = response.data.walletLimit;
+    console.log(walletsLimitplan)
+    console.log(res.data.wallets);
+    const data = res.data.wallets;
+    const activeWallets = data.slice(0, WalletLimitData)
+    const groupA = activeWallets.filter((item) => item.group === "A");
+    const groupB = activeWallets.filter((item) => item.group === "B");
+    const groupD = activeWallets.filter((item) => item.group === "D");
+    const groupG = activeWallets.filter((item) => item.group === "G");
+    const groupData = {
+      total: activeWallets,
+      groupA,
+      groupB,
+      groupD,
+      groupG,
+    };
+    return groupData;
+  } catch (e) {
+    console.log('errrrrrrrrrrr');
+  }
+}
+
+async function getInactiveWalletsbyUser(chatID) {
+  try {
+    const res = await axios.get(
+      `${apiUrl}${chatID}`,
+    );
+    const response = await axios.get(
+      `${apiUrl}${chatID}/walletLimit`,
+    );
+    const WalletLimitData = response.data.walletLimit;
+    console.log(walletsLimitplan)
+    console.log(res.data.wallets);
+    const data = res.data.wallets;
+    const inactiveWallets = data.slice(WalletLimitData)
+    const groupA = inactiveWallets.filter((item) => item.group === "A");
+    const groupB = inactiveWallets.filter((item) => item.group === "B");
+    const groupD = inactiveWallets.filter((item) => item.group === "D");
+    const groupG = inactiveWallets.filter((item) => item.group === "G");
+    const groupData = {
+      total: inactiveWallets,
+      groupA,
+      groupB,
+      groupD,
+      groupG,
+    };
+    return groupData;
+  } catch (e) {
+    console.log('errrrrrrrrrrr');
   }
 }
 
@@ -261,6 +321,8 @@ async function walletPdf(ctx, chatID) {
 
 module.exports = {
   getAllWalletsbyUser,
+  getActiveWalletsbyUser,
+  getInactiveWalletsbyUser,
   parseAddressesAndNames,
   walletgroup,
   planName,

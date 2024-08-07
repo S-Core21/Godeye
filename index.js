@@ -10,6 +10,8 @@ const userCache = new Map(); // Use a Map to store user data
 const fetchAllUsers = require("./users");
 const {
   getAllWalletsbyUser,
+  getActiveWalletsbyUser,
+  getInactiveWalletsbyUser,
   walletgroup,
   addRemoveWallet,
   walletPdf,
@@ -21,6 +23,7 @@ const {
   socialsMessage,
   importTransferKey, 
   supportMessage,
+  manageMessage,
   inlineKeys,
   buyButtons,
   walletsLimitplan,
@@ -402,8 +405,126 @@ async function main() {
     }
   });
 
+
   // manage walltes
   bot.action("manage", async (ctx) => {
+    ctx.deleteMessage();
+    const chatID = ctx.update.callback_query.message.chat.id
+    ctx.reply(manageMessage, {
+      parse_mode: "Markdown",
+      disable_web_page_preview: true,
+      reply_markup: {
+        inline_keyboard: [
+          [{ text: "🏦 All wallets", callback_data: "all" }], 
+          [{ text: "🟩 Active wallets", callback_data: "active" }], 
+          [{ text: "🟥 Inactive wallets", callback_data: "inactive" }], 
+          [{ text: "Back", callback_data: "Back" }]
+        ],
+      },
+    });
+  });
+
+  bot.action("active", async (ctx) => {
+    ctx.deleteMessage();
+    const chatID = ctx.update.callback_query.message.chat.id
+    const userData = await getActiveWalletsbyUser(chatID);
+    console.log(userData)
+    let header = false; 
+    if (userData) {
+      ctx.sendMessage(
+        `You are currently tracking ${userData.total.length}/1000`,
+      );
+      header = true
+      if(header){
+        ctx.sendMessage(
+          `ALPHA WALLETS \n\n${userData.groupA.map((item, index) => {
+            return `*W${index}* \`${item.address}\` (${item.name}),\n`;
+          })}`,
+          {
+            parse_mode: "Markdown",
+          },
+        );
+        ctx.sendMessage(
+          `BETA WALLETS \n\n${userData.groupB.map((item, index) => {
+            return `*W${index}* \`${item.address}\` (${item.name}),\n`;
+          })}`,
+          {
+            parse_mode: "Markdown",
+          },
+        );
+        ctx.sendMessage(
+          `DELTA WALLETS \n\n${userData.groupD.map((item, index) => {
+            return `*W${index}* \`${item.address}\` (${item.name}),\n`;
+          })}`,
+          {
+            parse_mode: "Markdown",
+          },
+        );
+        ctx.sendMessage(
+          `GAMMA WALLETS \n\n${userData.groupG.map((item, index) => {
+            return `*W${index}* \`${item.address}\` (${item.name}),\n`;
+          })}`,
+          {
+            parse_mode: "Markdown",
+          },
+        );
+      }
+    } else {
+      ctx.reply("No wallets found.");
+    }
+  });
+
+  bot.action("inactive", async (ctx) => {
+    ctx.deleteMessage();
+    const chatID = ctx.update.callback_query.message.chat.id
+    const userData = await getInactiveWalletsbyUser(chatID);
+    console.log(userData)
+    let header = false; 
+    if (userData) {
+      ctx.sendMessage(
+        `You are currently tracking ${userData.total.length}/1000`,
+      );
+      header = true
+      if(header){
+        ctx.sendMessage(
+          `ALPHA WALLETS \n\n${userData.groupA.map((item, index) => {
+            return `*W${index}* \`${item.address}\` (${item.name}),\n`;
+          })}`,
+          {
+            parse_mode: "Markdown",
+          },
+        );
+        ctx.sendMessage(
+          `BETA WALLETS \n\n${userData.groupB.map((item, index) => {
+            return `*W${index}* \`${item.address}\` (${item.name}),\n`;
+          })}`,
+          {
+            parse_mode: "Markdown",
+          },
+        );
+        ctx.sendMessage(
+          `DELTA WALLETS \n\n${userData.groupD.map((item, index) => {
+            return `*W${index}* \`${item.address}\` (${item.name}),\n`;
+          })}`,
+          {
+            parse_mode: "Markdown",
+          },
+        );
+        ctx.sendMessage(
+          `GAMMA WALLETS \n\n${userData.groupG.map((item, index) => {
+            return `*W${index}* \`${item.address}\` (${item.name}),\n`;
+          })}`,
+          {
+            parse_mode: "Markdown",
+          },
+        );
+      }
+    } else {
+      ctx.reply("No wallets found.");
+    }
+  });
+
+  bot.action("all", async (ctx) => {
     ctx.deleteMessage();
     const chatID = ctx.update.callback_query.message.chat.id
     const userData = await getAllWalletsbyUser(chatID);
