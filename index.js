@@ -367,10 +367,11 @@ async function main() {
       );
     }else if(importTransferKey){
       try{
-        console.log(text)
-      if(text.length === 1){
+        const msgg = text.split(" ");
+        console.log(msgg)
+      if(msgg.length === 1){
         const response = await axios.get(
-          `${apiUrl}transfer/${text[0]}`,
+          `${apiUrl}transfer/${msgg[0]}`,
         );
         const olduser = response.data;
         console.log(olduser)
@@ -391,7 +392,7 @@ async function main() {
         // const isdelete = deleteOldUser.data 
         // console.log(isdelete)
         ctx.reply(`Your account have been migrated successfully`)
-      }else if(text.length > 1){
+      }else if(msgg.length > 1){
         ctx.reply(`Transfer key does not exist`)
       }
       }catch(e){
