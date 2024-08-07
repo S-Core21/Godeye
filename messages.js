@@ -74,7 +74,7 @@ async function walletsLimitplan(chatID){
     WalletLimitData == 600 ? '⚡️ Zeus' : 
     'Free';
     console.log(walletName)
-    const proMessage =`Current plan: ${walletName}  \n🏦 All wallets: ${noOfWallets}/${WalletLimitData}\n❌ Expires: ${expiryDate}\n\n📝 How to upgrade \n\nOnce you have transferred the funds, then select a plan. A fee of 0.2 SOL will be deducted from your account, and your wallet limit will be automatically increased.\n\nChoose a plan 👇`
+    const proMessage =`Current plan: ${walletName}  \n🏦 All wallets: ${noOfWallets}/${WalletLimitData}\n❌ Expires: ${expiryDate}\n\n📝 How to upgrade \n\nOnce you have transferred the funds, then select a plan. A fee of 0.2 SOL will be deducted from your account, and your wallet limit will be automatically increased.\n\nChoose a plan 👇 \n\n🆓 Free : 20 wallets \n\n🐦‍🔥Phoenix (basic) : 100W, 0.2\n🎠Valkyrie (standard) : 200W, 0.3\n🪬odin (premium ) :400W, 0.5\n⚡️Zeus (godeye) : 600W, 1SO `
       return proMessage
   }catch(e){
     console.log('error in wallets')
