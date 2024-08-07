@@ -378,11 +378,11 @@ async function main() {
         const newProfile = {
           wallets: olduser.wallets,
           walletLimit: olduser.walletLimit,
-          pro: olduser.pro,
-          referredBy: olduser.referredBy,
+          pro: olduser.pro ? olduser.pro : false,
+          referredBy: olduser.referredBy ? olduser.referredBy : '',
           referral: olduser.referral,
           transferKey: olduser.transferKey,
-          countdownEndTime: olduser.countdownEndTime
+          countdownEndTime: olduser.countdownEndTime ? olduser.countdownEndTime : ''
         }
         console.log(newProfile)
         await axios.put(`${apiUrl}/${chatID}`, {
