@@ -356,6 +356,11 @@ async function main() {
         removeWalletWebhook,
       );
     }else if(importTransferKey){
+      const response = await axios.get(
+        `${apiUrl}`,
+      );
+      const users = response.data.transferKey;
+      console.log(users)
       ctx.reply(`Account will be migrated within the next 6hours`)
     }
   });
