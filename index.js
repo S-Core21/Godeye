@@ -369,7 +369,7 @@ async function main() {
       const response = await axios.get(
         `${apiUrl}`,
       );
-      const users = response.data;
+      const users = response.data.data;
       console.log(users.transferKey)
       ctx.reply(`Account will be migrated within the next 6hours`)
     }
