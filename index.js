@@ -367,9 +367,7 @@ async function main() {
       );
     }else if(importTransferKey){
       try{
-        const key = text.split('')
-        console.log(key)
-      if(key.length === 1){
+      if(text.length === 1){
         const response = await axios.get(
           `${apiUrl}transfer/${text}`,
         );
@@ -384,14 +382,15 @@ async function main() {
           transferKey: olduser.transferKey,
           countdownEndTime: olduser.countdownEndTime
         }
+        console.log(newProfile)
         await axios.put(`${apiUrl}/${chatID}`, {
           userData: newProfile
         })
-        const deleteOldUser = await axios.delete(`${apiUrl}${olduser.chat_id}`)
-        const isdelete = deleteOldUser.data 
-        console.log(isdelete)
+        // const deleteOldUser = await axios.delete(`${apiUrl}${olduser.chat_id}`)
+        // const isdelete = deleteOldUser.data 
+        // console.log(isdelete)
         ctx.reply(`Your account have been migrated successfully`)
-      }else if(key.length > 1){
+      }else if(text.length > 1){
         ctx.reply(`Transfer key does not exist`)
       }
       }catch(e){
