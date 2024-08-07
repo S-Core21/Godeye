@@ -385,7 +385,7 @@ async function main() {
           countdownEndTime: olduser.countdownEndTime ? olduser.countdownEndTime : ''
         }
         console.log(newProfile)
-        await axios.put(`${apiUrl}/${chatID}`, {
+        await axios.put(`${apiUrl}${chatID}`, {
           userData: newProfile
         })
         // const deleteOldUser = await axios.delete(`${apiUrl}${olduser.chat_id}`)
