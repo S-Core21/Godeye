@@ -248,15 +248,25 @@ async function main() {
   bot.action("export", async (ctx) => {
     ctx.deleteMessage();
     const chatID = ctx.update.callback_query.message.chat.id
-    const key = generateTransferCode()
     try{
-      await axios.post(`${apiUrl}${chatID}/transferKey`, {
-        transferKey : key
-      })
-      ctx.reply(`Your Account Transfer Key:\n\n${key}`, {
-        parse_mode: "Markdown",
-        disable_web_page_preview: true,
-      });
+      const response = axios.get(`${apiUrl}${chatID}/transferKey`)
+      const transferKey = response.data.transferKey
+      console.log(transferKey)
+      if(transferKey){
+        ctx.reply(`Your Account Transfer Key:\n\n${transferKey}`, {
+          parse_mode: "Markdown",
+          disable_web_page_preview: true,
+        });
+      }else{
+        const key = generateTransferCode()
+        await axios.post(`${apiUrl}${chatID}/transferKey`, {
+          transferKey : key
+        })
+        ctx.reply(`Your Account Transfer Key:\n\n${key}`, {
+          parse_mode: "Markdown",
+          disable_web_page_preview: true,
+        });
+      }
     }catch(e){
       console.log('no transfer key saved')
     }
@@ -359,7 +369,7 @@ async function main() {
       const response = await axios.get(
         `${apiUrl}`,
       );
-      const users = response.data.transferKey;
+      const users = response.data;
       console.log(users)
       ctx.reply(`Account will be migrated within the next 6hours`)
     }
