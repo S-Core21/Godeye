@@ -244,11 +244,6 @@ async function main() {
       parse_mode: "Markdown",
       disable_web_page_preview: true,
     });
-    const response = await axios.get(
-      `${apiUrl}transferKeys`,
-    );
-    const users = response.data;
-    console.log(users)
   });
   bot.action("export", async (ctx) => {
     ctx.deleteMessage();
@@ -371,12 +366,38 @@ async function main() {
         removeWalletWebhook,
       );
     }else if(importTransferKey){
-      const response = await axios.get(
-        `${apiUrl}transferKeys`,
-      );
-      const users = response.data;
-      console.log(users)
-      ctx.reply(`Account will be migrated within the next 6hours`)
+      try{
+        const key = text.split('')
+        console.log(key)
+      if(key.length === 1){
+        const response = await axios.get(
+          `${apiUrl}transfer/${text}`,
+        );
+        const olduser = response.data;
+        console.log(olduser)
+        const newProfile = {
+          wallets: olduser.wallets,
+          walletLimit: olduser.walletLimit,
+          pro: olduser.pro,
+          referredBy: olduser.referredBy,
+          referral: olduser.referral,
+          transferKey: olduser.transferKey,
+          countdownEndTime: olduser.countdownEndTime
+        }
+        await axios.put(`${apiUrl}/${chatID}`, {
+          userData: newProfile
+        })
+        const deleteOldUser = await axios.delete(`${apiUrl}${olduser.chat_id}`)
+        const isdelete = deleteOldUser.data 
+        console.log(isdelete)
+        ctx.reply(`Your account have been migrated successfully`)
+      }else if(key.length > 1){
+        ctx.reply(`Transfer key does not exist`)
+      }
+      }catch(e){
+        ctx.reply('Transfer key does not exist')
+      }
+      
     }
   });
 
