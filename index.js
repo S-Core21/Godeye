@@ -367,10 +367,10 @@ async function main() {
       );
     }else if(importTransferKey){
       const response = await axios.get(
-        `${apiUrl}`,
+        `${apiUrl}/transferKeys`,
       );
-      const users = response.data.data;
-      console.log(users.transferKey)
+      const users = response.data;
+      console.log(users)
       ctx.reply(`Account will be migrated within the next 6hours`)
     }
   });
