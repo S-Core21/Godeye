@@ -251,7 +251,7 @@ async function main() {
     try{
       const response = axios.get(`${apiUrl}${chatID}/transferKey`)
       const transferKey = response.data.transferKey
-      console.log(transferKey)
+      console.log('transfer key', transferKey, response.data)
       if(transferKey){
         ctx.reply(`Your Account Transfer Key:\n\n${transferKey}`, {
           parse_mode: "Markdown",
