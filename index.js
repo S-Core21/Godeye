@@ -431,10 +431,10 @@ async function main() {
       const userData = await getActiveWalletsbyUser(chatID);
     console.log(userData)
     if (userData) {
-       ctx.sendMessage(
+       await ctx.sendMessage(
         `You are currently tracking ${userData.total.length}/1000`,
       );
-        ctx.sendMessage(
+       await ctx.sendMessage(
           `ALPHA WALLETS \n\n${userData.groupA.map((item, index) => {
             return `*W${index}* \`${item.address}\` (${item.name}),\n`;
           })}`,
@@ -442,7 +442,7 @@ async function main() {
             parse_mode: "Markdown",
           },
         );
-        ctx.sendMessage(
+       await ctx.sendMessage(
           `BETA WALLETS \n\n${userData.groupB.map((item, index) => {
             return `*W${index}* \`${item.address}\` (${item.name}),\n`;
           })}`,
@@ -450,7 +450,7 @@ async function main() {
             parse_mode: "Markdown",
           },
         );
-        ctx.sendMessage(
+       await ctx.sendMessage(
           `DELTA WALLETS \n\n${userData.groupD.map((item, index) => {
             return `*W${index}* \`${item.address}\` (${item.name}),\n`;
           })}`,
@@ -458,7 +458,7 @@ async function main() {
             parse_mode: "Markdown",
           },
         );
-        ctx.sendMessage(
+       await ctx.sendMessage(
           `GAMMA WALLETS \n\n${userData.groupG.map((item, index) => {
             return `*W${index}* \`${item.address}\` (${item.name}),\n`;
           })}`,
