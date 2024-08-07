@@ -249,7 +249,7 @@ async function main() {
     ctx.deleteMessage();
     const chatID = ctx.update.callback_query.message.chat.id
     try{
-      const response = axios.get(`${apiUrl}${chatID}/transferKey`)
+      const response = await axios.get(`${apiUrl}${chatID}/transferKey`)
       const transferKey = response.data.transferKey
       console.log('transfer key', transferKey, response.data)
       if(transferKey){
