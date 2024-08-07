@@ -4,6 +4,7 @@ const axios = require("axios");
 const {isPro} = require('./countdown')
 const {apiUrl} = require('./api')
 const {planName} = require('./wallets')
+const {convertDate} = require('./formatNumber')
 
 const startMessage =
   "<b>Listen, 100x is more easier than you think, the secret is to get in early.</b>\n\n <b>I can help you monitor transactions accross your solana wallets. Simply 'ADD' wallets and you'll receive notifications for any activity performed by the wallets</b>";
@@ -58,9 +59,13 @@ function buyButtons(mint){
 async function walletsLimitplan(chatID){
   try{
     const response = await axios.get(
-      `${apiUrl}${chatID}/walletLimit`,
+      `${apiUrl}${chatID}`,
     );
-    const WalletLimitData = response.data.walletLimit;
+    const userData = response.data
+    const WalletLimitData = userData.walletLimit;
+    const wallets = userData.wallets;
+    const expiryDate = convertDate(userData.countdownEndTime)
+    const noOfWallets = wallets.length
     console.log(WalletLimitData, 'limit plan')
     const walletName = WalletLimitData == 20 ? 'Free' : 
     WalletLimitData == 100 ? '🐦‍🔥 Phoenix' : 
@@ -69,7 +74,7 @@ async function walletsLimitplan(chatID){
     WalletLimitData == 600 ? '⚡️ Zeus' : 
     'Free';
     console.log(walletName)
-    const proMessage =`Current plan:  \n🏦 All wallets: x/${walletName}\n❌ Expires: May 20, 2024\n\n📝 How to upgrade \n\nOnce you have transferred the funds, then select a plan. A fee of 0.2 SOL will be deducted from your account, and your wallet limit will be automatically increased.\n\nChoose a plan 👇`
+    const proMessage =`Current plan: ${walletName}  \n🏦 All wallets: ${noOfWallets}/${WalletLimitData}\n❌ Expires: ${expiryDate}\n\n📝 How to upgrade \n\nOnce you have transferred the funds, then select a plan. A fee of 0.2 SOL will be deducted from your account, and your wallet limit will be automatically increased.\n\nChoose a plan 👇`
       return proMessage
   }catch(e){
     console.log('error in wallets')

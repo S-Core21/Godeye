@@ -27,4 +27,27 @@ function shortenString(str) {
   return `${firstPart}...${lastPart}`;
 }
 
-module.exports = {formatNumber, formatMcap, shortenString}; 
+
+function convertDate(isoDate) {
+  const date = new Date(isoDate);
+  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  
+  const month = monthNames[date.getUTCMonth()];
+  const day = date.getUTCDate();
+  const year = date.getUTCFullYear();
+  const hours = date.getUTCHours();
+  const minutes = date.getUTCMinutes();
+  const ampm = hours >= 12 ? 'pm' : 'am';
+  const hour12 = hours % 12 === 0 ? 12 : hours % 12;
+
+  const formattedTime = `${hour12}:${minutes < 10 ? '0' + minutes : minutes}${ampm}`;
+  const formattedDate = `${month} ${day}, ${year} ${formattedTime}`;
+  
+  return formattedDate;
+}
+
+const isoDate = "2024-08-19T06:55:20.071+00:00";
+console.log(convertDate(isoDate)); // Output: August 19, 2024 6:55am
+
+
+module.exports = {formatNumber, formatMcap, shortenString, convertDate}; 
