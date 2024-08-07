@@ -250,8 +250,8 @@ async function main() {
     const chatID = ctx.update.callback_query.message.chat.id
     try{
       const response = await axios.get(`${apiUrl}${chatID}/transferKey`)
-      const transferKey = response.data.transferKey
-      console.log('transfer key', transferKey, response.data)
+      const transferKey = response.data
+      console.log('transfer key', transferKey)
       if(transferKey){
         ctx.reply(`Your Account Transfer Key:\n\n${transferKey}`, {
           parse_mode: "Markdown",
