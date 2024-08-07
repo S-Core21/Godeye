@@ -367,9 +367,10 @@ async function main() {
       );
     }else if(importTransferKey){
       try{
+        console.log(text)
       if(text.length === 1){
         const response = await axios.get(
-          `${apiUrl}transfer/${text}`,
+          `${apiUrl}transfer/${text[0]}`,
         );
         const olduser = response.data;
         console.log(olduser)
