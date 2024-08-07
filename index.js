@@ -367,7 +367,7 @@ async function main() {
       );
     }else if(importTransferKey){
       const response = await axios.get(
-        `${apiUrl}/transferKeys`,
+        `${apiUrl}transferKeys`,
       );
       const users = response.data;
       console.log(users)
