@@ -244,6 +244,11 @@ async function main() {
       parse_mode: "Markdown",
       disable_web_page_preview: true,
     });
+    const response = await axios.get(
+      `${apiUrl}transferKeys`,
+    );
+    const users = response.data;
+    console.log(users)
   });
   bot.action("export", async (ctx) => {
     ctx.deleteMessage();
