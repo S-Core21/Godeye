@@ -48,6 +48,7 @@ async function main() {
 
   let addNewWallets;
   let deleteWallets;
+  let importTransferKey;
 
   // for blocked users
   async function sendMessage(ctx, text, options) {
@@ -64,6 +65,7 @@ async function main() {
     const username = ctx.from.username;
     addNewWallets = false;
     deleteWallets = false;
+    transferKeyMsg = false
     console.log(chatID);
     const allmessages = ctx.message.text 
     const msgArray = allmessages.split(' ')
@@ -114,6 +116,7 @@ async function main() {
     const chatID = ctx.update.callback_query.message.chat.id
     addNewWallets = true;
     deleteWallets = false;
+    transferKeyMsg = false
     ctx.reply(addMessage, {
       parse_mode: "HTML",
       reply_markup: {
@@ -125,6 +128,7 @@ async function main() {
     ctx.deleteMessage();
     addNewWallets = true;
     deleteWallets = false;
+    transferKeyMsg = false
     sendMessage(ctx.message.chat.id, addMessage, {
       parse_mode: "HTML",
       reply_markup: {
@@ -139,6 +143,7 @@ async function main() {
     const chatID = ctx.update.callback_query.message.chat.id
     deleteWallets = true;
     addNewWallets = false;
+    transferKeyMsg = false
     ctx.reply(deleteMessage, {
       parse_mode: "HTML",
       reply_markup: {
@@ -150,6 +155,7 @@ async function main() {
     ctx.deleteMessage();
     deleteWallets = true;
     addNewWallets = false;
+    transferKeyMsg = false;
     sendMessage(ctx.message.chat.id, deleteMessage, {
       parse_mode: "HTML",
     });
@@ -229,6 +235,9 @@ async function main() {
   bot.action("import", async (ctx) => {
     ctx.deleteMessage();
     const chatID = ctx.update.callback_query.message.chat.id
+    addNewWallets = false;
+    deleteWallets = false;
+    transferKeyMsg = true 
     console.log(ctx.from.username)
     ctx.reply('Send me the transfer key of the account you want to import', {
       parse_mode: "Markdown",
@@ -239,11 +248,17 @@ async function main() {
     ctx.deleteMessage();
     const chatID = ctx.update.callback_query.message.chat.id
     const key = generateTransferCode()
-    console.log(ctx.from.username)
-    ctx.reply(key, {
-      parse_mode: "Markdown",
-      disable_web_page_preview: true,
-    });
+    try{
+      await axios.post(`${apiUrl}${chatID}/transferKey`, {
+        transferKey : key
+      })
+      ctx.reply(`Your Account Transfer Key:\n\n${key}`, {
+        parse_mode: "Markdown",
+        disable_web_page_preview: true,
+      });
+    }catch(e){
+      console.log('no transfer key saved')
+    }
   });
   // add payments options
   bot.action("pro1", async (ctx) => {
@@ -327,17 +342,21 @@ async function main() {
     console.log(user)
     const text = ctx.message.text;
     const solanaAddressRegex = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/;
-    await addRemoveWallet(
-      text,
-      solanaAddressRegex,
-      addNewWallets,
-      ctx,
-      chatID,
-      userCache,
-      editWebhook,
-      deleteWallets,
-      removeWalletWebhook,
-    );
+    if(addNewWallets || deleteWallets){
+      await addRemoveWallet(
+        text,
+        solanaAddressRegex,
+        addNewWallets,
+        ctx,
+        chatID,
+        userCache,
+        editWebhook,
+        deleteWallets,
+        removeWalletWebhook,
+      );
+    }else if(transferKeyMsg){
+      ctx.reply(`Account will be migrated within the next 6hours`)
+    }
   });
 
   // manage walltes
