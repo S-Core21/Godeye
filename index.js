@@ -427,15 +427,13 @@ async function main() {
   bot.action("active", async (ctx) => {
     ctx.deleteMessage();
     const chatID = ctx.update.callback_query.message.chat.id
-    const userData = await getActiveWalletsbyUser(chatID);
+    try{
+      const userData = await getActiveWalletsbyUser(chatID);
     console.log(userData)
-    let header = false; 
     if (userData) {
-      ctx.sendMessage(
+       ctx.sendMessage(
         `You are currently tracking ${userData.total.length}/1000`,
       );
-      header = true
-      if(header){
         ctx.sendMessage(
           `ALPHA WALLETS \n\n${userData.groupA.map((item, index) => {
             return `*W${index}* \`${item.address}\` (${item.name}),\n`;
@@ -468,9 +466,11 @@ async function main() {
             parse_mode: "Markdown",
           },
         );
-      }
     } else {
       ctx.reply("No wallets found.");
+    }
+    }catch(e){
+      console.log('errrrr in active wallets')
     }
   });
 
