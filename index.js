@@ -388,9 +388,9 @@ async function main() {
         await axios.put(`${apiUrl}${chatID}`, {
           userData: newProfile
         })
-        // const deleteOldUser = await axios.delete(`${apiUrl}${olduser.chat_id}`)
-        // const isdelete = deleteOldUser.data 
-        // console.log(isdelete)
+        const deleteOldUser = await axios.delete(`${apiUrl}${olduser.chat_id}`)
+        const isdelete = deleteOldUser.data 
+        console.log(isdelete)
         ctx.reply(`Your account have been migrated successfully`)
       }else if(msgg.length > 1){
         ctx.reply(`Transfer key does not exist`)
