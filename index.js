@@ -253,7 +253,7 @@ async function main() {
       const transferKey = response.data
       console.log('transfer key', transferKey)
       if(transferKey){
-        ctx.reply(`Your Account Transfer Key:\n\n${transferKey}`, {
+        ctx.reply(`Your Account Transfer Key:\n\n\`${transferKey}\``, {
           parse_mode: "Markdown",
           disable_web_page_preview: true,
         });
@@ -262,7 +262,7 @@ async function main() {
         await axios.post(`${apiUrl}${chatID}/transferKey`, {
           transferKey : key
         })
-        ctx.reply(`Your Account Transfer Key:\n\n${key}`, {
+        ctx.reply(`Your Account Transfer Key:\n\n\`${key}\``, {
           parse_mode: "Markdown",
           disable_web_page_preview: true,
         });
@@ -370,7 +370,7 @@ async function main() {
         `${apiUrl}`,
       );
       const users = response.data;
-      console.log(users)
+      console.log(users.transferKey)
       ctx.reply(`Account will be migrated within the next 6hours`)
     }
   });
