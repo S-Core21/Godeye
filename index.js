@@ -19,12 +19,13 @@ const {
   addMessage,
   deleteMessage,
   socialsMessage,
-  transferKeyMsg, 
+  importTransferKey, 
   supportMessage,
   inlineKeys,
   buyButtons,
   walletsLimitplan,
   upgradePro,
+  transferKeyMsg,
 } = require("./messages");
 const { formatNumber, formatMcap, shortenString } = require("./formatNumber");
 const { createWallet, payFee, generatePrivateKey } = require("./WalletCreate");
@@ -65,7 +66,7 @@ async function main() {
     const username = ctx.from.username;
     addNewWallets = false;
     deleteWallets = false;
-    transferKeyMsg = false
+    importTransferKey = false
     console.log(chatID);
     const allmessages = ctx.message.text 
     const msgArray = allmessages.split(' ')
@@ -116,7 +117,7 @@ async function main() {
     const chatID = ctx.update.callback_query.message.chat.id
     addNewWallets = true;
     deleteWallets = false;
-    transferKeyMsg = false
+    importTransferKey = false
     ctx.reply(addMessage, {
       parse_mode: "HTML",
       reply_markup: {
@@ -128,7 +129,7 @@ async function main() {
     ctx.deleteMessage();
     addNewWallets = true;
     deleteWallets = false;
-    transferKeyMsg = false
+    importTransferKey = false
     sendMessage(ctx.message.chat.id, addMessage, {
       parse_mode: "HTML",
       reply_markup: {
@@ -143,7 +144,7 @@ async function main() {
     const chatID = ctx.update.callback_query.message.chat.id
     deleteWallets = true;
     addNewWallets = false;
-    transferKeyMsg = false
+    importTransferKey = false
     ctx.reply(deleteMessage, {
       parse_mode: "HTML",
       reply_markup: {
@@ -155,7 +156,7 @@ async function main() {
     ctx.deleteMessage();
     deleteWallets = true;
     addNewWallets = false;
-    transferKeyMsg = false;
+    importTransferKey = false;
     sendMessage(ctx.message.chat.id, deleteMessage, {
       parse_mode: "HTML",
     });
@@ -237,7 +238,7 @@ async function main() {
     const chatID = ctx.update.callback_query.message.chat.id
     addNewWallets = false;
     deleteWallets = false;
-    transferKeyMsg = true 
+    importTransferKey = true 
     console.log(ctx.from.username)
     ctx.reply('Send me the transfer key of the account you want to import', {
       parse_mode: "Markdown",
@@ -354,7 +355,7 @@ async function main() {
         deleteWallets,
         removeWalletWebhook,
       );
-    }else if(transferKeyMsg){
+    }else if(importTransferKey){
       ctx.reply(`Account will be migrated within the next 6hours`)
     }
   });
