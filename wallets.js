@@ -105,7 +105,8 @@ function parseAddressesAndNames(input, ctx) {
   const lines = input.split("\n");
   const result = lines.map((line) => {
     const [address, name, ...groupn] = line.split(" ");
-    const group = groupn.join(" ");
+    const groupdata = groupn.join(" ");
+    const group = groupdata.toUppperCase()
 
     // Define default values
     const defaultAddress = "default_address";
@@ -113,7 +114,6 @@ function parseAddressesAndNames(input, ctx) {
     const defaultGroup = "default_group";
 
     if (!address || !name || !group) {
-      ctx.reply("Incomplete input, using default values.");
       return { address: defaultAddress, name: defaultName, group: defaultGroup };
     }
 
