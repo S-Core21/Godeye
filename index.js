@@ -324,7 +324,7 @@ async function main() {
       },
     });
   });
-  bot.command("/tutorials", async (ctx) => {
+  bot.command("tutorials", async (ctx) => {
     ctx.deleteMessage();
     const chatID = ctx.message.chat.id
     ctx.reply('How to use Theia \n\n Theia A \n\n Theia B', {
@@ -503,7 +503,11 @@ async function main() {
     if (userData) {
        await ctx.sendMessage(
         `🗂️ You are currently tracking ${userData.total.length}/1000`,
-      );
+      )
+      .then((result) => { 
+        ctx.pinChatMessage(result.message_id)
+    })
+    .catch(err => console.log('not pinned'))
        await ctx.sendMessage(
           `ALPHA WALLETS \n\n${userData.groupA.map((item, index) => {
             return `*W${index}* \`${item.address}\` (${item.name}),\n`;
@@ -553,7 +557,11 @@ async function main() {
     if (userData) {
        await ctx.sendMessage(
         `🗂️ You are currently tracking ${userData.total.length}/1000`,
-      );
+      )
+      .then((result) => { 
+        ctx.pinChatMessage(result.message_id)
+    })
+    .catch(err => console.log('not pinned'))
        await ctx.sendMessage(
           `ALPHA WALLETS \n\n${userData.groupA.map((item, index) => {
             return `*W${index}* \`${item.address}\` (${item.name}),\n`;
