@@ -324,7 +324,7 @@ async function main() {
     ctx.deleteMessage();
     const chatID = ctx.update.callback_query.message.chat.id
     ctx.reply(socialsMessage, {
-      parse_mode: "Markdown",
+      parse_mode: "HTML",
       disable_web_page_preview: true,
       reply_markup: {
         inline_keyboard: [[{ text: "Back", callback_data: "Back" }]],

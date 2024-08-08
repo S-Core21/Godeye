@@ -13,9 +13,9 @@ const addMessage =
 const deleteMessage = 'send me the wallet you want to unalive?☠️\n\nTo unalive multiple wallets send me each wallet on a new line in this format👇 \n\nWallet 1\nWallet 2\nWallet 3'
 const transferKeyMsg = 'You can move your wallet data to a new Telegram account if you lose your device or your telegram gets banned\n\nTips: We would never ask for your transfer key via phone, email, or text. Protect yourself from scams because anyone who has this key can access your wallets.\n\n➡️Import wallet\n⬅️Export wallet'
 const supportMessage = 'For complaints, support, or feedback, kindly contact\n\n[kaiju](https://t.me/Division_3)\n[Dev S](https://t.me/Devvv_S)'
-const manageMessage = 'WALLET SUMMARY \n🏦All wallets: A list of all your saved wallets \n🟩Active wallets : A list of wallets sending notifications depending on your subscription \n🟥Inactive wallets : a list of wallets not sending notifications due to expired subscription.\n📝Tips: upgrade plan to use inactive wallets'
+const manageMessage = 'WALLET SUMMARY \n\n🏦All wallets: A list of all your saved wallets \n🟩Active wallets : A list of wallets sending notifications depending on your subscription \n🟥Inactive wallets : a list of wallets not sending notifications due to expired subscription.\n\n📝Tips: upgrade plan to use inactive wallets'
 
-const socialsMessage = `Connect with us on social media for the latest updates and insights.\n\n🤖Bot: Godeye_wallet_tracker\n\n🦅Twitter: https://x.com/godeye_network?s=21 \n\n😎Lounge: https://t.me/Godeye_olympus \n\n🚨Channel: https://t.me/Godeye_news_channel \n\n🌐Website: https://Godeyenetwork.org`
+const socialsMessage = 'Connect with us on social media for the latest updates and insights.\n\n🤖Bot: Godeye_wallet_tracker\n\n🦅Twitter: https://x.com/godeye_network?s=21 \n\n😎Lounge: https://t.me/Godeye_olympus \n\n🚨Channel: https://t.me/Godeye_news_channel \n\n🌐Website: https://Godeyenetwork.org'
 
 const inlineKeys = [
   [
