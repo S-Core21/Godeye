@@ -30,7 +30,7 @@ async function createWallet(ctx, userCache, chatID) {
       );
       const balanceInSol = balance / solanaWeb3.LAMPORTS_PER_SOL;
       ctx.reply(
-        `Your godeye wallet address: \n\`${keys.publicKey}\`\nSOl balance:  ${balanceInSol} SOL \n\nTips: We would never ask for your private key via phone, email, or text. Protect yourself from scams.`,
+        `👤 Your godeye wallet address: \n\`${keys.publicKey}\`\nSOl balance:  ${balanceInSol} SOL \n\n📝 Tips: We would never ask for your private key via phone, email, or text. Protect yourself from scams.`,
         {
           parse_mode: "Markdown",
           reply_markup: {
