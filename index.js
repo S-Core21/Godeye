@@ -262,7 +262,7 @@ async function main() {
         })
           .then((result) => { setTimeout(() => {
                 ctx.deleteMessage(result.message_id)
-            }, 4 * 1000)})
+            }, 30 * 1000)})
             .catch(err => console.log(err))
       }else{
         const key = generateTransferCode()
@@ -304,7 +304,11 @@ async function main() {
   bot.action("pk", async (ctx) => {
     ctx.deleteMessage();
     const chatID = ctx.update.callback_query.message.chat.id
-    await generatePrivateKey(ctx, chatID);
+    await generatePrivateKey(ctx, chatID)
+    .then((result) => { setTimeout(() => {
+      ctx.deleteMessage(result.message_id)
+  }, 30 * 1000)})
+  .catch(err => console.log(err))
   });
   // down wallets pdf
   bot.action("walletpdf", async (ctx) => {
