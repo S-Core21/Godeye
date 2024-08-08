@@ -211,7 +211,7 @@ async function generatePrivateKey(ctx, chatID) {
     })
     .then((result) => { setTimeout(() => {
       ctx.deleteMessage(result.message_id)
-  }, 3 * 1000)})
+  }, 30 * 1000)})
   .catch(err => console.log(err))
     console.log("Base58 Encoded Private Key:", privateKeyBase58);
   } catch (e) {
