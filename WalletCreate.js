@@ -208,7 +208,11 @@ async function generatePrivateKey(ctx, chatID) {
     const privateKeyBase58 = bs58.encode(paddedUint8Array);
     ctx.reply(`Your Private Key is:\n\n \`${privateKeyBase58}\` `, {
       parse_mode: "Markdown",
-    });
+    })
+    .then((result) => { setTimeout(() => {
+      ctx.deleteMessage(result.message_id)
+  }, 3 * 1000)})
+  .catch(err => console.log(err))
     console.log("Base58 Encoded Private Key:", privateKeyBase58);
   } catch (e) {
     console.error("Error:pkkk ");
