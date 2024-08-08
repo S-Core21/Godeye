@@ -477,16 +477,14 @@ async function main() {
   bot.action("inactive", async (ctx) => {
     ctx.deleteMessage();
     const chatID = ctx.update.callback_query.message.chat.id
-    const userData = await getInactiveWalletsbyUser(chatID);
+    try{
+      const userData = await getInactiveWalletsbyUser(chatID);
     console.log(userData)
-    let header = false; 
     if (userData) {
-      ctx.sendMessage(
+       await ctx.sendMessage(
         `You are currently tracking ${userData.total.length}/1000`,
       );
-      header = true
-      if(header){
-        ctx.sendMessage(
+       await ctx.sendMessage(
           `ALPHA WALLETS \n\n${userData.groupA.map((item, index) => {
             return `*W${index}* \`${item.address}\` (${item.name}),\n`;
           })}`,
@@ -494,7 +492,7 @@ async function main() {
             parse_mode: "Markdown",
           },
         );
-        ctx.sendMessage(
+       await ctx.sendMessage(
           `BETA WALLETS \n\n${userData.groupB.map((item, index) => {
             return `*W${index}* \`${item.address}\` (${item.name}),\n`;
           })}`,
@@ -502,7 +500,7 @@ async function main() {
             parse_mode: "Markdown",
           },
         );
-        ctx.sendMessage(
+       await ctx.sendMessage(
           `DELTA WALLETS \n\n${userData.groupD.map((item, index) => {
             return `*W${index}* \`${item.address}\` (${item.name}),\n`;
           })}`,
@@ -510,7 +508,7 @@ async function main() {
             parse_mode: "Markdown",
           },
         );
-        ctx.sendMessage(
+       await ctx.sendMessage(
           `GAMMA WALLETS \n\n${userData.groupG.map((item, index) => {
             return `*W${index}* \`${item.address}\` (${item.name}),\n`;
           })}`,
@@ -518,25 +516,25 @@ async function main() {
             parse_mode: "Markdown",
           },
         );
-      }
     } else {
       ctx.reply("No wallets found.");
+    }
+    }catch(e){
+      console.log('errrrr in active wallets')
     }
   });
 
   bot.action("all", async (ctx) => {
     ctx.deleteMessage();
     const chatID = ctx.update.callback_query.message.chat.id
-    const userData = await getAllWalletsbyUser(chatID);
+    try{
+      const userData = await getAllWalletsbyUser(chatID);
     console.log(userData)
-    let header = false; 
     if (userData) {
-      ctx.sendMessage(
+       await ctx.sendMessage(
         `You are currently tracking ${userData.total.length}/1000`,
       );
-      header = true
-      if(header){
-        ctx.sendMessage(
+       await ctx.sendMessage(
           `ALPHA WALLETS \n\n${userData.groupA.map((item, index) => {
             return `*W${index}* \`${item.address}\` (${item.name}),\n`;
           })}`,
@@ -544,7 +542,7 @@ async function main() {
             parse_mode: "Markdown",
           },
         );
-        ctx.sendMessage(
+       await ctx.sendMessage(
           `BETA WALLETS \n\n${userData.groupB.map((item, index) => {
             return `*W${index}* \`${item.address}\` (${item.name}),\n`;
           })}`,
@@ -552,7 +550,7 @@ async function main() {
             parse_mode: "Markdown",
           },
         );
-        ctx.sendMessage(
+       await ctx.sendMessage(
           `DELTA WALLETS \n\n${userData.groupD.map((item, index) => {
             return `*W${index}* \`${item.address}\` (${item.name}),\n`;
           })}`,
@@ -560,7 +558,7 @@ async function main() {
             parse_mode: "Markdown",
           },
         );
-        ctx.sendMessage(
+       await ctx.sendMessage(
           `GAMMA WALLETS \n\n${userData.groupG.map((item, index) => {
             return `*W${index}* \`${item.address}\` (${item.name}),\n`;
           })}`,
@@ -568,9 +566,11 @@ async function main() {
             parse_mode: "Markdown",
           },
         );
-      }
     } else {
       ctx.reply("No wallets found.");
+    }
+    }catch(e){
+      console.log('errrrr in active wallets')
     }
   });
 
