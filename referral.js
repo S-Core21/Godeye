@@ -24,7 +24,7 @@ async function createReferralLink(ctx, chatID){
             ctx.reply(referralMessage,{
                        parse_mode: "Markdown",
                        reply_markup: {
-                         inline_keyboard: [[{ text: "Request Withdrawal", callback_data: "referralWithdrawal" }],[{ text: "Back", callback_data: "Back" }]],
+                         inline_keyboard: [[{ text: "Back", callback_data: "Back" }]]
                        },
                      })
         }else{
