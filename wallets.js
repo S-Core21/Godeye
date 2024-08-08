@@ -133,7 +133,8 @@ function deleteAddressesAndNames(input, ctx) {
   const lines = input.split("\n");
   const result = lines.map((line) => {
     const addressline = line.split(" ");
-    const address = addressline[0]
+    const addressParts = addressline.filter(parts => parts.trim() !== "")
+    const address = addressParts[0]
     return address
   });
   return result;
