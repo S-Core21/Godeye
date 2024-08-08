@@ -20,7 +20,7 @@ async function createReferralLink(ctx, chatID){
             const referralCode = referralData.referralCode;
             const referralCount = referralData.referralCount;
             const referralLink = `https://t.me/thetheiabot?start=${referralCode}`
-            const referralMessage = `Refer your friends and earn up to 10% of their monthly PRO subscription \n\n Copy and share yout referral link below: \n${referralLink} \n\nReferrals: ${referralCount} `
+              const referralMessage = `Refer your friends and earn up to 25% of their monthly PRO subscription, it's simple \n\n Share the love! 🫶❤️\n\n🔗Referral link: ${referralLink} \n🔢Referrals: ${referralCount} \n\nYour referral bonus will be credited to your Godeye account automatically upon successful referrals.\n\n🪽1-10 referrals: 15% of their monthly sub\n🪽10+ referrals: 25% of their monthly sub`
             ctx.reply(referralMessage,{
                        parse_mode: "Markdown",
                        reply_markup: {
