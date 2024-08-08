@@ -400,6 +400,7 @@ async function main() {
       }
       }catch(e){
         ctx.reply('Transfer key does not exist')
+        console.log(ctx.message)
       }
       
     }
