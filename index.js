@@ -225,12 +225,12 @@ async function main() {
         inline_keyboard: [
           [
             {
-              text: 'Import Wallet', callback_data: 'import'
+              text: '➡️ Import Wallet', callback_data: 'import'
             }
           ],
           [
             {
-              text: 'Export wallet', callback_data: 'export'
+              text: '⬅️ Export wallet', callback_data: 'export'
             }
           ]
         ],

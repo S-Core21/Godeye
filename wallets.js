@@ -134,12 +134,8 @@ function deleteAddressesAndNames(input, ctx) {
   const result = lines.map((line) => {
     const addressline = line.split(" ");
     const addressParts = addressline.filter(parts => parts.trim() !== "")
-    if(addressParts.length > 1){
-      ctx.reply('Send only the address of the wallet you want to unalive')
-    }else{
       const address = addressParts
       return address
-    }
   });
   return result;
 }
@@ -194,8 +190,8 @@ async function addRemoveWallet(
   console.log(WalletLimitData)
   const walletLimit = WalletLimitData ? WalletLimitData : 20
   const totalWallets = user.wallets.length 
-  if(totalWallets == walletLimit && addNewWallets){ 
-    ctx.reply('You have reached the maximum number of wallets(20) allowed.')
+  if(totalWallets >= walletLimit && addNewWallets){ 
+    ctx.reply('You have reached the maximum number of wallets allowed.')
   }else{
     if (addNewWallets) {
       const walletsData = parseAddressesAndNames(text, ctx);
