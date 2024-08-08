@@ -305,7 +305,7 @@ async function addRemoveWallet(
               await removeWalletWebhook(address);
             }
           } catch (e) {
-            console.log("Error deleting wallet", e);
+            console.log("Error deleting wallet");
             ctx.reply("Error deleting wallet. Please try again later.");
           }
         } else {
