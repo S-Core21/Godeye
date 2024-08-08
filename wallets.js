@@ -131,12 +131,17 @@ function parseAddressesAndNames(input, ctx) {
 
 function deleteAddressesAndNames(input, ctx) {
   const lines = input.split("\n");
-  const result = lines.map((line) => {
+  const eachLines = lines.filter(item => item.trim() !== "")
+  const result = eachLines.map((line) => {
     const addressline = line.split(" ");
     const addressParts = addressline.filter(parts => parts.trim() !== "")
     console.log(addressParts)
+    if(addressParts.length > 1){
+      ctx.reply('Send only the address of the wallet you want to unalive')
+    }else{
       const address = addressParts[0]
       return address
+    }
   });
   return result;
 }
