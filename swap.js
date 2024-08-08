@@ -46,7 +46,7 @@ async function swapMessage(webhookEvent, Source, wallet, desc, sol, AW1, sig, so
       const swapMessageReply = `
       ${walletgroup(wallet.group)} ALERT  \n[SWAP](${sig}) on ${Source.replace(/_/g, " ")}\n\`${UserAccount}\`(${wallet.name})\n\n 🔹[${wallet.name}](${solcAcct}${UserAccount}) ${desc[1]} ${formatNumber(desc[2])} [${desc[3]}](${solToken}${Mint1})(${await soldollarvalue(Mint1, desc[2])}) ${desc[4]} ${formatNumber(desc[5])} [${desc[6]}](${solToken}${Mint2})(${await soldollarvalue(Mint2, desc[5])}) \n\n*🔗${dexresult.ticker}(MC: ${dexresult.mcap})*\nDYOR: [SOT](${dexresult.twitter}) |[DS](${dexresult.Dexscreener}) | [DT](${dexresult.Dextools}) | [PH](${dexresult.Photon})| [BE](${dexresult.Birdeye})| [Rick](${dexresult.rick})| [Pump](${dexresult.pump})\nAnalyse Wallet: [W1](${AW1}${UserAccount})\n*CA:*\`${Mint1}\` \n\n*🔗${dexresult2.ticker}(MC: $${dexresult2.mcap})*\nDYOR: [SOT](${dexresult2.twitter}) |[DS](${dexresult2.Dexscreener}) | [DT](${dexresult2.Dextools}) | [PH](${dexresult2.Photon})| [BE](${dexresult2.Birdeye})| [Rick](${dexresult2.rick})| [Pump](${dexresult2.pump})\nAnalyse Wallet: [W1](${AW1}${UserAccount})\n*CA:*\`${Mint2}\`
       `;
-
+ 
       const messageToSend = swapMessageReply;
       console.log(messageToSend);
       console.log(desc);

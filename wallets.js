@@ -134,8 +134,12 @@ function deleteAddressesAndNames(input, ctx) {
   const result = lines.map((line) => {
     const addressline = line.split(" ");
     const addressParts = addressline.filter(parts => parts.trim() !== "")
-    const address = addressParts[0]
-    return address
+    if(addressParts.length > 1){
+      ctx.reply('Send only the address of the wallet you want to unalive')
+    }else{
+      const address = addressParts
+      return address
+    }
   });
   return result;
 }
@@ -266,7 +270,7 @@ async function addRemoveWallet(
               walletExists = user.wallets.some((w) => w.address === address);
             }
             if (!walletExists) {
-              ctx.reply(`I've searched high and low, but that wallet ${address} is nowhere to be found. It's like it never existed!`);
+              ctx.reply(`🙅‍♂️ I've searched high and low, but that wallet ${address} is nowhere to be found. It's like it never existed!`);
             } else {
               // Make the DELETE request to remove the wallet
               await axios.delete(

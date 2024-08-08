@@ -262,7 +262,7 @@ async function main() {
         })
           .then((result) => { setTimeout(() => {
                 ctx.deleteMessage(result.message_id)
-            }, 30 * 1000)})
+            }, 15 * 1000)})
             .catch(err => console.log(err))
       }else{
         const key = generateTransferCode()
@@ -316,6 +316,17 @@ async function main() {
   bot.action("Tutorials", async (ctx) => {
     ctx.deleteMessage();
     const chatID = ctx.update.callback_query.message.chat.id
+    ctx.reply('How to use Theia \n\n Theia A \n\n Theia B', {
+      parse_mode: "Markdown",
+      disable_web_page_preview: true,
+      reply_markup: {
+        inline_keyboard: [[{ text: "Back", callback_data: "Back" }]],
+      },
+    });
+  });
+  bot.command("/tutorials", async (ctx) => {
+    ctx.deleteMessage();
+    const chatID = ctx.message.chat.id
     ctx.reply('How to use Theia \n\n Theia A \n\n Theia B', {
       parse_mode: "Markdown",
       disable_web_page_preview: true,
@@ -437,8 +448,12 @@ async function main() {
     console.log(userData)
     if (userData) {
        await ctx.sendMessage(
-        `You are currently tracking ${userData.total.length}/1000`,
-      );
+        `🗂️ You are currently tracking ${userData.total.length}/1000`,
+      )
+      .then((result) => { 
+        ctx.pinChatMessage(result.message_id)
+    })
+    .catch(err => console.log('not pinned'))
        await ctx.sendMessage(
           `ALPHA WALLETS \n\n${userData.groupA.map((item, index) => {
             return `*W${index}* \`${item.address}\` (${item.name}),\n`;
@@ -487,7 +502,7 @@ async function main() {
     console.log(userData)
     if (userData) {
        await ctx.sendMessage(
-        `You are currently tracking ${userData.total.length}/1000`,
+        `🗂️ You are currently tracking ${userData.total.length}/1000`,
       );
        await ctx.sendMessage(
           `ALPHA WALLETS \n\n${userData.groupA.map((item, index) => {
@@ -537,7 +552,7 @@ async function main() {
     console.log(userData)
     if (userData) {
        await ctx.sendMessage(
-        `You are currently tracking ${userData.total.length}/1000`,
+        `🗂️ You are currently tracking ${userData.total.length}/1000`,
       );
        await ctx.sendMessage(
           `ALPHA WALLETS \n\n${userData.groupA.map((item, index) => {

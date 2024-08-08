@@ -11,9 +11,9 @@ const startMessage =
 const addMessage =
   'Yay! A new wallet. Now send me your wallet details in this format👇\n\n“Wallet nickname group”\nExample:\n“HsDjdEk8RdyZqHCj9x2RLZuQxG6VW5Bugstcb1QXYDSR Sixth✅ A”\n\n“4Be9CvxqHW6BYiRAxW9Q3xu1ycTMWaL5z8NX4HR3ha7t Mitch🤡 B”\n\n📥Grouping helps categorize good or bad wallets,groups include: \nALPHA,BETA,DELTA,GAMMA with abbreviations A,B,D,G.';
 const deleteMessage = 'send me the wallet you want to unalive?☠️\n\nTo unalive multiple wallets send me each wallet on a new line in this format👇 \n\nWallet 1\nWallet 2\nWallet 3'
-const transferKeyMsg = 'You can move your wallet data to a new Telegram account if you lose your device or your telegram gets banned\n\nTips: We would never ask for your transfer key via phone, email, or text. Protect yourself from scams because anyone who has this key can access your wallets.\n\n➡️Import wallet\n⬅️Export wallet'
-const supportMessage = 'For complaints, support, or feedback, kindly contact\n\n[kaiju](https://t.me/Division_3)\n[Dev S](https://t.me/Devvv_S)'
-const manageMessage = 'WALLET SUMMARY \n\n🏦All wallets: A list of all your saved wallets \n🟩Active wallets : A list of wallets sending notifications depending on your subscription \n🟥Inactive wallets : a list of wallets not sending notifications due to expired subscription.\n\n📝Tips: upgrade plan to use inactive wallets'
+const transferKeyMsg = 'You can move your wallet data to a new Telegram account if you lose your device or your telegram gets banned\n\n📝 Tips: We would never ask for your transfer key via phone, email, or text. Protect yourself from scams because anyone who has this key can access your wallets.\n\n➡️Import wallet\n⬅️Export wallet'
+const supportMessage = '☎️ For complaints, support, or feedback, kindly contact\n\n👇👇👇'
+const manageMessage = 'WALLET SUMMARY \n\n🏦All wallets: A list of all your saved wallets \n🟩Active wallets : A list of wallets sending notifications depending on your subscription \n🟥Inactive wallets : a list of wallets not sending notifications due to expired subscription.\n\n📝 Tips: upgrade plan to use inactive wallets'
 
 const socialsMessage = 'Connect with us on social media for the latest updates and insights.\n\n🤖Bot: Godeye_wallet_tracker\n\n🦅Twitter: https://x.com/godeye_network?s=21 \n\n😎Lounge: https://t.me/Godeye_olympus \n\n🚨Channel: https://t.me/Godeye_news_channel \n\n🌐Website: https://Godeyenetwork.org'
 
@@ -40,6 +40,16 @@ const inlineKeys = [
     { text: "💬 Customer support", callback_data: "support" }
   ],
 ];
+
+const supportKeys = [
+  [
+    { text: "🦖 Kaiju", url: "https://t.me/Division_3" },
+    { text: "⚡️ Dev S", url: "https://t.me/Devvv_S" },
+  ],
+  [
+    { text: "🙋‍♂️ FAQ", url: "https://Godeyenetwork.org" }
+  ]
+]
 
 function buyButtons(mint){
   const inlineButtons = [
@@ -75,7 +85,7 @@ async function walletsLimitplan(chatID){
     WalletLimitData == 600 ? '⚡️ Zeus' : 
     'Free';
     console.log(walletName)
-    const proMessage =`Current plan: ${walletName}  \n🏦 All wallets: ${noOfWallets}/${WalletLimitData}\n❌ Expires: ${expiryDate}\n\n📝 How to upgrade \n\nOnce you have transferred the funds, then select a plan. A fee of 0.2 SOL will be deducted from your account, and your wallet limit will be automatically increased.\n\nChoose a plan 👇 \n\n🆓 Free : 20 wallets \n\n🐦‍🔥Phoenix (basic) : 100W, 0.2\n🎠Valkyrie (standard) : 200W, 0.3\n🪬odin (premium ) :400W, 0.5\n⚡️Zeus (godeye) : 600W, 1SO `
+    const proMessage =`👀 Current plan: ${walletName}  \n🏦 All wallets: ${noOfWallets}/${WalletLimitData}\n❌ Expires: ${expiryDate}\n\n📝 How to upgrade \n\nTo subscribe to Phoenix, please transfer a minimum of 0.21 SOL to your Godeye wallet. You can locate your Godeye wallet in the "My Accounts" menu.\n\nOnce you've transferred the funds, navigate to the "Upgrade" section and select the "Phoenix" plan. A fee of 0.2 SOL will be deducted from your account, and your wallet limit will be automatically increased.\n\nChoose a plan 👇 \n\n🆓 Free : 20 wallets \n\n🐦‍🔥Phoenix (basic) : 100W, 0.2\n🎠Valkyrie (standard) : 200W, 0.3\n🪬odin (premium ) :400W, 0.5\n⚡️Zeus (godeye) : 600W, 1SO `
       return proMessage
   }catch(e){
     console.log('error in wallets')
@@ -174,7 +184,7 @@ async function upgradePro(chatID){
 }
 
 function deleteResponse(){
-  const responseArray = ["That wallet? Yeah, it's history. Ancient history.", "Your wallet has been vaporized! No trace left behind.", "That wallet is toast! Crispy and gone. Forever!", "Wallet successfully sent to the digital graveyard. RIP."]
+  const responseArray = ["🚮 That wallet? Yeah, it's history. Ancient history.", "💨 Your wallet has been vaporized! No trace left behind.", "🔥 That wallet is toast! Crispy and gone. Forever!", "🪦 Wallet successfully sent to the digital graveyard. RIP."]
   const randomIndex = Math.floor(Math.random() * responseArray.length);
     return responseArray[randomIndex];
 }
