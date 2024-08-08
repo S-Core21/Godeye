@@ -259,7 +259,11 @@ async function main() {
         ctx.reply(`Your Account Transfer Key:\n\n\`${transferKey}\``, {
           parse_mode: "Markdown",
           disable_web_page_preview: true,
-        });
+        })
+          .then((result) => { setTimeout(() => {
+                ctx.deleteMessage(result.message_id)
+            }, 4 * 1000)})
+            .catch(err => console.log(err))
       }else{
         const key = generateTransferCode()
         await axios.post(`${apiUrl}${chatID}/transferKey`, {
@@ -403,13 +407,6 @@ async function main() {
       }
     } else if(!addNewWallets && !deleteWallets && !importTransferKey){
         ctx.reply('Click /start for more instructions')
-        console.log(ctx.message)
-        let botReply = "A response from the bot that will removed after 10 seconds"
-        ctx.sendMessage(botReply)
-            .then((result) => { setTimeout(() => {
-                ctx.deleteMessage(result.message_id)
-            }, 4 * 1000)})
-            .catch(err => console.log(err))
     }
   });
 
