@@ -25,6 +25,7 @@ const {
   supportMessage,
   manageMessage,
   inlineKeys,
+  supportKeys,
   buyButtons,
   walletsLimitplan,
   upgradePro,
@@ -353,7 +354,7 @@ async function main() {
       parse_mode: "Markdown",
       disable_web_page_preview: true,
       reply_markup: {
-        inline_keyboard: [[{ text: "Back", callback_data: "Back" }]],
+        inline_keyboard: supportKeys,
       },
     });
   });

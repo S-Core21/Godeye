@@ -48,6 +48,9 @@ const supportKeys = [
   ],
   [
     { text: "🙋‍♂️ FAQ", url: "https://Godeyenetwork.org" }
+  ],
+  [
+    { text: "Back", callback_data: "Back" }
   ]
 ]
 
@@ -189,4 +192,4 @@ function deleteResponse(){
     return responseArray[randomIndex];
 }
 
-module.exports = {startMessage, addMessage, deleteMessage, socialsMessage, transferKeyMsg, supportMessage, manageMessage, inlineKeys, buyButtons, walletsLimitplan, upgradePro, deleteResponse}
+module.exports = {startMessage, addMessage, deleteMessage, socialsMessage, transferKeyMsg, supportMessage, manageMessage, inlineKeys, supportKeys, buyButtons, walletsLimitplan, upgradePro, deleteResponse}
