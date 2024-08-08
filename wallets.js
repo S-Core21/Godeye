@@ -127,6 +127,16 @@ function parseAddressesAndNames(input, ctx) {
   return result;
 }
 
+function deleteAddressesAndNames(input, ctx) {
+  const lines = input.split("\n");
+  const result = lines.map((line) => {
+    const addressline = line.split(" ");
+    const address = addressline[0]
+    return address
+  });
+  return result;
+}
+
 
 function walletgroup(walletData) {
   const groupname =
@@ -241,7 +251,7 @@ async function addRemoveWallet(
         }
       }
     } else if (deleteWallets) {
-      const walletData = text.split(" ");
+      const walletData = deleteAddressesAndNames(text, ctx);
       if (walletData.length === 1 && walletData[0].match(solanaAddressRegex)) {
         const address = walletData[0];
         try {
