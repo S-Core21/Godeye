@@ -102,48 +102,56 @@ async function getInactiveWalletsbyUser(chatID) {
 // }
 
 function parseAddressesAndNames(input, ctx) {
-  const lines = input.split("\n");
-  const result = lines.map((line) => {
-    const addressData = line.split(" ")
-    const addressParts = addressData.filter(parts => parts.trim() !== "")
-    const [address, name, ...groupn] = addressParts;
-    const groupdata = groupn.join(" ");
-    const group = groupdata.toUpperCase()
-
-    // Define default values
-    const defaultAddress = "default_address";
-    const defaultName = "default_name";
-    const defaultGroup = "default_group";
-
-    if (!address || !name || !group) {
-      return { address: defaultAddress, name: defaultName, group: defaultGroup };
-    }
-
-    if (group === "A" || group === "B" || group === "D" || group === "G") {
-      return { address, name, group };
-    } else {
-      ctx.reply("Invalid wallet, name or group");
-      return { address: defaultAddress, name: defaultName, group: defaultGroup };
-    }
-  });
-  return result;
+  try{
+    const lines = input.split("\n");
+    const result = lines.map((line) => {
+      const addressData = line.split(" ")
+      const addressParts = addressData.filter(parts => parts.trim() !== "")
+      const [address, name, ...groupn] = addressParts;
+      const groupdata = groupn.join(" ");
+      const group = groupdata.toUpperCase()
+  
+      // Define default values
+      const defaultAddress = "default_address";
+      const defaultName = "default_name";
+      const defaultGroup = "default_group";
+  
+      if (!address || !name || !group) {
+        return { address: defaultAddress, name: defaultName, group: defaultGroup };
+      }
+  
+      if (group === "A" || group === "B" || group === "D" || group === "G") {
+        return { address, name, group };
+      } else {
+        ctx.reply("Invalid wallet, name or group");
+        return { address: defaultAddress, name: defaultName, group: defaultGroup };
+      }
+    });
+    return result;    
+  }catch(e){
+    console.log('error in adding wallets')
+  }
 }
 
 function deleteAddressesAndNames(input, ctx) {
-  const lines = input.split("\n");
-  const eachLines = lines.filter(item => item.trim() !== "")
-  const result = eachLines.map((line) => {
-    const addressline = line.split(" ");
-    const addressParts = addressline.filter(parts => parts.trim() !== "")
-    console.log(addressParts)
-    if(addressParts.length > 1){
-      ctx.reply('Send only the address of the wallet you want to unalive')
-    }else if(addressParts.length === 1){
-      const address = addressParts[0]
-      return address
-    }
-  });
-  return result;
+  try{
+    const lines = input.split("\n");
+    const eachLines = lines.filter(item => item.trim() !== "")
+    const result = eachLines.map((line) => {
+      const addressline = line.split(" ");
+      const addressParts = addressline.filter(parts => parts.trim() !== "")
+      console.log(addressParts)
+      if(addressParts.length > 1){
+        ctx.reply('Send only the address of the wallet you want to unalive ☠️')
+      }else if(addressParts.length === 1){
+        const address = addressParts[0]
+        return address
+      }
+    });
+    return result;
+  }catch(e){
+    console.log('err in deleting wallets')
+  }
 }
 
 
