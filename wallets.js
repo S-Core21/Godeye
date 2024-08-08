@@ -104,7 +104,9 @@ async function getInactiveWalletsbyUser(chatID) {
 function parseAddressesAndNames(input, ctx) {
   const lines = input.split("\n");
   const result = lines.map((line) => {
-    const [address, name, ...groupn] = line.split(" ");
+    const addressData = line.split(" ")
+    const addressParts = addressData.filter(parts => parts.trim() !== "")
+    const [address, name, ...groupn] = addressParts;
     const groupdata = groupn.join(" ");
     const group = groupdata.toUpperCase()
 

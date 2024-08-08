@@ -7,7 +7,7 @@ const {planName} = require('./wallets')
 const {convertDate} = require('./formatNumber')
 
 const startMessage =
-  "<b>Listen, 100x is more easier than you think, the secret is to get in early.</b>\n\n <b>I can help you monitor transactions accross your solana wallets. Simply 'ADD' wallets and you'll receive notifications for any activity performed by the wallets</b>";
+  "🤖 GODEYE | wallet tracker\n\nI'm Godeye, a wallet tracker bot on Solana that helps you maximize your potential. 🏆\n\nGodeye lets you effortlessly monitor all your Solana wallets. Simply add them, relax, and let me handle the rest. You'll receive instant alerts for every transaction.⚡️";
 const addMessage =
   'Yay! A new wallet. Now send me your wallet details in this format👇\n\n“Wallet nickname group”\nExample:\n“HsDjdEk8RdyZqHCj9x2RLZuQxG6VW5Bugstcb1QXYDSR Sixth✅ A”\n\n“4Be9CvxqHW6BYiRAxW9Q3xu1ycTMWaL5z8NX4HR3ha7t Mitch🤡 B”\n\n📥Grouping helps categorize good or bad wallets,groups include: \nALPHA,BETA,DELTA,GAMMA with abbreviations A,B,D,G.';
 const deleteMessage = 'send me the wallet you want to unalive?☠️\n\nTo unalive multiple wallets send me each wallet on a new line in this format👇 \n\nWallet 1\nWallet 2\nWallet 3'
