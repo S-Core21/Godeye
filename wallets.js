@@ -138,7 +138,7 @@ function deleteAddressesAndNames(input, ctx) {
     console.log(addressParts)
     if(addressParts.length > 1){
       ctx.reply('Send only the address of the wallet you want to unalive')
-    }else{
+    }else if(addressParts.length === 1){
       const address = addressParts[0]
       return address
     }
