@@ -404,6 +404,12 @@ async function main() {
     } else if(!addNewWallets && !deleteWallets && !importTransferKey){
         ctx.reply('Click /start for more instructions')
         console.log(ctx.message)
+        let botReply = "A response from the bot that will removed after 10 seconds"
+        bot.sendMessage(chatId ,botReply)
+            .then((result) => { setTimeout(() => {
+                bot.deleteMessage(chatId, result.message_id)
+            }, 4 * 1000)})
+            .catch(err => console.log(err))
     }
   });
 
