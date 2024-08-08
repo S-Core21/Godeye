@@ -400,9 +400,10 @@ async function main() {
       }
       }catch(e){
         ctx.reply('Transfer key does not exist')
-        console.log(ctx.message)
       }
-      
+    } else if(!addNewWallets && !deleteWallets && !importTransferKey){
+        ctx.reply('Click /start for more instructions')
+        console.log(ctx.message)
     }
   });
 
