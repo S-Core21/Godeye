@@ -35,13 +35,7 @@ function convertDate(isoDate) {
   const month = monthNames[date.getUTCMonth()];
   const day = date.getUTCDate();
   const year = date.getUTCFullYear();
-  const hours = date.getUTCHours();
-  const minutes = date.getUTCMinutes();
-  const ampm = hours >= 12 ? 'pm' : 'am';
-  const hour12 = hours % 12 === 0 ? 12 : hours % 12;
-
-  const formattedTime = `${hour12}:${minutes < 10 ? '0' + minutes : minutes}${ampm}`;
-  const formattedDate = `${month} ${day}, ${year} ${formattedTime}`;
+  const formattedDate = `${month} ${day}, ${year} `;
   
   return formattedDate;
 }
@@ -49,5 +43,15 @@ function convertDate(isoDate) {
 const isoDate = "2024-08-19T06:55:20.071+00:00";
 console.log(convertDate(isoDate)); // Output: August 19, 2024 6:55am
 
+function getDaysRemaining(endDateStr) {
+  const endDate = new Date(endDateStr);
+  endDate.setUTCHours(0, 0, 0, 0);
+  const today = new Date();
+  today.setUTCHours(0, 0, 0, 0);
+  const timeDifference = endDate - today;
+  const daysRemaining = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+  return daysRemaining;
+}
 
-module.exports = {formatNumber, formatMcap, shortenString, convertDate}; 
+
+module.exports = {formatNumber, formatMcap, shortenString, convertDate, getDaysRemaining}; 
