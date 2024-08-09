@@ -209,63 +209,63 @@ async function addRemoveWallet(
   }else{
     if (addNewWallets) {
       const walletsData = parseAddressesAndNames(text, ctx);
-      for (let walletData of walletsData) {
-        const wAdd = walletData.address; // /add when clicked twice gives an error
-        if (wAdd.match(solanaAddressRegex)) {
-          const wallet = {
-            address: walletData.address,
-            name: walletData.name || "",
-            group: walletData.group, //incase of setting a default group
-          };
-          const groupname = walletgroup(walletData);
-          console.log("this is the wallets" + wallet);
-          try {
-            // Check if the wallet already exists in the userCache
-            let walletExists = false;
-            if (userCache.has(ctx.from.username)) {
-              const user = userCache.get(ctx.from.username);
-              walletExists = user.wallets.some((w) => w.address === wallet.address);
-            }
-            console.log(walletExists)
-            if (walletExists) {
-              ctx.reply(`Wallet ${wallet.address} already exists`);
-            } else {
-              // Make the POST request to add the wallet
-              await axios.post(
-                `${apiUrl}${chatID}/addWallet`,
-                {
-                  wallet: wallet,
-                },
-              );
-              console.log("Wallet added");
-              ctx.reply(
-                `${walletgroup(wallet.group)} Wallet ${wallet.address} named as ${wallet.name} saved successfully🎊 \n\nTo add multiple wallets, send /tutorials`,
-              );
-
-              // Update the cache
-              if (user) {
-                user.wallets.push(wallet);
-                console.log(user.wallets);
-                userCache.set(ctx.from.username, user);
+      try{
+        for (let walletData of walletsData) {
+          const wAdd = walletData.address; // /add when clicked twice gives an error
+          if (wAdd.match(solanaAddressRegex)) {
+            const wallet = {
+              address: walletData.address,
+              name: walletData.name || "",
+              group: walletData.group, //incase of setting a default group
+            };
+            const groupname = walletgroup(walletData);
+            console.log("this is the wallets" + wallet);
+              // Check if the wallet already exists in the userCache
+              let walletExists = false;
+              if (userCache.has(ctx.from.username)) {
+                const user = userCache.get(ctx.from.username);
+                walletExists = user.wallets.some((w) => w.address === wallet.address);
               }
-
-              const allWallets = [];
-              userCache.forEach((user) => {
-                user.wallets.forEach((wallet) => {
-                  allWallets.push(wallet.address);
+              console.log(walletExists)
+              if (walletExists) {
+                ctx.reply(`Wallet ${wallet.address} already exists`);
+              } else {
+                // Make the POST request to add the wallet
+                await axios.post(
+                  `${apiUrl}${chatID}/addWallet`,
+                  {
+                    wallet: wallet,
+                  },
+                );
+                console.log("Wallet added");
+                ctx.reply(
+                  `${walletgroup(wallet.group)} Wallet ${wallet.address} named as ${wallet.name} saved successfully🎊 \n\nTo add multiple wallets, send /tutorials`,
+                );
+  
+                // Update the cache
+                if (user) {
+                  user.wallets.push(wallet);
+                  console.log(user.wallets);
+                  userCache.set(ctx.from.username, user);
+                }
+  
+                const allWallets = [];
+                userCache.forEach((user) => {
+                  user.wallets.forEach((wallet) => {
+                    allWallets.push(wallet.address);
+                  });
                 });
-              });
-
-              await editWebhook(allWallets);
-            }
-          } catch (e) {
-            console.log("Error adding wallet");
-            ctx.reply("Error adding wallet");
+  
+                await editWebhook(allWallets);
+              }
+  
+          } else {
+            ctx.reply("Invalid address/name or Incomplete data");
           }
-
-        } else {
-          ctx.reply("Invalid address/name or Incomplete data");
         }
+      }catch(e){
+        console.log("Error adding wallet");
+        ctx.reply("Error adding wallet");
       }
     } else if (deleteWallets) {
       const walletData = deleteAddressesAndNames(text, ctx);
@@ -309,7 +309,6 @@ async function addRemoveWallet(
         }
       }catch(e){
         console.log('Invalid address')
-        ctx.reply("Error deleting wallet. Please try again later.");
       }
     }
      else if (!addNewWallets && !deleteWallets) {
