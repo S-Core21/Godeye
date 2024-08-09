@@ -40,7 +40,7 @@ async function sendReminder(bot, userCache){
     setInterval(async () =>{
       const timeLeft = await getCountdown(user.chat_id)
       console.log('timeleft', timeLeft)
-      if(timeLeft >= 259200000 && timeLeft <= 345600000){
+      if(timeLeft <= 345600000 && timeLeft >= 259200000){
         setTimeout(async () =>{
           bot.telegram.sendMessage(user.chat_id, "Your Pro plan will end in 3 days. Upgrade to get more wallets! or renew your plan to continue receiving notifications.");
         },7200000)

@@ -159,8 +159,9 @@ async function payFee(amount, ctx, chatID) {
         : amount === 0.002
           ? 200
           : amount === 0.003
-            ? 500
-            : 20;
+            ? 400
+            : amount === 0.004
+              ? 600 : 20;
     const duration = 30 * 24 * 60 * 60 * 1000;
     const pro = true;
     await axios.post(
