@@ -83,7 +83,7 @@ async function sendReminder(bot, userCache){
             const pro = await isPro(user.chat_id)
             await haltWallets(user.chat_id, pro)
           }
-      }, 60000)
+      }, 600000)
     });
   }catch(e){
     console.log('no expiry date')

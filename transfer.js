@@ -9,7 +9,7 @@ async function transferMessage(webhookEvent, wallet, wallet2, sig, Source, solcA
   try{
     if (wallet && wallet2) {
       if (desc[3] === "SOL") {
-        const messageToSend = `💸[TRANSFER](${sig}) on ${Source.replace(/_/g, " ")} \n\`${wallet.address}\`(${wallet.name})\n\`${wallet2.address}\` (${wallet2.name})\n\n🔹[${wallet.name}](${solcAcct}${wallet.address}) transferred ${formatNumber(desc[2])} ${desc[3]}(${await soldollarvalue(sol, desc[2])}) to 🔹[${wallet2.name}](${solcAcct}${wallet2.address})\nAnalyse Wallet: [W1](${AW1}${wallet}) | [W2](${AW1}${wallet2}) `;
+        const messageToSend = `${walletgroup(wallet.group)} ALERT\n*${wallet.name}* transferred *${formatNumber(desc[2])} SOL*(${await soldollarvalue(sol, desc[2])}) to *${wallet2.name}*\n\n🕵️‍♂️ Analyse Wallet: [W1](${AW1}${wallet})\n\`${wallet.address}\` ➡️ [${wallet.name}](${solcAcct}${wallet.address}) \n\n🕵️‍♂️ Analyse Wallet: [W1](${AW1}${wallet2})\n\`${wallet2.address}\` ➡️ [${wallet2.name}](${solcAcct}${wallet.address}) `;
         bot.telegram.sendMessage(user.chat_id, messageToSend, {
           parse_mode: "Markdown",
           disable_web_page_preview: true,
@@ -19,7 +19,8 @@ async function transferMessage(webhookEvent, wallet, wallet2, sig, Source, solcA
          console.log('ca:', tmint)
         const dexresult = await fetchData(tmint);
 
-        const messageToSend = `💸[TRANSFER](${sig}) on ${Source.replace(/_/g, " ")} \n\`${wallet.address}\`(${wallet.name})\n\`${wallet2.address}\` (${wallet2.name})\n\n🔹[${wallet.name}](${solcAcct}${wallet.address}) transferred ${formatNumber(desc[2])} ${desc[3]}(${await soldollarvalue(tmint, desc[2])}) to 🔹[${wallet2.name}](${solcAcct}${wallet2.address})\n\n*🔗${dexresult.ticker ? dexresult.ticker: desc[3]}(MC: $${dexresult.mcap})*:\nDYOR: [SOT](${dexresult.twitter}) |[DS](${dexresult.Dexscreener}) | [DT](${dexresult.Dextools}) | [PH](${dexresult.Photon})| [BE](${dexresult.Birdeye})| [Rick](${dexresult.rick})\nAnalyse Wallet: [W1](${AW1}${wallet}) | [W2](${AW1}${wallet2})\n\`${tmint}\` `;
+        // const messageToSend = `${walletgroup(wallet.group)} ALERT\n💸[TRANSFER](${sig}) on ${Source.replace(/_/g, " ")} \n\`${wallet.address}\`(${wallet.name})\n\`${wallet2.address}\` (${wallet2.name})\n\n🔹[${wallet.name}](${solcAcct}${wallet.address}) transferred ${formatNumber(desc[2])} ${desc[3]}(${await soldollarvalue(tmint, desc[2])}) to 🔹[${wallet2.name}](${solcAcct}${wallet2.address})\n\n*🔗${dexresult.ticker ? dexresult.ticker: desc[3]}(MC: $${dexresult.mcap})*:\nDYOR: [SOT](${dexresult.twitter}) |[DS](${dexresult.Dexscreener}) | [DT](${dexresult.Dextools}) | [PH](${dexresult.Photon})| [BE](${dexresult.Birdeye})| [Rick](${dexresult.rick})\nAnalyse Wallet: [W1](${AW1}${wallet}) | [W2](${AW1}${wallet2})\n\`${tmint}\` `;
+        const messageToSend = `${walletgroup(wallet.group)} ALERT\n*${wallet.name}* transferred *${formatNumber(desc[2])} ${desc[3]}*(${await soldollarvalue(tmint, desc[2])}) to *${wallet2.name}*\n\n*💡${dexresult.ticker} | MC: ${dexresult.mcap}*\n\`${tmint}\`\n🔎 *DYOR:* [SOLC](${sig}) | [X](${dexresult.twitter}) | [RICK](${dexresult.rick}) | [DS](${dexresult.Dexscreener}) | [DT](${dexresult.Dextools}) | [BE](${dexresult.Birdeye}) | [Pump](${dexresult.pump})\n\n🕵️‍♂️ Analyse Wallet: [W1](${AW1}${wallet})\n\`${wallet.address}\` ➡️ [${wallet.name}](${solcAcct}${wallet.address}) \n🕵️‍♂️ Analyse Wallet: [W1](${AW1}${wallet2})\n\`${wallet2.address}\` ➡️ [${wallet2.name}](${solcAcct}${wallet.address}) `
         bot.telegram.sendMessage(user.chat_id, messageToSend, {
           parse_mode: "Markdown",
           disable_web_page_preview: true,
