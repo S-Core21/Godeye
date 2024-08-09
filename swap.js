@@ -1,4 +1,4 @@
-const { formatNumber } = require("./formatNumber");
+const { formatNumber, formatMcap } = require("./formatNumber");
 const soldollarvalue = require("./dollarvalue");
 const {walletgroup} = require("./wallets");
 const {fetchData, nftMetaData} = require("./metadata");
@@ -15,7 +15,7 @@ async function swapMessage(webhookEvent, Source, wallet, desc, sol, AW1, sig, so
       const quantitySol = webhookEvent[0].tokenTransfers[0].tokenAmount 
       const quantitytoken = webhookEvent[0].tokenTransfers[1].tokenAmount 
       const dexresult = await fetchData(Mint2);
-      const testMessage = `${walletgroup(wallet.group)} ALERT \n[${wallet.name}](${solcAcct}${UserAccount}) *BOUGHT* ${formatNumber(quantitytoken)} *${dexresult.ticker}* for ${formatNumber(quantitySol)} Sol (${await soldollarvalue(Mint1, quantitySol)}) on ${Source.replace(/_/g, " ")}\n\n*💡${dexresult.ticker} | MC: ${dexresult.mcap}*\n\`${Mint2}\`\n🔎 *DYOR:* [SOLC](${sig}) | [X](${dexresult.twitter}) | [RICK](${dexresult.rick}) | [DS](${dexresult.Dexscreener}) | [DT](${dexresult.Dextools}) | [BE](${dexresult.Birdeye}) | [Pump](${dexresult.pump})\n\n🕵️‍♂️ *Analyse Wallet:* [W1](${AW1}${UserAccount})\n[${wallet.name}](${solcAcct}${UserAccount})(\`${UserAccount}\`)`
+      const testMessage = `${walletgroup(wallet.group)} ALERT \n[${wallet.name}](${solcAcct}${UserAccount}) *BOUGHT* ${formatMcap(quantitytoken)} *${dexresult.ticker}* for *${formatNumber(quantitySol)} SOL*(${await soldollarvalue(Mint1, quantitySol)}) on ${Source.replace(/_/g, " ")}\n\n*💡${dexresult.ticker} | MC: ${dexresult.mcap}*\n\`${Mint2}\`\n🔎 *DYOR:* [SOLC](${sig}) | [X](${dexresult.twitter}) | [RICK](${dexresult.rick}) | [DS](${dexresult.Dexscreener}) | [DT](${dexresult.Dextools}) | [BE](${dexresult.Birdeye}) | [Pump](${dexresult.pump})\n\n🕵️‍♂️ *Analyse Wallet:* [W1](${AW1}${UserAccount})\n\`${UserAccount}\`➡️[${wallet.name}](${solcAcct}${UserAccount})`
       
       const messageToSend = testMessage;
       console.log(messageToSend);
@@ -33,7 +33,7 @@ async function swapMessage(webhookEvent, Source, wallet, desc, sol, AW1, sig, so
       const dexresult = await fetchData(Mint1);
       const quantitySol = webhookEvent[0].tokenTransfers[1].tokenAmount 
       const quantitytoken = webhookEvent[0].tokenTransfers[0].tokenAmount 
-       const testMessage = `${walletgroup(wallet.group)} ALERT \n[${wallet.name}](${solcAcct}${UserAccount}) *SOLD* ${formatNumber(quantitytoken)} *${dexresult.ticker}* for ${formatNumber(quantitySol)} Sol (${await soldollarvalue(Mint2, quantitySol)}) on ${Source.replace(/_/g, " ")}\n\n*💡${dexresult.ticker} | MC: ${dexresult.mcap}*\n\`${Mint1}\`\n🔎 *DYOR:* [SOLC](${sig}) | [X](${dexresult.twitter}) | [RICK](${dexresult.rick}) | [DS](${dexresult.Dexscreener}) | [DT](${dexresult.Dextools}) | [BE](${dexresult.Birdeye}) | [Pump](${dexresult.pump})\n\n🕵️‍♂️ *Analyse Wallet:* [W1](${AW1}${UserAccount})\n[${wallet.name}](${solcAcct}${UserAccount})(\`${UserAccount}\`) `
+       const testMessage = `${walletgroup(wallet.group)} ALERT \n[${wallet.name}](${solcAcct}${UserAccount}) *SOLD* ${formatMcap(quantitytoken)} *${dexresult.ticker}* for *${formatNumber(quantitySol)} SOL*(${await soldollarvalue(Mint2, quantitySol)}) on ${Source.replace(/_/g, " ")}\n\n*💡${dexresult.ticker} | MC: ${dexresult.mcap}*\n\`${Mint1}\`\n🔎 *DYOR:* [SOLC](${sig}) | [X](${dexresult.twitter}) | [RICK](${dexresult.rick}) | [DS](${dexresult.Dexscreener}) | [DT](${dexresult.Dextools}) | [BE](${dexresult.Birdeye}) | [Pump](${dexresult.pump})\n\n🕵️‍♂️ *Analyse Wallet:* [W1](${AW1}${UserAccount})\n\`${UserAccount}\`➡️[${wallet.name}](${solcAcct}${UserAccount})`
 
        const messageToSend = testMessage;
        console.log(messageToSend);
@@ -51,7 +51,7 @@ async function swapMessage(webhookEvent, Source, wallet, desc, sol, AW1, sig, so
       const dexresult2 = await fetchData(Mint2);
       const quantitytoken1 = webhookEvent[0].tokenTransfers[0].tokenAmount 
       const quantitytoken2 = webhookEvent[0].tokenTransfers[1].tokenAmount 
-       const testMessage = `${walletgroup(wallet.group)} ALERT \n[${wallet.name}](${solcAcct}${UserAccount}) *SWAPPED* ${formatNumber(quantitytoken1)} *${dexresult.ticker}* for ${formatNumber(quantitytoken2)} ${dexresult2.ticker} (${await soldollarvalue(Mint1, quantitytoken1)}) on ${Source.replace(/_/g, " ")}\n\n*💡${dexresult.ticker} | MC: ${dexresult.mcap}*\n\`${Mint2}\`\n🔎 *DYOR:* [SOLC](${sig}) | [X](${dexresult.twitter}) | [RICK](${dexresult.rick})| [DS](${dexresult.Dexscreener}) | [DT](${dexresult.Dextools}) | [BE](${dexresult.Birdeye}) | [Pump](${dexresult.pump})\n*💡${dexresult.ticker} | MC: ${dexresult.mcap}*\n\`${Mint2}\`\n🔎 *DYOR:* [SOLC](${sig}) | [X](${dexresult.twitter}) | [RICK](${dexresult.rick})| [DS](${dexresult.Dexscreener}) | [DT](${dexresult.Dextools}) | [BE](${dexresult.Birdeye}) | [Pump](${dexresult.pump})\n\n🕵️‍♂️ *Analyse Wallet:* [W1](${AW1}${UserAccount})\n[${wallet.name}](${solcAcct}${UserAccount})(\`${UserAccount}\`)`
+       const testMessage = `${walletgroup(wallet.group)} ALERT \n[${wallet.name}](${solcAcct}${UserAccount}) *SWAPPED* *${formatMcap(quantitytoken1)} ${dexresult.ticker}* for *${formatMcap(quantitytoken2)} ${dexresult2.ticker}*(${await soldollarvalue(Mint1, quantitytoken1)}) on ${Source.replace(/_/g, " ")}\n\n*💡${dexresult.ticker} | MC: ${dexresult.mcap}*\n\`${Mint2}\`\n🔎 *DYOR:* [SOLC](${sig}) | [X](${dexresult.twitter}) | [RICK](${dexresult.rick})| [DS](${dexresult.Dexscreener}) | [DT](${dexresult.Dextools}) | [BE](${dexresult.Birdeye}) | [Pump](${dexresult.pump})\n*💡${dexresult.ticker} | MC: ${dexresult.mcap}*\n\`${Mint2}\`\n🔎 *DYOR:* [SOLC](${sig}) | [X](${dexresult.twitter}) | [RICK](${dexresult.rick})| [DS](${dexresult.Dexscreener}) | [DT](${dexresult.Dextools}) | [BE](${dexresult.Birdeye}) | [Pump](${dexresult.pump})\n\n🕵️‍♂️ *Analyse Wallet:* [W1](${AW1}${UserAccount})\n\`${UserAccount}\`➡️[${wallet.name}](${solcAcct}${UserAccount})`
 
       const messageToSend = testMessage;
       console.log(messageToSend);
