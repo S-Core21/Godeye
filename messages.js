@@ -9,7 +9,7 @@ const {convertDate} = require('./formatNumber')
 const startMessage =
   "🤖 GODEYE | wallet tracker\n\nI'm Godeye, a wallet tracker bot on Solana that helps you maximize your potential. 🏆\n\nGodeye lets you effortlessly monitor all your Solana wallets. Simply add them, relax, and let me handle the rest. You'll receive instant alerts for every transaction.⚡️";
 const addMessage =
-  'Yay! A new wallet. Now send me your wallet details in this format👇\n\n“Wallet nickname group”\nExample:\n“HsDjdEk8RdyZqHCj9x2RLZuQxG6VW5Bugstcb1QXYDSR Sixth✅ A”\n\n“4Be9CvxqHW6BYiRAxW9Q3xu1ycTMWaL5z8NX4HR3ha7t Mitch🤡 B”\n\n📥Grouping helps categorize good or bad wallets,groups include: \nALPHA,BETA,DELTA,GAMMA with abbreviations A,B,D,G.';
+  'Yay! A new wallet. Now send me your wallet details in this format👇\n\n“Wallet nickname group”\nExample:\n“HsDjdEk8RdyZqHCj9x2RLZuQxG6VW5Bugstcb1QXYDSR Sixth✅ A”\n\n“Wallet1 nickname group”\n“Wallet2 nickname group”\n\n📥Grouping helps categorize good or bad wallets,groups include: \nALPHA,BETA,DELTA,GAMMA with abbreviations A,B,D,G.';
 const deleteMessage = 'send me the wallet you want to unalive?☠️\n\nTo unalive multiple wallets send me each wallet on a new line in this format👇 \n\nWallet 1\nWallet 2\nWallet 3'
 const transferKeyMsg = 'You can move your wallet data to a new Telegram account if you lose your device or your telegram gets banned\n\n📝 Tips: We would never ask for your transfer key via phone, email, or text. Protect yourself from scams because anyone who has this key can access your wallets.\n\n➡️Import wallet\n⬅️Export wallet'
 const supportMessage = '☎️ For complaints, support, or feedback, kindly contact\n\n👇👇👇'
