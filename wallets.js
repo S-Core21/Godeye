@@ -269,48 +269,47 @@ async function addRemoveWallet(
       }
     } else if (deleteWallets) {
       const walletData = deleteAddressesAndNames(text, ctx);
-      
-      for (const address of walletData) {
-        if (address.match(solanaAddressRegex)) {
-          try {
-            // Check if the wallet exists in the userCache
-            let walletExists = false;
-            if (userCache.has(ctx.from.username)) {
-              const user = userCache.get(ctx.from.username);
-              walletExists = user.wallets.some((w) => w.address === address);
-            }
-            if (!walletExists) {
-              ctx.reply(`🙅‍♂️ I've searched high and low, but that wallet ${address} is nowhere to be found. It's like it never existed!`);
-            } else {
-              // Make the DELETE request to remove the wallet
-              await axios.delete(
-                `${apiUrl}${chatID}/removeWallet`,
-                {
-                  data: {
-                    address: address,
-                  },
-                },
-              );
-              ctx.reply(deleteResponse());
-    
-              // Update the cache
-              const user = userCache.get(ctx.from.username);
-              if (user) {
-                user.wallets = user.wallets.filter(
-                  (item) => item.address !== address,
-                );
-                userCache.set(ctx.from.username, user); // Update the cache
+      try{
+        for (const address of walletData) {
+          if (address.match(solanaAddressRegex)) {
+              // Check if the wallet exists in the userCache
+              let walletExists = false;
+              if (userCache.has(ctx.from.username)) {
+                const user = userCache.get(ctx.from.username);
+                walletExists = user.wallets.some((w) => w.address === address);
               }
-    
-              await removeWalletWebhook(address);
-            }
-          } catch (e) {
-            console.log("Error deleting wallet");
-            ctx.reply("Error deleting wallet. Please try again later.");
+              if (!walletExists) {
+                ctx.reply(`🙅‍♂️ I've searched high and low, but that wallet ${address} is nowhere to be found. It's like it never existed!`);
+              } else {
+                // Make the DELETE request to remove the wallet
+                await axios.delete(
+                  `${apiUrl}${chatID}/removeWallet`,
+                  {
+                    data: {
+                      address: address,
+                    },
+                  },
+                );
+                ctx.reply(deleteResponse());
+      
+                // Update the cache
+                const user = userCache.get(ctx.from.username);
+                if (user) {
+                  user.wallets = user.wallets.filter(
+                    (item) => item.address !== address,
+                  );
+                  userCache.set(ctx.from.username, user); // Update the cache
+                }
+      
+                await removeWalletWebhook(address);
+              }
+          } else {
+            ctx.reply(`Invalid address: ${address}`);
           }
-        } else {
-          ctx.reply(`Invalid address: ${address}`);
         }
+      }catch(e){
+        console.log('Invalid address')
+        ctx.reply("Error deleting wallet. Please try again later.");
       }
     }
      else if (!addNewWallets && !deleteWallets) {
