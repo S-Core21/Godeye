@@ -279,7 +279,7 @@ async function addRemoveWallet(
                 walletExists = user.wallets.some((w) => w.address === address);
               }
               if (!walletExists) {
-                ctx.reply(`🙅‍♂️ I've searched high and low, but that wallet ${address} is nowhere to be found. It's like it never existed!`);
+                ctx.reply(`I've searched high and low, but ${address} is nowhere to be found. It's like it never existed! 🙅‍♂️`);
               } else {
                 // Make the DELETE request to remove the wallet
                 await axios.delete(

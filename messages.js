@@ -187,7 +187,7 @@ async function upgradePro(chatID){
 }
 
 function deleteResponse(){
-  const responseArray = ["🚮 That wallet? Yeah, it's history. Ancient history.", "💨 Your wallet has been vaporized! No trace left behind.", "🔥 That wallet is toast! Crispy and gone. Forever!", "🪦 Wallet successfully sent to the digital graveyard. RIP."]
+  const responseArray = ["That wallet? Yeah, it's history. Ancient history 🚮", "Your wallet has been vaporized! No trace left behind 💨", "That wallet is toast! Crispy and gone. Forever! 🔥", "Wallet successfully sent to the digital graveyard. RIP. 🪦"]
   const randomIndex = Math.floor(Math.random() * responseArray.length);
     return responseArray[randomIndex];
 }
