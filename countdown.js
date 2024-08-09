@@ -51,7 +51,7 @@ async function sendReminder(bot, userCache){
               },
             })
             .then((result) => { 
-              bot.pinChatMessage(user.chat_id, result.message_id)
+              bot.telegram.pinChatMessage(user.chat_id, result.message_id)
             })
             .catch(err => console.log('not pinned'))
           }else if(daysLeft === 1){
@@ -62,7 +62,7 @@ async function sendReminder(bot, userCache){
               },
             })
             .then((result) => { 
-              bot.pinChatMessage(user.chat_id, result.message_id)
+              bot.telegram.pinChatMessage(user.chat_id, result.message_id)
             })
             .catch(err => console.log('not pinned'))
           }else if(expiryDate === 0){
@@ -73,7 +73,7 @@ async function sendReminder(bot, userCache){
               },
             })
             .then((result) => { 
-              bot.pinChatMessage(user.chat_id, result.message_id)
+              bot.telegram.pinChatMessage(user.chat_id, result.message_id)
             })
             .catch(err => console.log('not pinned'))
             await axios.post(
