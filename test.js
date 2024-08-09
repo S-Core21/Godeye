@@ -7,12 +7,12 @@ async function testData(){
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          transactions: ['4jNWQ1eADrvZwZfU9UYTb81szEGKFN1vjY4NsYmhby5HqHbQ5yE1DpZF3Q31bg13akQP5o911n8i2eVogKf7xDxo'],
+          transactions: ['3BDdrtkc5YkYZD73z9R3FP6E5G1cFFrWXXNBeRhuqPpXTnMEKgKXXAoVXoxxiY3bNcK199EBtsSeZizvBAMkFaWw'],
         }),
       });
       const data = await response.json();
       // console.log("parsed transaction: ", data);
-    const url2 = `https://04d44488-19ca-4991-9b4c-ce61ea02cb1a-00-ql75piaetz4j.janeway.replit.dev/webhook`
+    const url2 = `https://godeye-3d8a522e85b5.herokuapp.com/webhook`
     const response2 = await fetch(url2, {
       method: 'POST',
       headers: {

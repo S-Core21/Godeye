@@ -13,8 +13,8 @@ async function swapMessage(webhookEvent, Source, wallet, desc, sol, AW1, sig, so
     const Mint2 = webhookEvent[0].tokenTransfers[tokenTransfersLength - 1].mint
     if(Mint1 == "So11111111111111111111111111111111111111112"){
       const transactionType = 'BUY'
-      const quantitySol = webhookEvent[0].tokenTransfers[0].tokenAmount 
-      const quantitytoken = webhookEvent[0].tokenTransfers[1].tokenAmount 
+      const quantitySol = webhookEvent[0].tokenTransfers[tokenTransfersLength - 2].tokenAmount 
+      const quantitytoken = webhookEvent[0].tokenTransfers[tokenTransfersLength - 1].tokenAmount 
       const dexresult = await fetchData(Mint2);
       const testMessage = `${walletgroup(wallet.group)} ALERT \n*${wallet.name}* *BOUGHT* ${formatMcap(quantitytoken)} *${dexresult.ticker}* for *${formatNumber(quantitySol)} SOL*(${await soldollarvalue(Mint1, quantitySol)}) on ${Source.replace(/_/g, " ")}\n\n*💡${dexresult.ticker} | MC: ${dexresult.mcap}*\n\`${Mint2}\`\n🔎 *DYOR:* [SOLC](${sig}) | [X](${dexresult.twitter}) | [RICK](${dexresult.rick}) | [DS](${dexresult.Dexscreener}) | [DT](${dexresult.Dextools}) | [BE](${dexresult.Birdeye}) | [Pump](${dexresult.pump})\n\n🕵️‍♂️ *Analyse Wallet:* [W1](${AW1}${UserAccount})\n\`${UserAccount}\` ➡️ [${wallet.name}](${solcAcct}${UserAccount})`
       
