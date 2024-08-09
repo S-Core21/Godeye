@@ -44,11 +44,38 @@ async function sendReminder(bot, userCache){
         const daysLeft = getDaysRemaining(expiryDate)
         console.log('days left', daysLeft)
         if(daysLeft === 3){
-            bot.telegram.sendMessage(user.chat_id, "Your Pro plan will end in 3 days. Upgrade to get more wallets! or renew your plan to continue receiving notifications.");
+            bot.telegram.sendMessage(user.chat_id, "🚨🚨🚨\nYour Pro plan expires in 3 days. To continue enjoying all its benefits, kindly renew your subscription.👇", {
+              parse_mode: "HTML",
+              reply_markup: {
+                inline_keyboard: [[{ text: "🔼 Upgrade", callback_data: "Pro" }]],
+              },
+            })
+            .then((result) => { 
+              ctx.pinChatMessage(result.message_id)
+            })
+            .catch(err => console.log('not pinned'))
           }else if(daysLeft === 1){
-              bot.telegram.sendMessage(user.chat_id, "Your Pro plan will end in 1 day. Upgrade to get more wallets! or renew your plan to continue receiving notifications.");
+            bot.telegram.sendMessage(user.chat_id, "🚨🚨🚨\nYour Pro plan expires in 24 hours. To continue enjoying all its benefits, kindly renew your subscription.👇", {
+              parse_mode: "HTML",
+              reply_markup: {
+                inline_keyboard: [[{ text: "🔼 Upgrade", callback_data: "Pro" }]],
+              },
+            })
+            .then((result) => { 
+              ctx.pinChatMessage(result.message_id)
+            })
+            .catch(err => console.log('not pinned'))
           }else if(expiryDate === 0){
-            bot.telegram.sendMessage(user.chat_id, "Your Pro plan has expired. Upgrade to get more wallets! or renew your plan to continue receiving notifications.");
+            bot.telegram.sendMessage(user.chat_id, "🚨🚨🚨\nYour Pro plan has expired. To continue enjoying all its benefits, kindly renew your subscription.👇", {
+              parse_mode: "HTML",
+              reply_markup: {
+                inline_keyboard: [[{ text: "🔼 Upgrade", callback_data: "Pro" }]],
+              },
+            })
+            .then((result) => { 
+              ctx.pinChatMessage(result.message_id)
+            })
+            .catch(err => console.log('not pinned'))
             await axios.post(
               `${apiUrl}${user.chat_id}/setPro`,
               { pro: false },
