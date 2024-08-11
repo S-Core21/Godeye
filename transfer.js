@@ -15,6 +15,7 @@ async function transferMessage(webhookEvent, wallet, wallet2, sig, Source, solcA
       (accountInfo) => accountInfo.account === address2
     )
     console.log(senderAcctData)
+    console.log(ReceiverAcctData)
     if (wallet && wallet2) {
       if (desc[3] === "SOL") {
         const messageToSend = `${walletgroup(wallet.group)} ALERT\n*${wallet.name}* transferred *${formatNumber(desc[2])} SOL*(${await soldollarvalue(sol, desc[2])}) to *${wallet2.name}*\n\n🕵️‍♂️ Analyse Wallet: [W1](${AW1}${wallet})\n\`${wallet.address}\` ➡️ [${wallet.name}](${solcAcct}${wallet.address}) \n\n🕵️‍♂️ Analyse Wallet: [W2](${AW1}${address2})\n\`${wallet2.address}\` ➡️ [${wallet2.name}](${solcAcct}${wallet2.address}) `;
