@@ -49,7 +49,7 @@ async function swapMessage(webhookEvent, Source, wallet, desc, sol, AW1, sig, so
          });
   
       }
-    }else{
+    }else if((desc[3] !== 'SOL' && desc[6] !== 'SOL')){
       const Mint1swap = webhookEvent[0].tokenTransfers[0].mint
       const Mintswap = webhookEvent[0].tokenTransfers[1].mint
       const dexresult = await fetchData(Mint1swap);
