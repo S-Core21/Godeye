@@ -45,7 +45,7 @@ async function transferMessage(webhookEvent, wallet, wallet2, sig, Source, solcA
           disable_web_page_preview: true,
         });
       } else {
-        if(senderAcctData.nativeBalanceChange === 0){
+        if(ReceiverAcctData.nativeBalanceChange === 0){
           const tmint = webhookEvent[0].tokenTransfers[0].mint;
           const dexresult = await fetchData(tmint);
           console.log('ca:', tmint)
@@ -57,8 +57,8 @@ async function transferMessage(webhookEvent, wallet, wallet2, sig, Source, solcA
               inline_keyboard: buyButtons(tmint),
             },
           });
-        }else if(senderAcctData.nativeBalanceChange !== 0){
-          const quantitySol = senderAcctData.nativeBalanceChange / 1000000000
+        }else if(ReceiverAcctData.nativeBalanceChange !== 0){
+          const quantitySol = ReceiverAcctData.nativeBalanceChange / 1000000000
           console.log(quantitySol)
           const quantitytoken = webhookEvent[0].tokenTransfers[0].tokenAmount 
           const tmint = webhookEvent[0].tokenTransfers[0].mint;
