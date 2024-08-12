@@ -31,10 +31,10 @@ async function fetchData(Mint1, quantitySol, quantitytoken){
     });
 
     const data = await response2.json();
+    const decimal = data[0].onChainAccountInfo.accountInfo.data.parsed.info.decimals
     const supply= data[0].onChainAccountInfo.accountInfo.data.parsed.info.supply
     const unitSupply = supply.toString().slice(0, -decimal)
     if(Object.keys(priceData).length >= 1){
-      const decimal = data[0].onChainAccountInfo.accountInfo.data.parsed.info.decimals
       console.log('supply', unitSupply)
       console.log('current price', priceData[Mint1].price)
       const mcap = unitSupply * priceData[Mint1].price
