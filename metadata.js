@@ -173,8 +173,10 @@ async function checksource(mint){
   });
   const data = await response2.json();
   const pump = data[0].offChainMetadata.metadata.createdOn
+  console.log(pump)
   const dexId = dexscreener.pairs[0].dexId 
   const source = pump == 'https://pump.fun' ? 'PUMP FUN' : dexId == 'moonshot' ? 'MOONSHOT' : 'UNKNOWN'
+  console.log(source)
   return source 
   }catch(e){
     return "UNKNOWN"
