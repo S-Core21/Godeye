@@ -74,7 +74,7 @@ async function fetchData(Mint1, quantitySol, quantitytoken){
      return MetaData
     }
   }catch(e){
-    console.log('err no metadata')
+    console.log('err no metadata', e)
     const MetaData = {
        ticker: '',
        mcap: '',
