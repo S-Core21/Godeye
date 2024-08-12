@@ -1,9 +1,17 @@
 const { default: axios } = require("axios")
 const { formatMcap } = require("./formatNumber");
+const soldollarvalue = require("./dollarvalue");
 
+// async function price2(supply, quantitytoken){
+//   const solmint = 'So11111111111111111111111111111111111111112'
+//   const response = await axios.get(`https://price.jup.ag/v6/price?ids=${solmint}`) 
+//   const solprice = response.data.data[solmint].price
+//   const priceInSol = quantitytoken / supply
+//   const priceInUsd = priceInSol * solprice
+//   return priceInUsd
+// }
 
-
-async function fetchData(Mint1){
+async function fetchData(Mint1, quantitySol, quantitytoken){
   const url = `https://api.helius.xyz/v0/token-metadata?api-key=${process.env.API_KEY}`;
   try{
     const response = await axios.get(`https://price.jup.ag/v6/price?ids=${Mint1}`)
@@ -23,17 +31,17 @@ async function fetchData(Mint1){
     });
 
     const data = await response2.json();
+    const supply= data[0].onChainAccountInfo.accountInfo.data.parsed.info.supply
+    const unitSupply = supply.toString().slice(0, -decimal)
     if(Object.keys(priceData).length >= 1){
       const decimal = data[0].onChainAccountInfo.accountInfo.data.parsed.info.decimals
-      const supply= data[0].onChainAccountInfo.accountInfo.data.parsed.info.supply
-      const unitSupply = supply.toString().slice(0, -decimal)
       console.log('supply', unitSupply)
       console.log('current price', priceData[Mint1].price)
       const mcap = unitSupply * priceData[Mint1].price
       console.log(mcap)
       const MetaData = {
          ticker: data[0].onChainMetadata.metadata.data.symbol,
-         mcap: mcap ? formatMcap(mcap): 'UNKNOWN',
+         mcap: mcap ? formatMcap(mcap): '',
          // pump : data[0].offChainMetadata.metadata.createdOn,
          Dextools : `https://dextools.io/app/en/solana/pair-explorer/${Mint1}`,
          Dexscreener : `https://dexscreener.com/solana/${Mint1}`,
@@ -45,24 +53,25 @@ async function fetchData(Mint1){
          rick: `t.me/RickBurpBot?start=${Mint1}`,
       }
       return MetaData
-    }else if(Object.keys(priceData).length === 0){
-      const dexscreenermcap = await axios.get(`https://api.dexscreener.com/latest/dex/tokens/${Mint1}`)
-      console.log(dexscreenermcap)
-      const tokenmcap = dexscreenermcap.data.pairs.length >= 1 ? dexscreenermcap.data.pairs[0].fdv : ''
+    }else{
+      const sol = 'So11111111111111111111111111111111111111112'
+      const solToDollar = await soldollarvalue(sol, quantitySol)
+      const priceInUsd = solToDollar / quantitytoken
+      const mcap = priceInUsd * unitSupply
       const MetaData = {
-         ticker: data[0].onChainMetadata.metadata.data.symbol,
-         mcap: tokenmcap,
-        //  pump : data[0].offChainMetadata.metadata.createdOn,
-         Dextools : `https://dextools.io/app/en/solana/pair-explorer/${Mint1}`,
-         Dexscreener : `https://dexscreener.com/solana/${Mint1}`,
-         Birdeye : `https://birdeye.so/${Mint1}?chain=solana`,
-         Photon : `https://photon-sol.tinyastro.io/en/lp/${Mint1}`,
-         Rick : `https://t.me/RickBurpBot?start=${Mint1}`,
-         twitter : `https://twitter.com/search?q=${Mint1}`,
-         solscan: `https://solscan.io/token/${Mint1}`,
-         rick: `t.me/RickBurpBot?start=${Mint1}`,
-      }
-      return MetaData
+        ticker: data[0].onChainMetadata.metadata.data.symbol,
+        mcap: mcap ? formatMcap(mcap): '',
+       //  pump : data[0].offChainMetadata.metadata.createdOn,
+        Dextools : `https://dextools.io/app/en/solana/pair-explorer/${Mint1}`,
+        Dexscreener : `https://dexscreener.com/solana/${Mint1}`,
+        Birdeye : `https://birdeye.so/${Mint1}?chain=solana`,
+        Photon : `https://photon-sol.tinyastro.io/en/lp/${Mint1}`,
+        Rick : `https://t.me/RickBurpBot?start=${Mint1}`,
+        twitter : `https://twitter.com/search?q=${Mint1}`,
+        solscan: `https://solscan.io/token/${Mint1}`,
+        rick: `t.me/RickBurpBot?start=${Mint1}`,
+     }
+     return MetaData
     }
   }catch(e){
     console.log('err no metadata')
@@ -172,15 +181,39 @@ async function checksource(mint){
     }),
   });
   const data = await response2.json();
-  const pump = data[0].offChainMetadata.metadata.createdOn
+  const pump = data[0].offChainMetadata.metadata
   console.log(pump)
   const dexId = dexscreener.pairs[0].dexId 
-  const source = pump == 'https://pump.fun' ? 'PUMP FUN' : dexId == 'moonshot' ? 'MOONSHOT' : 'UNKNOWN'
-  console.log(source)
-  return source 
+  if(pump.createdOn && pump.createdOn === 'https://pump.fun'){
+    return 'PUMP FUN'
+  }else if(!pump.createdOn){
+    const source = dexId === 'moonshot' ? 'MOONSHOT' : 'SOLANA'
+    return source
+  }
   }catch(e){
     return "UNKNOWN"
   }
 }
+
+
+// else if(Object.keys(priceData).length === 0){
+//   const dexscreenermcap = await axios.get(`https://api.dexscreener.com/latest/dex/tokens/${Mint1}`)
+//   console.log(dexscreenermcap)
+//   const tokenmcap = dexscreenermcap.data.pairs.length >= 1 ? dexscreenermcap.data.pairs[0].fdv : ''
+//   const MetaData = {
+//      ticker: data[0].onChainMetadata.metadata.data.symbol,
+//      mcap: tokenmcap ? formatMcap(tokenmcap): '',
+//     //  pump : data[0].offChainMetadata.metadata.createdOn,
+//      Dextools : `https://dextools.io/app/en/solana/pair-explorer/${Mint1}`,
+//      Dexscreener : `https://dexscreener.com/solana/${Mint1}`,
+//      Birdeye : `https://birdeye.so/${Mint1}?chain=solana`,
+//      Photon : `https://photon-sol.tinyastro.io/en/lp/${Mint1}`,
+//      Rick : `https://t.me/RickBurpBot?start=${Mint1}`,
+//      twitter : `https://twitter.com/search?q=${Mint1}`,
+//      solscan: `https://solscan.io/token/${Mint1}`,
+//      rick: `t.me/RickBurpBot?start=${Mint1}`,
+//   }
+//   return MetaData
+// }
 
 module.exports = {fetchData, tokenMintData, nftMetaData, checksource}
