@@ -156,4 +156,29 @@ async function nftMetaData(mint){
   }
 }
 
-module.exports = {fetchData, tokenMintData, nftMetaData}
+async function checksource(mint){
+  try{
+    const dexscreener = await axios.get(`https://api.dexscreener.com/latest/dex/tokens/${mint}`)
+  const url = `https://api.helius.xyz/v0/token-metadata?api-key=${process.env.API_KEY}`;
+  const response2 = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      mintAccounts: mint,
+      includeOffChain: true,
+      disableCache: false,
+    }),
+  });
+  const data = await response2.json();
+  const pump = data[0].offChainMetadata.metadata.createdOn
+  const dexId = dexscreener.pairs[0].dexId 
+  const source = pump == 'https://pump.fun' ? 'PUMP FUN' : dexId == 'moonshot' ? 'MOONSHOT' : 'UNKNOWN'
+  return source 
+  }catch(e){
+    return "UNKNOWN"
+  }
+}
+
+module.exports = {fetchData, tokenMintData, nftMetaData, checksource}
