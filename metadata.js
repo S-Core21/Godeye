@@ -52,7 +52,7 @@ async function fetchData(Mint1){
       const MetaData = {
          ticker: data[0].onChainMetadata.metadata.data.symbol,
          mcap: tokenmcap,
-         // pump : data[0].offChainMetadata.metadata.createdOn,
+        //  pump : data[0].offChainMetadata.metadata.createdOn,
          Dextools : `https://dextools.io/app/en/solana/pair-explorer/${Mint1}`,
          Dexscreener : `https://dexscreener.com/solana/${Mint1}`,
          Birdeye : `https://birdeye.so/${Mint1}?chain=solana`,
@@ -67,6 +67,7 @@ async function fetchData(Mint1){
   }catch(e){
     console.log('err no metadata')
     const MetaData = {
+       ticker: '',
        mcap: '',
        // pump : data[0].offChainMetadata.metadata.createdOn,
        Dextools : `https://dextools.io/app/en/solana/pair-explorer/${Mint1}`,
