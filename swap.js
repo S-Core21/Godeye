@@ -9,14 +9,18 @@ async function swapMessage(webhookEvent, Source, wallet, desc, sol, AW1, sig, so
   try {
     const UserAccount = webhookEvent[0].tokenTransfers[0].fromUserAccount;
     const tokenTransfersLength = webhookEvent[0].tokenTransfers.length
-    const Mint1 = webhookEvent[0].tokenTransfers[tokenTransfersLength - 2].mint
+    const Mint1 = webhookEvent[0].tokenTransfers[0].mint
     const Mint2 = webhookEvent[0].tokenTransfers[tokenTransfersLength - 1].mint
     const Mint1swap = webhookEvent[0].tokenTransfers[0].mint
     const Mintswap = webhookEvent[0].tokenTransfers[tokenTransfersLength - 1].mint
+    const senderAcctData = accountData.find(
+      (accountInfo) => accountInfo.account === address1
+    )
+    // const usdcMint = ''
     if(desc[3] === 'SOL' || desc[6]==='SOL'){
       if(Mint1 == "So11111111111111111111111111111111111111112"){
         const transactionType = 'BUY'
-        const quantitySol = webhookEvent[0].tokenTransfers[tokenTransfersLength - 2].tokenAmount 
+        const quantitySol = webhookEvent[0].tokenTransfers[0].tokenAmount 
         const quantitytoken = webhookEvent[0].tokenTransfers[tokenTransfersLength - 1].tokenAmount 
         const dexresult = await fetchData(Mint2, quantitySol, quantitytoken);
         const testMessage = `${walletgroup(wallet.group)} ALERT \n*${wallet.name}* *BOUGHT* ${formatMcap(quantitytoken)} *${dexresult.ticker}* for *${formatNumber(quantitySol)} SOL*(${await soldollarvalue(Mint1, quantitySol)}) on ${Source.replace(/_/g, " ")}\n\n*💡${dexresult.ticker} | MC: ${dexresult.mcap}*\n\`${Mint2}\`\n🔎 *DYOR:* [SOLC](${sig}) | [X](${dexresult.twitter}) | [RICK](${dexresult.rick}) | [DS](${dexresult.Dexscreener}) | [DT](${dexresult.Dextools}) | [BE](${dexresult.Birdeye}) | [Pump](${dexresult.pump})\n\n🕵️‍♂️ *Analyse Wallet:* [W1](${AW1}${UserAccount})\n\`${UserAccount}\` ➡️ [${wallet.name}](${solcAcct}${UserAccount})`
@@ -35,7 +39,7 @@ async function swapMessage(webhookEvent, Source, wallet, desc, sol, AW1, sig, so
       }else if(Mint2 == "So11111111111111111111111111111111111111112"){
         const transactionType = 'SELL'
         const quantitySol = webhookEvent[0].tokenTransfers[tokenTransfersLength - 1].tokenAmount 
-        const quantitytoken = webhookEvent[0].tokenTransfers[tokenTransfersLength - 2].tokenAmount 
+        const quantitytoken = webhookEvent[0].tokenTransfers[0].tokenAmount 
         const dexresult = await fetchData(Mint1, quantitySol, quantitytoken);
          const testMessage = `${walletgroup(wallet.group)} ALERT \n*${wallet.name}* *SOLD* ${formatMcap(quantitytoken)} *${dexresult.ticker}* for *${formatNumber(quantitySol)} SOL*(${await soldollarvalue(Mint2, quantitySol)}) on ${Source.replace(/_/g, " ")}\n\n*💡${dexresult.ticker} | MC: ${dexresult.mcap}*\n\`${Mint1}\`\n🔎 *DYOR:* [SOLC](${sig}) | [X](${dexresult.twitter}) | [RICK](${dexresult.rick}) | [DS](${dexresult.Dexscreener}) | [DT](${dexresult.Dextools}) | [BE](${dexresult.Birdeye}) | [Pump](${dexresult.pump})\n\n🕵️‍♂️ *Analyse Wallet:* [W1](${AW1}${UserAccount})\n\`${UserAccount}\` ➡️ [${wallet.name}](${solcAcct}${UserAccount})`
   
@@ -49,7 +53,22 @@ async function swapMessage(webhookEvent, Source, wallet, desc, sol, AW1, sig, so
              inline_keyboard: buyButtons(Mint1),
            },
          });
-  
+      }else if (Mint1 == 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v' && senderAcctData.nativeBalanceChange !== 0 ){
+          const quantitySol = senderAcctData.nativeBalanceChange / 1000000000
+          const quantitytoken = webhookEvent[0].tokenTransfers[0].tokenAmount 
+          const dexresult = await fetchData(Mint1, quantitySol, quantitytoken);
+          const testMessage = `${walletgroup(wallet.group)} ALERT \n*${wallet.name}* *SOLD* ${formatMcap(quantitytoken)} *${dexresult.ticker}* for *${formatNumber(quantitySol)} SOL*(${await soldollarvalue(Mint2, quantitySol)}) on ${Source.replace(/_/g, " ")}\n\n*💡${dexresult.ticker} | MC: ${dexresult.mcap}*\n\`${Mint1}\`\n🔎 *DYOR:* [SOLC](${sig}) | [X](${dexresult.twitter}) | [RICK](${dexresult.rick}) | [DS](${dexresult.Dexscreener}) | [DT](${dexresult.Dextools}) | [BE](${dexresult.Birdeye}) | [Pump](${dexresult.pump})\n\n🕵️‍♂️ *Analyse Wallet:* [W1](${AW1}${UserAccount})\n\`${UserAccount}\` ➡️ [${wallet.name}](${solcAcct}${UserAccount})`
+   
+          const messageToSend = testMessage;
+         //  console.log(messageToSend);
+    
+          bot.telegram.sendMessage(user.chat_id, messageToSend, {
+            parse_mode: "Markdown",
+            disable_web_page_preview: true,
+            reply_markup: {
+              inline_keyboard: buyButtons(Mint1),
+            },
+          });
       }
     }else if(Mint1swap !== 'So11111111111111111111111111111111111111112' && Mintswap !== 'So11111111111111111111111111111111111111112'){
       const quantitytoken1 = webhookEvent[0].tokenTransfers[0].tokenAmount 
