@@ -123,7 +123,7 @@ async function swapMessage(webhookEvent, Source, wallet, desc, sol, AW1, sig, so
     //   });
     // }
   } catch (e) {
-    console.log("buy, sell or swap error");
+    console.log("buy, sell or swap error", e);
   }
 }
 
