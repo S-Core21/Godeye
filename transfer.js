@@ -133,7 +133,7 @@ async function transferMessage(webhookEvent, wallet, wallet2, sig, Source, solcA
       }
     }
   }catch(e){
-    console.log('error in transfer message')
+    console.log('error in transfer message', e)
   }
 }
 
