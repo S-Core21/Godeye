@@ -87,7 +87,7 @@ async function sendReminder(bot, userCache) {
         }
 
         // Schedule next check
-        setTimeout(checkExpiry, 10000); // 1 hour
+        setTimeout(checkExpiry, 21600000); // 1 hour
       };
 
       // Start the check
