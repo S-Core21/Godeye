@@ -40,6 +40,7 @@ const editWebhook = async (wallet) => {
             "NFT_CANCEL_LISTING",
             "NFT_MINT",
             "COMPRESSED_NFT_BURN",
+            "COMPRESSED_NFT_TRANSFER",
             "WITHDRAW_LIQUIDITY",
             "ADD_LIQUIDITY"
           ],
