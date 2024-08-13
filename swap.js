@@ -15,7 +15,7 @@ async function swapMessage(webhookEvent, Source, wallet, desc, sol, AW1, sig, so
     const Mintswap = webhookEvent[0].tokenTransfers[tokenTransfersLength - 1].mint
     const accountData = webhookEvent[0].accountData
     const senderAcctData = accountData.find(
-      (accountInfo) => accountInfo.account === address1
+      (accountInfo) => accountInfo.account === wallet.address
     )
     // const usdcMint = ''
     if(desc[3] === 'SOL' || desc[6]==='SOL'){
