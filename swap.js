@@ -11,6 +11,8 @@ async function swapMessage(webhookEvent, Source, wallet, desc, sol, AW1, sig, so
     const tokenTransfersLength = webhookEvent[0].tokenTransfers.length
     const Mint1 = webhookEvent[0].tokenTransfers[tokenTransfersLength - 2].mint
     const Mint2 = webhookEvent[0].tokenTransfers[tokenTransfersLength - 1].mint
+    const Mint1swap = webhookEvent[0].tokenTransfers[0].mint
+    const Mintswap = webhookEvent[0].tokenTransfers[tokenTransfersLength - 1].mint
     if(desc[3] === 'SOL' || desc[6]==='SOL'){
       if(Mint1 == "So11111111111111111111111111111111111111112"){
         const transactionType = 'BUY'
@@ -49,11 +51,9 @@ async function swapMessage(webhookEvent, Source, wallet, desc, sol, AW1, sig, so
          });
   
       }
-    }else if((desc[3] !== 'SOL' && desc[6] !== 'SOL')){
-      const Mint1swap = webhookEvent[0].tokenTransfers[0].mint
-      const Mintswap = webhookEvent[0].tokenTransfers[1].mint
-      const quantitytoken1 = desc[2]
-      const quantitytoken2 = desc[5]
+    }else if(Mint1swap !== 'So11111111111111111111111111111111111111112' && Mintswap !== 'So11111111111111111111111111111111111111112'){
+      const quantitytoken1 = webhookEvent[0].tokenTransfers[0].tokenAmount 
+      const quantitytoken2 = webhookEvent[0].tokenTransfers[tokenTransfersLength - 1].tokenAmount 
       const dexresult = await fetchData(Mint1swap);
       const dexresult2 = await fetchData(Mintswap);
        const testMessage = `${walletgroup(wallet.group)} ALERT \n*${wallet.name}* *SWAPPED* *${formatMcap(quantitytoken1)} ${dexresult.ticker}* for *${formatMcap(quantitytoken2)} ${dexresult2.ticker}*(${await soldollarvalue(Mint1swap, quantitytoken1)}) on ${Source.replace(/_/g, " ")}\n\n*💡${dexresult.ticker} | MC: ${dexresult.mcap}*\n\`${Mint1swap}\`\n🔎 *DYOR:* [SOLC](${sig}) | [X](${dexresult.twitter}) | [RICK](${dexresult.rick})| [DS](${dexresult.Dexscreener}) | [DT](${dexresult.Dextools}) | [BE](${dexresult.Birdeye}) | [Pump](${dexresult.pump})\n*💡${dexresult2.ticker} | MC: ${dexresult2.mcap}*\n\`${Mintswap}\`\n🔎 *DYOR:* [SOLC](${sig}) | [X](${dexresult2.twitter}) | [RICK](${dexresult2.rick})| [DS](${dexresult2.Dexscreener}) | [DT](${dexresult2.Dextools}) | [BE](${dexresult2.Birdeye}) | [Pump](${dexresult2.pump})\n\n🕵️‍♂️ *Analyse Wallet:* [W1](${AW1}${UserAccount})\n\`${UserAccount}\` ➡️ [${wallet.name}](${solcAcct}${UserAccount})`
