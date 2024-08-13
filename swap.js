@@ -13,6 +13,7 @@ async function swapMessage(webhookEvent, Source, wallet, desc, sol, AW1, sig, so
     const Mint2 = webhookEvent[0].tokenTransfers[tokenTransfersLength - 1].mint
     const Mint1swap = webhookEvent[0].tokenTransfers[0].mint
     const Mintswap = webhookEvent[0].tokenTransfers[tokenTransfersLength - 1].mint
+    const accountData = webhookEvent[0].accountData
     const senderAcctData = accountData.find(
       (accountInfo) => accountInfo.account === address1
     )
