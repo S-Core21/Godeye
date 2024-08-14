@@ -189,7 +189,7 @@ async function payFee(amount, ctx, chatID, userCache) {
       "Limit updated and countdown set and wallet resumed and pro enabled",
     );
     ctx.reply(
-      `Transaction confirmed:\n\n [View Transaction](https://solscan.io/tx/${signature}) `,
+      `Transaction confirmed:\n\n [View Transaction](https://solscan.io/tx/${signature})`,
       {
         parse_mode: "Markdown",
       },
