@@ -257,7 +257,7 @@ async function addRemoveWallet(
                   });
                 });
   
-                await editWebhook(allWallets);
+                await editWebhook(wallet.address);
               }
   
           } else {

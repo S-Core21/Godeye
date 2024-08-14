@@ -10,7 +10,7 @@ const editWebhook = async (wallet) => {
     const webhookData = await getResponse.json();
 
     // Combine existing accountAddresses with new wallet addresses, ensuring no duplicates
-    const combinedAddresses = [...new Set([...webhookData.accountAddresses, ...wallet])];
+    const combinedAddresses = [...new Set([...webhookData.accountAddresses, wallet])];
 
     // Update the webhook with the combined addresses
     const response = await fetch(
