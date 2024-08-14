@@ -38,7 +38,7 @@ async function fetchData(Mint1, quantitySol, quantitytoken){
     const solToDollar = await soldollarvalue(sol, quantitySol)
     const priceInUsd = solToDollar / quantitytoken
     const mcapcalc = priceInUsd * unitSupply
-    console.log('supply', unitSupply)
+    console.log('mcapcalc', mcapcalc)
     if(Object.keys(priceData).length >= 1){
       console.log('supply', unitSupply)
       console.log('current price', priceData[Mint1].price)
