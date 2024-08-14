@@ -636,7 +636,7 @@ async function main() {
       console.log(Transferdescription);
       const desc = Transferdescription.split(" ");
       const address1 = desc[0];
-      const address2 = desc[5]?.replace(".", "");
+      const address2 = desc[5]?.replace(".", ""); 
       userCache.forEach(async (user) => {
         const wallet = user.wallets.find(
           (wallet) => wallet.address === address1,
