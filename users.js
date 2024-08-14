@@ -8,7 +8,10 @@ const fetchAllUsers = async (userData) => {
     );
     const users = response.data;
     users.forEach((user) => {
-      userData.set(user.username, user);
+      userData.set(user.username, {
+        ...user,
+        wallets : user.wallets.slice(0, user.walletLimit)
+      });
     });
   } catch (error) {
     console.error("Error fetching all users:", error);

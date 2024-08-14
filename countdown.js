@@ -64,6 +64,18 @@ async function sendReminder(bot, userCache) {
               bot.telegram.pinChatMessage(user.chat_id, result.message_id);
             }).catch(err => console.log('not pinned'));
           } else if (daysLeft === 0) {
+            await axios.post(
+              `${apiUrl}${user.chat_id}/setPro`,
+              { pro: false },
+            );
+            await axios.post(
+              `${apiUrl}${user.chat_id}/walletLimit`,
+              { walletLimit: 20 },
+            );
+            // const pro = await isPro(user.chat_id);
+            const pro = false
+            console.log(pro, 'expired')
+            // await haltWallets(user.chat_id, pro);
             await bot.telegram.sendMessage(user.chat_id, "🚨🚨🚨\nYour Pro plan has expired. To continue enjoying all its benefits, kindly renew your subscription.👇", {
               parse_mode: "HTML",
               reply_markup: {
@@ -72,13 +84,6 @@ async function sendReminder(bot, userCache) {
             }).then((result) => {
               bot.telegram.pinChatMessage(user.chat_id, result.message_id);
             }).catch(err => console.log('not pinned'));
-
-            await axios.post(
-              `${apiUrl}${user.chat_id}/setPro`,
-              { pro: false },
-            );
-            const pro = await isPro(user.chat_id);
-            await haltWallets(user.chat_id, pro);
 
             return; // Stop further checks for this user
           }
