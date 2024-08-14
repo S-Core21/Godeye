@@ -2,7 +2,7 @@ const axios = require("axios");
 const {apiUrl} = require('./api')
 const {haltWallets} = require('./webhook')
 const {getDaysRemaining} = require('./formatNumber')
-const {fetchAllUsers} = require('./users')
+const fetchAllUsers = require('./users')
 
 
 async function getCountdown(chatID) {
