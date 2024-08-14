@@ -4,7 +4,8 @@ const bs58 = require("bs58").default;
 // const {continueWallets} = require('./webhook')
 const { checkWallets } = require("./HeliusWallets");
 const { payReferralBonus } = require("./referral");
-const {apiUrl} = require('./api')
+const {apiUrl} = require('./api');
+const fetchAllUsers = require("./users");
 
 
 async function createWallet(ctx, userCache, chatID) {
@@ -182,6 +183,7 @@ async function payFee(amount, ctx, chatID, userCache) {
       user.wallets = user.wallets.slice(0, walletLimit); // Update the wallets array
       userCache.set(ctx.from.username, user); // Put the updated user back into the cache
     }
+    await fetchAllUsers(userCache)
     // await checkWallets(amount, myaddress);
     // await continueWallets(ctx)
     console.log(
