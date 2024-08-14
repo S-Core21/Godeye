@@ -72,9 +72,9 @@ async function sendReminder(bot, userCache) {
               `${apiUrl}${user.chat_id}/setWalletLimit`,
               { walletLimit: 20 },
             );
-            userData.set(user.username, {
+            userCache.set(user.username, {
               ...user,
-              wallets : user.wallets.slice(0, user.walletLimit)
+              wallets : user.wallets.slice(0, 20)
             });
             // const pro = await isPro(user.chat_id);
             const pro = false
