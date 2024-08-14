@@ -2,6 +2,7 @@ const axios = require("axios");
 const {apiUrl} = require('./api')
 const {haltWallets} = require('./webhook')
 const {getDaysRemaining} = require('./formatNumber')
+const {fetchAllUsers} = require('./users')
 
 
 async function getCountdown(chatID) {
@@ -75,6 +76,7 @@ async function sendReminder(bot, userCache) {
             user.walletLimit = 20;
             user.wallets = user.wallets.slice(0, 20); // Update the wallets array
             userCache.set(user.username, user); // Put the updated user back into the cache
+            await fetchAllUsers(userCache)
             // userCache.set(user.username, {
             //   ...user,
             //   wallets : user.wallets.slice(0, 20)
