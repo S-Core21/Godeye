@@ -34,6 +34,11 @@ async function fetchData(Mint1, quantitySol, quantitytoken){
     const decimal = data[0].onChainAccountInfo.accountInfo.data.parsed.info.decimals
     const supply= data[0].onChainAccountInfo.accountInfo.data.parsed.info.supply
     const unitSupply = supply.toString().slice(0, -decimal)
+    const sol = 'So11111111111111111111111111111111111111112'
+    const solToDollar = await soldollarvalue(sol, quantitySol)
+    const priceInUsd = solToDollar / quantitytoken
+    const mcapcalc = priceInUsd * unitSupply
+    console.log('supply', unitSupply)
     if(Object.keys(priceData).length >= 1){
       console.log('supply', unitSupply)
       console.log('current price', priceData[Mint1].price)
@@ -41,7 +46,7 @@ async function fetchData(Mint1, quantitySol, quantitytoken){
       console.log(mcap)
       const MetaData = {
          ticker: data[0].onChainMetadata.metadata.data.symbol,
-         mcap: mcap ? formatMcap(mcap): '',
+         mcap: mcap ? formatMcap(mcap): formatMcap(mcapcalc),
          // pump : data[0].offChainMetadata.metadata.createdOn,
          Dextools : `https://dextools.io/app/en/solana/pair-explorer/${Mint1}`,
          Dexscreener : `https://dexscreener.com/solana/${Mint1}`,
@@ -54,13 +59,9 @@ async function fetchData(Mint1, quantitySol, quantitytoken){
       }
       return MetaData
     }else{
-      const sol = 'So11111111111111111111111111111111111111112'
-      const solToDollar = await soldollarvalue(sol, quantitySol)
-      const priceInUsd = solToDollar / quantitytoken
-      const mcap = priceInUsd * unitSupply
       const MetaData = {
         ticker: data[0].onChainMetadata.metadata.data.symbol,
-        mcap: mcap ? formatMcap(mcap): '',
+        mcap: mcapcalc ? formatMcap(mcapcalc): '',
        //  pump : data[0].offChainMetadata.metadata.createdOn,
         Dextools : `https://dextools.io/app/en/solana/pair-explorer/${Mint1}`,
         Dexscreener : `https://dexscreener.com/solana/${Mint1}`,
