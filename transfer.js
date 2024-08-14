@@ -38,7 +38,7 @@ async function transferMessage(webhookEvent, wallet, wallet2, sig, Source, solcA
         });
       }
     } else if (wallet && !wallet2) {
-      if (desc[3] === "SOL" && webhookEvent[0].tokenTransfers.length === 1 ) {
+      if (desc[3] === "SOL" && webhookEvent[0].tokenTransfers.length !== 2 ) {
         const messageToSend = `${walletgroup(wallet.group)} ALERT\n*${wallet.name}* transferred *${formatNumber(desc[2])} SOL*(${await soldollarvalue(sol, desc[2])}) to *UNSAVED*\n\n🕵️‍♂️ Analyse Wallet: [W1](${AW1}${address1})\n\`${wallet.address}\` ➡️ [${wallet.name}](${solcAcct}${wallet.address}) \n\n🕵️‍♂️ Analyse Wallet: [W2](${AW1}${address2})\n\`${address2}\` ➡️ [UNSAVED](${solcAcct}${address2}) `;
         bot.telegram.sendMessage(user.chat_id, messageToSend, {
           parse_mode: "Markdown",
