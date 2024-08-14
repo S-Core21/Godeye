@@ -449,7 +449,7 @@ async function main() {
     console.log(userData)
     if (userData) {
        await ctx.sendMessage(
-        `🗂️ You are currently tracking ${userData.total.length}/1000`,
+        `🗂️ You are currently tracking ${userData.total.length} wallets`,
       )
       .then((result) => { 
         ctx.pinChatMessage(result.message_id)
@@ -503,7 +503,7 @@ async function main() {
     console.log(userData)
     if (userData) {
        await ctx.sendMessage(
-        `🗂️ You are currently tracking ${userData.total.length}/1000`,
+        `🗂️ You are currently not tracking ${userData.total.length}`,
       )
       .then((result) => { 
         ctx.pinChatMessage(result.message_id)
@@ -557,7 +557,7 @@ async function main() {
     console.log(userData)
     if (userData) {
        await ctx.sendMessage(
-        `🗂️ You are currently tracking ${userData.total.length}/1000`,
+        `🗂️ You are currently tracking ${userData.total.length}`,
       )
       .then((result) => { 
         ctx.pinChatMessage(result.message_id)
