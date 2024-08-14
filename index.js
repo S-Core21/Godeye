@@ -632,12 +632,12 @@ async function main() {
     if (webhookEvent.length === 0) {
       console.log("Empty webhook event");
     } else {
-      const Transferdescription = webhookEvent[0].description;
+      try{
+        const Transferdescription = webhookEvent[0].description;
       console.log(Transferdescription);
       const desc = Transferdescription.split(" ");
       const address1 = desc[0];
       const address2 = desc[5]?.replace(".", "");
-      try{
         userCache.forEach(async (user) => {
           const wallet = user.wallets.find(
             (wallet) => wallet.address === address1,
