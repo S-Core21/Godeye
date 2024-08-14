@@ -72,10 +72,13 @@ async function sendReminder(bot, userCache) {
               `${apiUrl}${user.chat_id}/setWalletLimit`,
               { walletLimit: 20 },
             );
-            userCache.set(user.username, {
-              ...user,
-              wallets : user.wallets.slice(0, 20)
-            });
+            user.walletLimit = 20;
+            user.wallets = user.wallets.slice(0, 20); // Update the wallets array
+            userCache.set(username, user); // Put the updated user back into the cache
+            // userCache.set(user.username, {
+            //   ...user,
+            //   wallets : user.wallets.slice(0, 20)
+            // });
             // const pro = await isPro(user.chat_id);
             const pro = false
             console.log(pro, 'expired')
