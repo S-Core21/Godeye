@@ -176,10 +176,13 @@ async function payFee(amount, ctx, chatID, userCache) {
       `${apiUrl}${chatID}/setPro`,
       { pro: pro },
     );
-    userCache.set(user.username, {
-      ...user,
-      wallets : user.wallets.slice(0, walletLimit)
-    });
+    const user = userCache.get(ctx.from.username);
+    if(user){
+      userCache.set(user.username, {
+        ...user,
+        wallets : user.wallets.slice(0, walletLimit)
+      });
+    }
     // await checkWallets(amount, myaddress);
     // await continueWallets(ctx)
     console.log(
@@ -192,7 +195,7 @@ async function payFee(amount, ctx, chatID, userCache) {
       },
     );
   } catch (e) {
-    console.log("insufficient balance");
+    console.log("insufficient balance", e);
     ctx.reply(`Insufficient sol balance `);
   }
 }
