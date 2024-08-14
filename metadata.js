@@ -1,15 +1,21 @@
 const { default: axios } = require("axios")
 const { formatMcap } = require("./formatNumber");
-const {soldollarvalue, solToUSD} = require("./dollarvalue");
+const soldollarvalue = require("./dollarvalue");
 
-// async function price2(supply, quantitytoken){
-//   const solmint = 'So11111111111111111111111111111111111111112'
-//   const response = await axios.get(`https://price.jup.ag/v6/price?ids=${solmint}`) 
-//   const solprice = response.data.data[solmint].price
-//   const priceInSol = quantitytoken / supply
-//   const priceInUsd = priceInSol * solprice
-//   return priceInUsd
-// }
+async function solToUSD(mint, value){
+  try{
+    const response = await axios.get(`https://price.jup.ag/v6/price?ids=${mint}`)
+    const priceData = response.data
+    const price = priceData.data[mint].price
+    const dollarValue = price * value
+    const data = dollarValue
+    return data
+  }catch(e){ 
+    console.log('error fetching dollar value')
+    const data = '$ -'
+    return data
+  }
+}
 
 async function fetchData(Mint1, quantitySol, quantitytoken){
   const url = `https://api.helius.xyz/v0/token-metadata?api-key=${process.env.API_KEY}`;
