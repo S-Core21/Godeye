@@ -22,7 +22,7 @@ async function testData(){
     });
     // const data2 = await response2.json();
   }catch(e){
-    console.log('error in nft data')
+    console.log('error in nft data') 
   }
 }
 
