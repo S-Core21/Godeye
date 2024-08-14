@@ -74,7 +74,7 @@ async function sendReminder(bot, userCache) {
             );
             user.walletLimit = 20;
             user.wallets = user.wallets.slice(0, 20); // Update the wallets array
-            userCache.set(username, user); // Put the updated user back into the cache
+            userCache.set(user.username, user); // Put the updated user back into the cache
             // userCache.set(user.username, {
             //   ...user,
             //   wallets : user.wallets.slice(0, 20)
