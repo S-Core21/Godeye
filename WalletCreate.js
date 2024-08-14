@@ -183,7 +183,7 @@ async function payFee(amount, ctx, chatID, userCache) {
       user.wallets = user.wallets.slice(0, walletLimit); // Update the wallets array
       userCache.set(ctx.from.username, user); // Put the updated user back into the cache
     }
-    await fetchAllUsers(userCache)
+    await fetchAllUsers(userCache) 
     // await checkWallets(amount, myaddress);
     // await continueWallets(ctx)
     console.log(
