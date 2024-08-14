@@ -68,6 +68,8 @@ async function main() {
   bot.start(async (ctx) => {
     const chatID = ctx.message.chat.id;
     const username = ctx.from.username;
+    const user11 = userCache.get(ctx.from.username);
+    console.log(user11)
     addNewWallets = false;
     deleteWallets = false;
     importTransferKey = false
