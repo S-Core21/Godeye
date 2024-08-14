@@ -1,6 +1,6 @@
 const { default: axios } = require("axios")
 const { formatMcap } = require("./formatNumber");
-const soldollarvalue = require("./dollarvalue");
+const {soldollarvalue, solToUSD} = require("./dollarvalue");
 
 // async function price2(supply, quantitytoken){
 //   const solmint = 'So11111111111111111111111111111111111111112'
@@ -35,7 +35,7 @@ async function fetchData(Mint1, quantitySol, quantitytoken){
     const supply= data[0].onChainAccountInfo.accountInfo.data.parsed.info.supply
     const unitSupply = supply.toString().slice(0, -decimal)
     const sol = 'So11111111111111111111111111111111111111112'
-    const solToDollar = await soldollarvalue(sol, quantitySol)
+    const solToDollar = await solToUSD(sol, quantitySol)
     const priceInUsd = solToDollar / quantitytoken
     const mcapcalc = priceInUsd * unitSupply
     console.log('mcapcalc', mcapcalc)
