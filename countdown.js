@@ -69,7 +69,7 @@ async function sendReminder(bot, userCache) {
               { pro: false },
             );
             await axios.post(
-              `${apiUrl}${user.chat_id}/walletLimit`,
+              `${apiUrl}${user.chat_id}/setWalletLimit`,
               { walletLimit: 20 },
             );
             // const pro = await isPro(user.chat_id);
