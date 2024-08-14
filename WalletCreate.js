@@ -97,7 +97,7 @@ async function createWallet(ctx, userCache, chatID) {
 
 
 
-async function payFee(amount, ctx, chatID) {
+async function payFee(amount, ctx, chatID, userCache) {
   const connection = new solanaWeb3.Connection(
     solanaWeb3.clusterApiUrl("mainnet-beta"),
     "confirmed",
@@ -176,7 +176,11 @@ async function payFee(amount, ctx, chatID) {
       `${apiUrl}${chatID}/setPro`,
       { pro: pro },
     );
-    await checkWallets(amount, myaddress);
+    userCache.set(user.username, {
+      ...user,
+      wallets : user.wallets.slice(0, walletLimit)
+    });
+    // await checkWallets(amount, myaddress);
     // await continueWallets(ctx)
     console.log(
       "Limit updated and countdown set and wallet resumed and pro enabled",
