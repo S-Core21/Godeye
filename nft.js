@@ -5,11 +5,19 @@ const soldollarvalue = require("./dollarvalue");
 const { default: axios } = require("axios");
 
 
-async function nftSaleMessage(webhookEvent, desc, wallet, wallet2,address1, address2, Source, bot, user){
+async function nftSaleMessage(webhookEvent, desc, Source, bot, user){
   try{
     const txid = webhookEvent[0].signature
       const txidLink = `https://solscan.io/tx/${txid}`;
-      const mint = webhookEvent[0].tokenTransfers[0].mint;
+      const mint = webhookEvent[0].events.nft.nfts.mint;
+      const address1 =  webhookEvent[0].events.nft.seller
+      const address2 =  webhookEvent[0].events.nft.buyer
+      const wallet = user.wallets.find(
+        (wallet) => wallet.address === address1,
+      );
+      const wallet2 = user.wallets.find(
+        (wallet2) => wallet2.address === address2,
+      );
     console.log('nft mint add', mint)
       const nftData = await nftMetaData(mint)
       const sol = 'So11111111111111111111111111111111111111112'
@@ -17,7 +25,7 @@ async function nftSaleMessage(webhookEvent, desc, wallet, wallet2,address1, addr
       const solPlacement = desc.indexOf('SOL')
     const acctPrefix = "https://solscan.io/account/";
     const photUrl = nftData.image
-    
+
       if(wallet && !wallet2){
         const caption = `${walletgroup(wallet.group)} ALERT \n🎨 NFT SELL \n\n👤${wallet.name} *SOLD* ${nftData.name} for ${formatNumber(desc[solPlacement - 1])} SOL(${await soldollarvalue(sol, desc[solPlacement - 1])}) to *ANON* on ${Source.replace(/_/g, " ")} \n\n🖼 ${nftData.name} | ${Source.replace(/_/g, " ")} [SOLC](${txidLink})\n\n${nftData.attributes.map(item=>{
           return `\n*${item.trait_type ? item.trait_type.replace(/_/g, " ") : item.traitType.replace(/_/g, " ")}*: ${item.value.replace(/_/g, " ")}`
@@ -49,11 +57,19 @@ async function nftSaleMessage(webhookEvent, desc, wallet, wallet2,address1, addr
 }
 
 
-async function nftMintMessage(webhookEvent, desc, wallet2, Source, bot, user){
+async function nftMintMessage(webhookEvent, desc, Source, bot, user){
   try{
     const txid = webhookEvent[0].signature
       const txidLink = `https://solscan.io/tx/${txid}`;
-      const mint = webhookEvent[0].tokenTransfers[0].mint;
+      const mint = webhookEvent[0].events.nft.nfts.mint;
+      const address1 =  webhookEvent[0].events.nft.seller
+      const address2 =  webhookEvent[0].events.nft.buyer
+      const wallet = user.wallets.find(
+        (wallet) => wallet.address === address1,
+      );
+      const wallet2 = user.wallets.find(
+        (wallet2) => wallet2.address === address2,
+      );
     console.log('nft mint add', mint)
       const nftData = await nftMetaData(mint)
     console.log(nftData)
@@ -76,11 +92,19 @@ async function nftMintMessage(webhookEvent, desc, wallet2, Source, bot, user){
 }
 
 
-async function nftListMessage(webhookEvent, desc, wallet, Source, bot, user){
+async function nftListMessage(webhookEvent, desc, Source, bot, user){
   try{
     const txid = webhookEvent[0].signature
       const txidLink = `https://solscan.io/tx/${txid}`;
-      const mint = webhookEvent[0].tokenTransfers[0].mint;
+      const mint = webhookEvent[0].events.nft.nfts.mint;
+      const address1 =  webhookEvent[0].events.nft.seller
+      const address2 =  webhookEvent[0].events.nft.buyer
+      const wallet = user.wallets.find(
+        (wallet) => wallet.address === address1,
+      );
+      const wallet2 = user.wallets.find(
+        (wallet2) => wallet2.address === address2,
+      );
     console.log('nft mint add', mint)
       const nftData = await nftMetaData(mint)
     console.log(nftData)
@@ -103,13 +127,21 @@ async function nftListMessage(webhookEvent, desc, wallet, Source, bot, user){
 }
 
 
-async function nftCanListMessage(webhookEvent, desc, wallet, Source, bot, user){
+async function nftCanListMessage(webhookEvent, desc, Source, bot, user){
   try{
     const txid = webhookEvent[0].signature
       const txidLink = `https://solscan.io/tx/${txid}`;
-      const mint = webhookEvent[0].tokenTransfers[0].mint;
+      const mint = webhookEvent[0].events.nft.nfts.mint;
     console.log('nft mint add', mint)
       const nftData = await nftMetaData(mint)
+      const address1 =  webhookEvent[0].events.nft.seller
+      const address2 =  webhookEvent[0].events.nft.buyer
+      const wallet = user.wallets.find(
+        (wallet) => wallet.address === address1,
+      );
+      const wallet2 = user.wallets.find(
+        (wallet2) => wallet2.address === address2,
+      );
       const solPlacement = desc.indexOf('SOL')
     const acctPrefix = "https://solscan.io/account/";
     const photUrl = nftData.image
