@@ -28,7 +28,7 @@ async function nftSaleMessage(webhookEvent, desc, wallet, Source, bot, user){
         })
       } 
   }catch(e){
-    console.log('error')
+    console.log('error', e)
   }
 }
 
@@ -82,7 +82,7 @@ async function nftListMessage(webhookEvent, desc, wallet, Source, bot, user){
         })
       } 
   }catch(e){
-    console.log('error')
+    console.log('error', e)
   }
 }
 
@@ -108,7 +108,7 @@ async function nftCanListMessage(webhookEvent, desc, wallet, Source, bot, user){
         })
       } 
   }catch(e){
-    console.log('error')
+    console.log('error', e)
   }
 }
 
