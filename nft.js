@@ -64,6 +64,7 @@ async function nftMintMessage(webhookEvent, desc, Source, bot, user){
       const mint = webhookEvent[0].events.nft.nfts[0].mint;
       const address1 =  webhookEvent[0].events.nft.seller
       const address2 =  webhookEvent[0].events.nft.buyer
+       const sol = 'So11111111111111111111111111111111111111112'
       const wallet = user.wallets.find(
         (wallet) => wallet.address === address1,
       );
@@ -99,6 +100,7 @@ async function nftListMessage(webhookEvent, desc, Source, bot, user){
       const mint = webhookEvent[0].events.nft.nfts[0].mint;
       const address1 =  webhookEvent[0].events.nft.seller
       const address2 =  webhookEvent[0].events.nft.buyer
+       const sol = 'So11111111111111111111111111111111111111112'
       const wallet = user.wallets.find(
         (wallet) => wallet.address === address1,
       );
@@ -136,6 +138,7 @@ async function nftCanListMessage(webhookEvent, desc, Source, bot, user){
       const nftData = await nftMetaData(mint)
       const address1 =  webhookEvent[0].events.nft.seller
       const address2 =  webhookEvent[0].events.nft.buyer
+       const sol = 'So11111111111111111111111111111111111111112'
       const wallet = user.wallets.find(
         (wallet) => wallet.address === address1,
       );
