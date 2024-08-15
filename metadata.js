@@ -44,16 +44,15 @@ async function fetchData(Mint1, quantitySol, quantitytoken){
     const solToDollar = await solToUSD(sol, quantitySol)
     const priceInUsd = solToDollar / quantitytoken
     const mcapcalc = priceInUsd * unitSupply
-    // console.log('mcapcalc', mcapcalc)
+    console.log('mcapcalc', mcapcalc)
     if(Object.keys(priceData).length >= 1){
       console.log('supply', unitSupply)
       console.log('current price', priceData[Mint1].price)
       const mcap = unitSupply * priceData[Mint1].price
       console.log('helius', mcap)
-      console.log('selfcalc', mcapcalc)
       const MetaData = {
          ticker: data[0].onChainMetadata.metadata.data.symbol,
-         mcap: mcap ? formatMcap(mcap): formatMcap(mcapcalc),
+         mcap: formatMcap(mcap),
          // pump : data[0].offChainMetadata.metadata.createdOn,
          Dextools : `https://dextools.io/app/en/solana/pair-explorer/${Mint1}`,
          Dexscreener : `https://dexscreener.com/solana/${Mint1}`,
@@ -65,12 +64,27 @@ async function fetchData(Mint1, quantitySol, quantitytoken){
          rick: `t.me/RickBurpBot?start=${Mint1}`,
       }
       return MetaData
+    }else if(mcapcalc){
+      const MetaData = {
+        ticker: data[0].onChainMetadata.metadata.data.symbol,
+        mcap: formatMcap(mcapcalc),
+        // pump : data[0].offChainMetadata.metadata.createdOn,
+        Dextools : `https://dextools.io/app/en/solana/pair-explorer/${Mint1}`,
+        Dexscreener : `https://dexscreener.com/solana/${Mint1}`,
+        Birdeye : `https://birdeye.so/${Mint1}?chain=solana`,
+        Photon : `https://photon-sol.tinyastro.io/en/lp/${Mint1}`,
+        Rick : `https://t.me/RickBurpBot?start=${Mint1}`,
+        twitter : `https://twitter.com/search?q=${Mint1}`,
+        solscan: `https://solscan.io/token/${Mint1}`,
+        rick: `t.me/RickBurpBot?start=${Mint1}`,
+     }
+     return MetaData
     }else{
       const dexscreener = await axios.get(`https://api.dexscreener.com/latest/dex/tokens/${Mint1}`)
       const tokenmcap = dexscreener.data.pairs != null ? dexscreener.data.pairs[0].fdv : ''
       const MetaData = {
         ticker: data[0].onChainMetadata.metadata.data.symbol,
-        mcap: tokenmcap ? tokenmcap: '',
+        mcap: tokenmcap ? formatMcap(tokenmcap): '',
        //  pump : data[0].offChainMetadata.metadata.createdOn,
         Dextools : `https://dextools.io/app/en/solana/pair-explorer/${Mint1}`,
         Dexscreener : `https://dexscreener.com/solana/${Mint1}`,
