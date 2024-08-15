@@ -5,7 +5,7 @@ const soldollarvalue = require("./dollarvalue");
 const { default: axios } = require("axios");
 
 
-async function nftSaleMessage(webhookEvent, desc, wallet, Source, bot, user){
+async function nftSaleMessage(webhookEvent, desc, wallet, wallet2,address1, address2, Source, bot, user){
   try{
     const txid = webhookEvent[0].signature
       const txidLink = `https://solscan.io/tx/${txid}`;
@@ -18,22 +18,38 @@ async function nftSaleMessage(webhookEvent, desc, wallet, Source, bot, user){
     const acctPrefix = "https://solscan.io/account/";
     const photUrl = nftData.image
 
-      if(wallet){
-        const caption = `${walletgroup(wallet.group)} ALERT \n🎨 NFT SELL \n\n👤${wallet.name} *SOLD* ${nftData.name} for ${formatNumber(desc[solPlacement - 1])} SOL(${await soldollarvalue(sol, desc[solPlacement - 1])}) on ${Source.replace(/_/g, " ")} \n\n🖼 ${nftData.name} | ${Source.replace(/_/g, " ")} [SOLC](${txidLink})\n\n${nftData.attributes.map(item=>{
+      if(wallet && !wallet2){
+        const caption = `${walletgroup(wallet.group)} ALERT \n🎨 NFT SELL \n\n👤${wallet.name} *SOLD* ${nftData.name} for ${formatNumber(desc[solPlacement - 1])} SOL(${await soldollarvalue(sol, desc[solPlacement - 1])}) to *ANON* on ${Source.replace(/_/g, " ")} \n\n🖼 ${nftData.name} | ${Source.replace(/_/g, " ")} [SOLC](${txidLink})\n\n${nftData.attributes.map(item=>{
           return `\n*${item.trait_type ? item.trait_type.replace(/_/g, " ") : item.traitType.replace(/_/g, " ")}*: ${item.value.replace(/_/g, " ")}`
-        })}\n\n\`${wallet.address}\` ➡️ [${wallet.name}](${solcAcct}${wallet.address})`
+        })}\n\n\`${wallet.address}\` ➡️ [${wallet.name}](${solcAcct}${wallet.address})\n\`${address2}\` ➡️ [ANON](${solcAcct}${address2})`
         bot.telegram.sendPhoto(user.chat_id, photUrl, {
           caption: caption,
           parse_mode: 'Markdown'
         })
-      } 
+      }else if(!wallet && wallet2){
+        const caption = `${walletgroup(wallet2.group)} ALERT \n🎨 NFT SELL \n\n👤*ANON* *SOLD* ${nftData.name} for ${formatNumber(desc[solPlacement - 1])} SOL(${await soldollarvalue(sol, desc[solPlacement - 1])}) to ${wallet2.name} on ${Source.replace(/_/g, " ")} \n\n🖼 ${nftData.name} | ${Source.replace(/_/g, " ")} [SOLC](${txidLink})\n\n${nftData.attributes.map(item=>{
+          return `\n*${item.trait_type ? item.trait_type.replace(/_/g, " ") : item.traitType.replace(/_/g, " ")}*: ${item.value.replace(/_/g, " ")}`
+        })}\n\n\`${wallet2.address}\` ➡️ [${wallet2.name}](${solcAcct}${wallet2.address})\n\`${address1}\` ➡️ [ANON](${solcAcct}${address1})`
+        bot.telegram.sendPhoto(user.chat_id, photUrl, {
+          caption: caption,
+          parse_mode: 'Markdown'
+        })
+      }else if(wallet && wallet2){
+        const caption = `${walletgroup(wallet.group)} ALERT \n🎨 NFT SELL \n\n👤${wallet.name} *SOLD* ${nftData.name} for ${formatNumber(desc[solPlacement - 1])} SOL(${await soldollarvalue(sol, desc[solPlacement - 1])}) to ${wallet2.name} on ${Source.replace(/_/g, " ")} \n\n🖼 ${nftData.name} | ${Source.replace(/_/g, " ")} [SOLC](${txidLink})\n\n${nftData.attributes.map(item=>{
+          return `\n*${item.trait_type ? item.trait_type.replace(/_/g, " ") : item.traitType.replace(/_/g, " ")}*: ${item.value.replace(/_/g, " ")}`
+        })}\n\n\`${wallet.address}\` ➡️ [${wallet.name}](${solcAcct}${wallet.address})\n\`${wallet2.address}\` ➡️ [${wallet2.name}](${solcAcct}${wallet2.address})`
+        bot.telegram.sendPhoto(user.chat_id, photUrl, {
+          caption: caption,
+          parse_mode: 'Markdown'
+        })
+      }
   }catch(e){
     console.log('error', e)
   }
 }
 
 
-async function nftMintMessage(webhookEvent, desc, wallet, Source, bot, user){
+async function nftMintMessage(webhookEvent, desc, wallet2, Source, bot, user){
   try{
     const txid = webhookEvent[0].signature
       const txidLink = `https://solscan.io/tx/${txid}`;
