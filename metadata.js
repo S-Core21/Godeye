@@ -65,9 +65,11 @@ async function fetchData(Mint1, quantitySol, quantitytoken){
       }
       return MetaData
     }else{
+      const dexscreener = await axios.get(`https://api.dexscreener.com/latest/dex/tokens/${Mint1}`)
+      const tokenmcap = dexscreener.data.pairs.length >= 1 ? dexscreener.data.pairs[0].fdv : ''
       const MetaData = {
         ticker: data[0].onChainMetadata.metadata.data.symbol,
-        mcap: mcapcalc ? formatMcap(mcapcalc): '',
+        mcap: tokenmcap ? tokenmcap: '',
        //  pump : data[0].offChainMetadata.metadata.createdOn,
         Dextools : `https://dextools.io/app/en/solana/pair-explorer/${Mint1}`,
         Dexscreener : `https://dexscreener.com/solana/${Mint1}`,
