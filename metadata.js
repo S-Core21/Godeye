@@ -66,7 +66,7 @@ async function fetchData(Mint1, quantitySol, quantitytoken){
       return MetaData
     }else{
       const dexscreener = await axios.get(`https://api.dexscreener.com/latest/dex/tokens/${Mint1}`)
-      const tokenmcap = dexscreener.data.pairs.length >= 1 ? dexscreener.data.pairs[0].fdv : ''
+      const tokenmcap = dexscreener.data.pairs != null ? dexscreener.data.pairs[0].fdv : ''
       const MetaData = {
         ticker: data[0].onChainMetadata.metadata.data.symbol,
         mcap: tokenmcap ? tokenmcap: '',

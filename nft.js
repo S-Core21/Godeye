@@ -79,7 +79,7 @@ async function nftMintMessage(webhookEvent, desc, Source, bot, user){
     const photUrl = nftData.image
 
       if(wallet){
-        const caption = `${walletgroup(wallet.group)} ALERT \n🎨 NFT MINT\n\n👤${wallet.name} *MINTED* ${nftData.name} for on ${formatNumber(desc[solPlacement - 1])} SOL(${await soldollarvalue(sol, desc[solPlacement - 1])}) on ${Source.replace(/_/g, " ")}\n\n🖼 ${nftData.name} | ${Source.replace(/_/g, " ")} [SOLC](${txidLink})\n\n${nftData.attributes.map(item=>{
+        const caption = `${walletgroup(wallet.group)} ALERT \n🎨 NFT MINT\n\n👤${wallet.name} *MINTED* ${nftData.name} for ${formatNumber(desc[solPlacement - 1])} SOL(${await soldollarvalue(sol, desc[solPlacement - 1])}) on ${Source.replace(/_/g, " ")}\n\n🖼 ${nftData.name} | ${Source.replace(/_/g, " ")} [SOLC](${txidLink})\n\n${nftData.attributes.map(item=>{
           return `\n*${item.trait_type ? item.trait_type.replace(/_/g, " ") : item.traitType.replace(/_/g, " ")}*: ${item.value.replace(/_/g, " ")}`
         })}\n\n\`${wallet.address}\` ➡️ [${wallet.name}](${acctPrefix}${wallet.address})`
         bot.telegram.sendPhoto(user.chat_id, photUrl, {
@@ -115,7 +115,7 @@ async function nftListMessage(webhookEvent, desc, Source, bot, user){
     const photUrl = nftData.image
 
       if(wallet){
-        const caption = `${walletgroup(wallet.group)} ALERT \n🎨 NFT LISTING\n\n👤${wallet.name} *LISTED* ${nftData.name} for on ${formatNumber(desc[solPlacement - 1])} SOL(${await soldollarvalue(sol, desc[solPlacement - 1])}) on ${Source.replace(/_/g, " ")}\n\n🖼 ${nftData.name} | ${Source.replace(/_/g, " ")} [SOLC](${txidLink})\n\n${nftData.attributes.map(item=>{
+        const caption = `${walletgroup(wallet.group)} ALERT \n🎨 NFT LISTING\n\n👤${wallet.name} *LISTED* ${nftData.name} for ${formatNumber(desc[solPlacement - 1])} SOL(${await soldollarvalue(sol, desc[solPlacement - 1])}) on ${Source.replace(/_/g, " ")}\n\n🖼 ${nftData.name} | ${Source.replace(/_/g, " ")} [SOLC](${txidLink})\n\n${nftData.attributes.map(item=>{
           return `\n*${item.trait_type ? item.trait_type.replace(/_/g, " ") : item.traitType.replace(/_/g, " ")}*: ${item.value.replace(/_/g, " ")}`
         })}\n\n\`${wallet.address}\` ➡️ [${wallet.name}](${acctPrefix}${wallet.address})`
         bot.telegram.sendPhoto(user.chat_id, photUrl, {
@@ -150,7 +150,7 @@ async function nftCanListMessage(webhookEvent, desc, Source, bot, user){
     const photUrl = nftData.image
     console.log(nftData)
       if(wallet){
-        const caption = `${walletgroup(wallet.group)} ALERT \n🎨 NFT CANCEL LISTING\n\n👤${wallet.name} *LISTED* ${nftData.name} for on ${formatNumber(desc[solPlacement - 1])} SOL(${await soldollarvalue(sol, desc[solPlacement - 1])}) on ${Source.replace(/_/g, " ")}\n\n🖼 ${nftData.name} | ${Source.replace(/_/g, " ")} [SOLC](${txidLink})\n\n${nftData.attributes.map(item=>{
+        const caption = `${walletgroup(wallet.group)} ALERT \n🎨 NFT CANCEL LISTING\n\n👤${wallet.name} *LISTED* ${nftData.name} for ${formatNumber(desc[solPlacement - 1])} SOL(${await soldollarvalue(sol, desc[solPlacement - 1])}) on ${Source.replace(/_/g, " ")}\n\n🖼 ${nftData.name} | ${Source.replace(/_/g, " ")} [SOLC](${txidLink})\n\n${nftData.attributes.map(item=>{
           return `\n*${item.trait_type ? item.trait_type.replace(/_/g, " ") : item.traitType.replace(/_/g, " ")}*: ${item.value.replace(/_/g, " ")}`
         })}\n\n\`${wallet.address}\` ➡️ [${wallet.name}](${acctPrefix}${wallet.address})`
         bot.telegram.sendPhoto(user.chat_id, photUrl, {
