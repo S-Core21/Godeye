@@ -44,12 +44,13 @@ async function fetchData(Mint1, quantitySol, quantitytoken){
     const solToDollar = await solToUSD(sol, quantitySol)
     const priceInUsd = solToDollar / quantitytoken
     const mcapcalc = priceInUsd * unitSupply
-    console.log('mcapcalc', mcapcalc)
+    // console.log('mcapcalc', mcapcalc)
     if(Object.keys(priceData).length >= 1){
       console.log('supply', unitSupply)
       console.log('current price', priceData[Mint1].price)
       const mcap = unitSupply * priceData[Mint1].price
-      console.log(mcap)
+      console.log('helius', mcap)
+      console.log('selfcalc', mcapcalc)
       const MetaData = {
          ticker: data[0].onChainMetadata.metadata.data.symbol,
          mcap: mcap ? formatMcap(mcap): formatMcap(mcapcalc),
