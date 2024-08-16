@@ -163,11 +163,15 @@ async function nftCanListMessage(webhookEvent, desc, Source, bot, user){
   }
 }
 
-async function compressedNftTransfer(webhookEvent, wallet, Source, bot, user){
+async function compressedNftTransfer(webhookEvent, desc, Source, bot, user){
   try{
     const txid = webhookEvent[0].signature
-      const txidLink = `https://solscan.io/tx/${txid}`;
-      const assetID = webhookEvent[0].events.compressed[0].assetId;
+    const address1 =  desc[0]
+    const wallet = user.wallets.find(
+      (wallet) => wallet.address === address1,
+    );
+    const txidLink = `https://solscan.io/tx/${txid}`;
+    const assetID = webhookEvent[0].events.compressed[0].assetId;
     const cNftData = await getcNftData(assetID)
     const acctPrefix = "https://solscan.io/account/";
     const photUrl = cNftData.image
