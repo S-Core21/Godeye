@@ -39,7 +39,7 @@ const soldollarvalue = require("./dollarvalue");
 const {checkreferrals, createReferralLink, generateTransferCode} = require('./referral')
 const {swapMessage} = require('./swap')
 const {transferMessage} = require('./transfer')
-const {nftSaleMessage, nftMintMessage, nftListMessage, nftCanListMessage, addLiquidityMessage, removeLiquidityMessage} = require('./nft')
+const {nftSaleMessage, nftMintMessage, nftListMessage, nftCanListMessage, addLiquidityMessage, removeLiquidityMessage, compressedNftTransfer} = require('./nft')
 const {testData} = require('./test')
 
 async function main() {
@@ -706,9 +706,10 @@ async function main() {
             }else if(Type === 'NFT_LISTING'){
                await nftListMessage(webhookEvent, desc, Source, bot, user)
             }else if(Type === 'NFT_CANCEL_LISTING'){
-              console.log('cancelleddddddd')
                await nftCanListMessage(webhookEvent, desc, Source, bot, user)
-            }else if(Type === 'WITHDRAW_LIQUIDITY'){
+            }else if(Type === '"COMPRESSED_NFT_TRANSFER"'){
+              await compressedNftTransfer(webhookEvent, desc, Source, bot, user)
+           }else if(Type === 'WITHDRAW_LIQUIDITY'){
               await removeLiquidityMessage(webhookEvent, wallet, Source, AW1, bot, user)
             }else if(Type === 'ADD_LIQUIDITY'){
               await addLiquidityMessage(webhookEvent, wallet, Source, AW1, bot, user)

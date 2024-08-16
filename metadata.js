@@ -189,6 +189,34 @@ async function nftMetaData(mint){
   }
 }
 
+async function  getcNftData(assetID) {
+  try{
+    const response = await fetch(`https://mainnet.helius-rpc.com/?api-key=${process.env.API_KEY}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        jsonrpc: "2.0",
+        id: "my-id",
+        method: "getAsset",
+        params: {
+          id: assetID,
+        },
+      }),
+    });
+    const { result } = await response.json();
+    const cNftData = result.content.metadata
+    const metadata = {
+      name: cNftData.name,
+      image: result.content.links.image,
+      attributes: cNftData.attributes
+    }
+    console.log(metadata)
+    return metadata
+  }catch(e){
+    console.log('no cNfts found')
+  }
+}
+
 function checkProgramId(instructions, targetProgramId) {
   return instructions.some(instruction => {
     if (instruction.programId === targetProgramId) {
@@ -201,4 +229,4 @@ function checkProgramId(instructions, targetProgramId) {
   });
 }
 
-module.exports = {fetchData, tokenMintData, nftMetaData, checkProgramId}
+module.exports = {fetchData, tokenMintData, nftMetaData, getcNftData, checkProgramId}

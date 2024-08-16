@@ -1,4 +1,4 @@
-const {fetchData, nftMetaData} = require("./metadata");
+const {fetchData, nftMetaData, getcNftData} = require("./metadata");
 const {walletgroup} = require("./wallets");
 const { formatNumber, formatMcap } = require("./formatNumber");
 const soldollarvalue = require("./dollarvalue");
@@ -163,25 +163,29 @@ async function nftCanListMessage(webhookEvent, desc, Source, bot, user){
   }
 }
 
-// async function compressedNftTransfer(webhookEvent, wallet, Source, AW1, bot, user){
-//   try{
-//     const txid = webhookEvent[0].signature
-//       const txidLink = `https://solscan.io/tx/${txid}`;
-//     console.log('nft mint add', mint)
-//     const acctPrefix = "https://solscan.io/account/";
-//     const photUrl = nftData.image
+async function compressedNftTransfer(webhookEvent, wallet, Source, AW1, bot, user){
+  try{
+    const txid = webhookEvent[0].signature
+      const txidLink = `https://solscan.io/tx/${txid}`;
+      const assetID = webhookEvent[0].events.compressed[0].assetId;
+    console.log('nft mint add', mint)
+    const cNftData = await getcNftData(assetID)
+    const acctPrefix = "https://solscan.io/account/";
+    const photUrl = cNftData.image
 
-//       if(wallet){
-//         const caption = `${walletgroup(wallet.group)} ALERT \n🎨 COMPRESSED NFT TRANSFER on ${Source.replace(/_/g, " ")}\n\n👤${wallet.name} transferred a compressed nft [SOLC](${txidLink})\n\n\`${wallet.address}\` ➡️ [${wallet.name}](${acctPrefix}${wallet.address})`
-//         bot.telegram.sendPhoto(user.chat_id, photUrl, {
-//           caption: caption,
-//           parse_mode: 'Markdown'
-//         })
-//       } 
-//   }catch(e){
-//     console.log('error')
-//   }
-// }
+      if(wallet){
+        const caption = `${walletgroup(wallet.group)} ALERT \n🎨 COMPRESSED NFT TRANSFER on ${Source.replace(/_/g, " ")}\n\n👤${wallet.name} transferred *${cNftData.name}* \n\n*${cNftData.name}* | ${Source.replace(/_/g, " ")} | [SOLC](${txidLink})\n\n${cNftData.attributes.map(item=>{
+          return `\n*${item.trait_type ? item.trait_type.replace(/_/g, " ") : item.traitType.replace(/_/g, " ")}*: ${item.value.replace(/_/g, " ")}`
+        })}\n\n\`${wallet.address}\` ➡️ [${wallet.name}](${acctPrefix}${wallet.address})`
+        bot.telegram.sendPhoto(user.chat_id, photUrl, {
+          caption: caption,
+          parse_mode: 'Markdown'
+        })
+      } 
+  }catch(e){
+    console.log('error')
+  }
+}
 
 async function addLiquidityMessage(webhookEvent, wallet, Source, AW1, bot, user){
   try{
@@ -230,4 +234,4 @@ async function removeLiquidityMessage(webhookEvent, wallet, Source, AW1, bot, us
 
 
 
-module.exports = {nftSaleMessage, nftMintMessage, nftListMessage, nftCanListMessage, addLiquidityMessage, removeLiquidityMessage}
+module.exports = {nftSaleMessage, nftMintMessage, nftListMessage, nftCanListMessage, compressedNftTransfer, addLiquidityMessage, removeLiquidityMessage}
