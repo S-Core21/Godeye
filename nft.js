@@ -183,7 +183,7 @@ async function compressedNftTransfer(webhookEvent, wallet, Source, AW1, bot, use
         })
       } 
   }catch(e){
-    console.log('error')
+    console.log('error',e)
   }
 }
 
