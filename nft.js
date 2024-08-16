@@ -42,6 +42,16 @@ async function nftSaleMessage(webhookEvent, desc, Source, bot, user){
           caption: caption,
           parse_mode: 'Markdown'
         })
+        .then(()=>{
+          console.log('sent')
+        })
+        .catch((err)=>{
+          console.log(err)
+          bot.telegram.sendMessage(user.chat_id, caption, {
+            parse_mode: "Markdown",
+            disable_web_page_preview: true
+          });
+        })
       }else if(wallet && wallet2){
         const caption = `${walletgroup(wallet.group)} ALERT \n🎨 NFT SELL \n\n👤${wallet.name} *SOLD* ${nftData.name} for ${formatNumber(desc[solPlacement - 1])} SOL(${await soldollarvalue(sol, desc[solPlacement - 1])}) to ${wallet2.name} on ${Source.replace(/_/g, " ")} \n\n🖼 ${nftData.name} | ${Source.replace(/_/g, " ")} [SOLC](${txidLink})\n\n${nftData.attributes.map(item=>{
           return `\n*${item.trait_type ? item.trait_type.replace(/_/g, " ") : item.traitType.replace(/_/g, " ")}*: ${item.value.replace(/_/g, " ")}`
@@ -49,6 +59,16 @@ async function nftSaleMessage(webhookEvent, desc, Source, bot, user){
         bot.telegram.sendPhoto(user.chat_id, photUrl, {
           caption: caption,
           parse_mode: 'Markdown'
+        })
+        .then(()=>{
+          console.log('sent')
+        })
+        .catch((err)=>{
+          console.log(err)
+          bot.telegram.sendMessage(user.chat_id, caption, {
+            parse_mode: "Markdown",
+            disable_web_page_preview: true
+          });
         })
       }
   }catch(e){
@@ -68,9 +88,6 @@ async function nftMintMessage(webhookEvent, desc, Source, bot, user){
       const wallet = user.wallets.find(
         (wallet) => wallet.address === address1,
       );
-      const wallet2 = user.wallets.find(
-        (wallet2) => wallet2.address === address2,
-      );
     console.log('nft mint add', mint)
       const nftData = await nftMetaData(mint)
     console.log(nftData)
@@ -85,6 +102,16 @@ async function nftMintMessage(webhookEvent, desc, Source, bot, user){
         bot.telegram.sendPhoto(user.chat_id, photUrl, {
           caption: caption,
           parse_mode: 'Markdown'
+        })
+        .then(()=>{
+          console.log('sent')
+        })
+        .catch((err)=>{
+          console.log(err)
+          bot.telegram.sendMessage(user.chat_id, caption, {
+            parse_mode: "Markdown",
+            disable_web_page_preview: true
+          });
         })
       } 
   }catch(e){
@@ -104,9 +131,6 @@ async function nftListMessage(webhookEvent, desc, Source, bot, user){
       const wallet = user.wallets.find(
         (wallet) => wallet.address === address1,
       );
-      const wallet2 = user.wallets.find(
-        (wallet2) => wallet2.address === address2,
-      );
     console.log('nft mint add', mint)
       const nftData = await nftMetaData(mint)
     console.log(nftData)
@@ -121,6 +145,16 @@ async function nftListMessage(webhookEvent, desc, Source, bot, user){
         bot.telegram.sendPhoto(user.chat_id, photUrl, {
           caption: caption,
           parse_mode: 'Markdown'
+        })
+        .then(()=>{
+          console.log('sent')
+        })
+        .catch((err)=>{
+          console.log(err)
+          bot.telegram.sendMessage(user.chat_id, caption, {
+            parse_mode: "Markdown",
+            disable_web_page_preview: true
+          });
         })
       } 
   }catch(e){
@@ -142,9 +176,6 @@ async function nftCanListMessage(webhookEvent, desc, Source, bot, user){
       const wallet = user.wallets.find(
         (wallet) => wallet.address === address1,
       );
-      const wallet2 = user.wallets.find(
-        (wallet2) => wallet2.address === address2,
-      );
       const solPlacement = desc.indexOf('SOL')
     const acctPrefix = "https://solscan.io/account/";
     const photUrl = nftData.image
@@ -156,6 +187,16 @@ async function nftCanListMessage(webhookEvent, desc, Source, bot, user){
         bot.telegram.sendPhoto(user.chat_id, photUrl, {
           caption: caption,
           parse_mode: 'Markdown'
+        })
+        .then(()=>{
+          console.log('sent')
+        })
+        .catch((err)=>{
+          console.log(err)
+          bot.telegram.sendMessage(user.chat_id, caption, {
+            parse_mode: "Markdown",
+            disable_web_page_preview: true
+          });
         })
       } 
   }catch(e){
