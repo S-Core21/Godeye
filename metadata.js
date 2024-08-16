@@ -189,35 +189,16 @@ async function nftMetaData(mint){
   }
 }
 
-// async function checksource(mint){
-//   try{
-//     const dexscreener = await axios.get(`https://api.dexscreener.com/latest/dex/tokens/${mint}`)
-//   const url = `https://api.helius.xyz/v0/token-metadata?api-key=${process.env.API_KEY}`;
-//   const response2 = await fetch(url, {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify({
-//       mintAccounts: mint,
-//       includeOffChain: true,
-//       disableCache: false,
-//     }),
-//   });
-//   const data = await response2.json();
-//   const pump = data[0].offChainMetadata.metadata
-//   console.log(pump)
-//   const dexId = dexscreener.pairs[0].dexId 
-//   if(pump.createdOn && pump.createdOn === 'https://pump.fun'){
-//     return 'PUMP FUN'
-//   }else if(!pump.createdOn){
-//     const source = dexId === 'moonshot' ? 'MOONSHOT' : 'SOLANA'
-//     return source
-//   }
-//   }catch(e){
-//     return "UNKNOWN"
-//   }
-// }
+function checkProgramId(instructions, targetProgramId) {
+  return instructions.some(instruction => {
+    if (instruction.programId === targetProgramId) {
+      return true;
+    }
+    if (instruction.innerInstructions && instruction.innerInstructions.length > 0) {
+      return checkProgramId(instruction.innerInstructions, targetProgramId);
+    }
+    return false;
+  });
+}
 
-
-module.exports = {fetchData, tokenMintData, nftMetaData}
+module.exports = {fetchData, tokenMintData, nftMetaData, checkProgramId}

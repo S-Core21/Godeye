@@ -1,7 +1,7 @@
 const { formatNumber, formatMcap, shortenString } = require("./formatNumber");
 const soldollarvalue = require("./dollarvalue");
 const {walletgroup} = require("./wallets");
-const {fetchData, nftMetaData} = require("./metadata");
+const {fetchData, checkProgramId} = require("./metadata");
 
 
 
@@ -11,9 +11,12 @@ async function transferMessage(webhookEvent, wallet, wallet2, sig, Source, solcA
     const moonshotProgramID = 'MoonCVVNZFSYkqNXP6bxHLPL6QQJiMagDL3qcqUQTrG'
     const degenFundProgramID = 'degenhbmsyzLpJUwwrzjsPyhPNvLurBFB4k1pBWSoxs'
     const instructions = webhookEvent[0].instructions
-    const isPumpId = instructions.some(instruction => instruction.programId === pumpFunProgramID);
-    const isMoonshotId = instructions.some(instruction => instruction.programId === moonshotProgramID);
-    const isDegenId = instructions.some(instruction => instruction.programId === degenFundProgramID);
+    const isPumpId = checkProgramId(instructions, pumpFunProgramID);
+    const isMoonshotId = checkProgramId(instructions, moonshotProgramID);
+    const isDegenId = checkProgramId(instructions, degenFundProgramID);
+    // const isPumpId = instructions.some(instruction => instruction.programId === pumpFunProgramID);
+    // const isMoonshotId = instructions.some(instruction => instruction.programId === moonshotProgramID);
+    // const isDegenId = instructions.some(instruction => instruction.programId === degenFundProgramID);
     const sourceofTx = isPumpId ? 'PUMP FUN' : isMoonshotId ? 'MOONSHOT' : isDegenId ? 'DEGEN FUND' : 'UNKNOWN'
     const accountData = webhookEvent[0].accountData
     const senderAcctData = accountData.find(
