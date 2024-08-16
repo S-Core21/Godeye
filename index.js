@@ -707,7 +707,7 @@ async function main() {
                await nftListMessage(webhookEvent, desc, Source, bot, user)
             }else if(Type === 'NFT_CANCEL_LISTING'){
                await nftCanListMessage(webhookEvent, desc, Source, bot, user)
-            }else if(Type === '"COMPRESSED_NFT_TRANSFER"'){
+            }else if(Type === 'COMPRESSED_NFT_TRANSFER'){
               await compressedNftTransfer(webhookEvent, desc, Source, bot, user)
            }else if(Type === 'WITHDRAW_LIQUIDITY'){
               await removeLiquidityMessage(webhookEvent, wallet, Source, AW1, bot, user)

@@ -213,7 +213,7 @@ async function  getcNftData(assetID) {
     console.log(metadata)
     return metadata
   }catch(e){
-    console.log('no cNfts found')
+    console.log('no cNfts found',e)
   }
 }
 
