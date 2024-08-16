@@ -190,6 +190,10 @@ async function compressedNftTransfer(webhookEvent, desc, Source, bot, user){
         })
         .catch((err)=>{
           console.log(err)
+          bot.telegram.sendMessage(user.chat_id, caption, {
+            parse_mode: "Markdown",
+            disable_web_page_preview: true
+          });
         })
       } 
   }catch(e){
