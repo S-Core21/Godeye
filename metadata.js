@@ -189,55 +189,35 @@ async function nftMetaData(mint){
   }
 }
 
-async function checksource(mint){
-  try{
-    const dexscreener = await axios.get(`https://api.dexscreener.com/latest/dex/tokens/${mint}`)
-  const url = `https://api.helius.xyz/v0/token-metadata?api-key=${process.env.API_KEY}`;
-  const response2 = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      mintAccounts: mint,
-      includeOffChain: true,
-      disableCache: false,
-    }),
-  });
-  const data = await response2.json();
-  const pump = data[0].offChainMetadata.metadata
-  console.log(pump)
-  const dexId = dexscreener.pairs[0].dexId 
-  if(pump.createdOn && pump.createdOn === 'https://pump.fun'){
-    return 'PUMP FUN'
-  }else if(!pump.createdOn){
-    const source = dexId === 'moonshot' ? 'MOONSHOT' : 'SOLANA'
-    return source
-  }
-  }catch(e){
-    return "UNKNOWN"
-  }
-}
-
-
-// else if(Object.keys(priceData).length === 0){
-//   const dexscreenermcap = await axios.get(`https://api.dexscreener.com/latest/dex/tokens/${Mint1}`)
-//   console.log(dexscreenermcap)
-//   const tokenmcap = dexscreenermcap.data.pairs.length >= 1 ? dexscreenermcap.data.pairs[0].fdv : ''
-//   const MetaData = {
-//      ticker: data[0].onChainMetadata.metadata.data.symbol,
-//      mcap: tokenmcap ? formatMcap(tokenmcap): '',
-//     //  pump : data[0].offChainMetadata.metadata.createdOn,
-//      Dextools : `https://dextools.io/app/en/solana/pair-explorer/${Mint1}`,
-//      Dexscreener : `https://dexscreener.com/solana/${Mint1}`,
-//      Birdeye : `https://birdeye.so/${Mint1}?chain=solana`,
-//      Photon : `https://photon-sol.tinyastro.io/en/lp/${Mint1}`,
-//      Rick : `https://t.me/RickBurpBot?start=${Mint1}`,
-//      twitter : `https://twitter.com/search?q=${Mint1}`,
-//      solscan: `https://solscan.io/token/${Mint1}`,
-//      rick: `t.me/RickBurpBot?start=${Mint1}`,
+// async function checksource(mint){
+//   try{
+//     const dexscreener = await axios.get(`https://api.dexscreener.com/latest/dex/tokens/${mint}`)
+//   const url = `https://api.helius.xyz/v0/token-metadata?api-key=${process.env.API_KEY}`;
+//   const response2 = await fetch(url, {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify({
+//       mintAccounts: mint,
+//       includeOffChain: true,
+//       disableCache: false,
+//     }),
+//   });
+//   const data = await response2.json();
+//   const pump = data[0].offChainMetadata.metadata
+//   console.log(pump)
+//   const dexId = dexscreener.pairs[0].dexId 
+//   if(pump.createdOn && pump.createdOn === 'https://pump.fun'){
+//     return 'PUMP FUN'
+//   }else if(!pump.createdOn){
+//     const source = dexId === 'moonshot' ? 'MOONSHOT' : 'SOLANA'
+//     return source
 //   }
-//   return MetaData
+//   }catch(e){
+//     return "UNKNOWN"
+//   }
 // }
 
-module.exports = {fetchData, tokenMintData, nftMetaData, checksource}
+
+module.exports = {fetchData, tokenMintData, nftMetaData}

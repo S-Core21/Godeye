@@ -1,12 +1,20 @@
 const { formatNumber, formatMcap, shortenString } = require("./formatNumber");
 const soldollarvalue = require("./dollarvalue");
 const {walletgroup} = require("./wallets");
-const {fetchData, nftMetaData, checksource} = require("./metadata");
+const {fetchData, nftMetaData} = require("./metadata");
 
 
 
 async function transferMessage(webhookEvent, wallet, wallet2, sig, Source, solcAcct, desc, sol, AW1, bot, user, address1, address2, buyButtons){
   try{
+    const pumpFunProgramID = '6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P'
+    const moonshotProgramID = 'MoonCVVNZFSYkqNXP6bxHLPL6QQJiMagDL3qcqUQTrG'
+    const degenFundProgramID = 'degenhbmsyzLpJUwwrzjsPyhPNvLurBFB4k1pBWSoxs'
+    const instructions = webhookEvent[0].instructions
+    const isPumpId = instructions.some(instruction => instruction.programId === pumpFunProgramID);
+    const isMoonshotId = instructions.some(instruction => instruction.programId === moonshotProgramID);
+    const isDegenId = instructions.some(instruction => instruction.programId === degenFundProgramID);
+    const sourceofTx = isPumpId ? 'PUMP FUN' : isMoonshotId ? 'MOONSHOT' : isDegenId ? 'DEGEN FUND' : 'UNKNOWN'
     const accountData = webhookEvent[0].accountData
     const senderAcctData = accountData.find(
       (accountInfo) => accountInfo.account === address1
@@ -65,10 +73,9 @@ async function transferMessage(webhookEvent, wallet, wallet2, sig, Source, solcA
             console.log(quantitySol)
             const quantitytoken = webhookEvent[0].tokenTransfers[0].tokenAmount 
             const tmint = webhookEvent[0].tokenTransfers[0].mint;
-            const txsource = await checksource(tmint)
             const solmint = "So11111111111111111111111111111111111111112"
             const dexresult = await fetchData(tmint, quantitySol, quantitytoken);
-              const messageToSend = `${walletgroup(wallet.group)} ALERT\n👤*${wallet.name}* *SOLD* ${formatMcap(quantitytoken)} *${dexresult.ticker}* for *${formatNumber(quantitySol)} SOL*(${await soldollarvalue(solmint, quantitySol)}) on *${txsource ? txsource : 'UNKNOWN'}*\n\n*💡${dexresult.ticker} | MC: ${dexresult.mcap}*\n\`${tmint}\`\n🔎 DYOR: [SOLC](${sig}) | [X](${dexresult.twitter}) | [RICK](${dexresult.rick}) | [DS](${dexresult.Dexscreener}) | [DT](${dexresult.Dextools}) | [BE](${dexresult.Birdeye}) | [Pump](${dexresult.pump})\n\n🕵️‍♂️ *Analyse Wallet:* [W1](${AW1}${wallet.address})\n\`${wallet.address}\` ➡️ [${wallet.name}](${solcAcct}${wallet.address})`
+              const messageToSend = `${walletgroup(wallet.group)} ALERT\n👤*${wallet.name}* *SOLD* ${formatMcap(quantitytoken)} *${dexresult.ticker}* for *${formatNumber(quantitySol)} SOL*(${await soldollarvalue(solmint, quantitySol)}) on *${sourceofTx}*\n\n*💡${dexresult.ticker} | MC: ${dexresult.mcap}*\n\`${tmint}\`\n🔎 DYOR: [SOLC](${sig}) | [X](${dexresult.twitter}) | [RICK](${dexresult.rick}) | [DS](${dexresult.Dexscreener}) | [DT](${dexresult.Dextools}) | [BE](${dexresult.Birdeye}) | [Pump](${dexresult.pump})\n\n🕵️‍♂️ *Analyse Wallet:* [W1](${AW1}${wallet.address})\n\`${wallet.address}\` ➡️ [${wallet.name}](${solcAcct}${wallet.address})`
               bot.telegram.sendMessage(user.chat_id, messageToSend, {
                 parse_mode: "Markdown",
                 disable_web_page_preview: true,
@@ -103,10 +110,9 @@ async function transferMessage(webhookEvent, wallet, wallet2, sig, Source, solcA
           console.log(quantitySol)
           const quantitytoken = webhookEvent[0].tokenTransfers[0].tokenAmount 
           const tmint = webhookEvent[0].tokenTransfers[0].mint;
-          const txsource = await checksource(tmint)
           const solmint = "So11111111111111111111111111111111111111112"
           const dexresult = await fetchData(tmint, quantitySol, quantitytoken);
-            const messageToSend = `${walletgroup(wallet2.group)} ALERT\n👤*${wallet2.name}* *BOUGHT* ${formatMcap(quantitytoken)} *${dexresult.ticker}* for *${formatNumber(quantitySol)} SOL*(${await soldollarvalue(solmint, quantitySol)}) on *${txsource ? txsource : 'UNKNOWN'}*\n\n*💡${dexresult.ticker} | MC: ${dexresult.mcap}*\n\`${tmint}\`\n🔎 DYOR: [SOLC](${sig}) | [X](${dexresult.twitter}) | [RICK](${dexresult.rick}) | [DS](${dexresult.Dexscreener}) | [DT](${dexresult.Dextools}) | [BE](${dexresult.Birdeye}) | [Pump](${dexresult.pump})\n\n🕵️‍♂️ *Analyse Wallet2:* [W1](${AW1}${wallet2.address})\n\`${wallet2.address}\` ➡️ [${wallet2.name}](${solcAcct}${wallet2.address})`
+            const messageToSend = `${walletgroup(wallet2.group)} ALERT\n👤*${wallet2.name}* *BOUGHT* ${formatMcap(quantitytoken)} *${dexresult.ticker}* for *${formatNumber(quantitySol)} SOL*(${await soldollarvalue(solmint, quantitySol)}) on *${sourceofTx}*\n\n*💡${dexresult.ticker} | MC: ${dexresult.mcap}*\n\`${tmint}\`\n🔎 DYOR: [SOLC](${sig}) | [X](${dexresult.twitter}) | [RICK](${dexresult.rick}) | [DS](${dexresult.Dexscreener}) | [DT](${dexresult.Dextools}) | [BE](${dexresult.Birdeye}) | [Pump](${dexresult.pump})\n\n🕵️‍♂️ *Analyse Wallet2:* [W1](${AW1}${wallet2.address})\n\`${wallet2.address}\` ➡️ [${wallet2.name}](${solcAcct}${wallet2.address})`
             bot.telegram.sendMessage(user.chat_id, messageToSend, {
               parse_mode: "Markdown",
               disable_web_page_preview: true,
