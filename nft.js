@@ -163,7 +163,7 @@ async function nftCanListMessage(webhookEvent, desc, Source, bot, user){
   }
 }
 
-async function compressedNftTransfer(webhookEvent, wallet, Source, AW1, bot, user){
+async function compressedNftTransfer(webhookEvent, wallet, Source, bot, user){
   try{
     const txid = webhookEvent[0].signature
       const txidLink = `https://solscan.io/tx/${txid}`;
@@ -176,6 +176,7 @@ async function compressedNftTransfer(webhookEvent, wallet, Source, AW1, bot, use
         const caption = `${walletgroup(wallet.group)} ALERT \n🎨 COMPRESSED NFT TRANSFER on ${Source.replace(/_/g, " ")}\n\n👤${wallet.name} transferred *${cNftData.name}* \n\n*${cNftData.name}* | ${Source.replace(/_/g, " ")} | [SOLC](${txidLink})\n\n${cNftData.attributes.map(item=>{
           return `\n*${item.trait_type ? item.trait_type.replace(/_/g, " ") : item.traitType.replace(/_/g, " ")}*: ${item.value.replace(/_/g, " ")}`
         })}\n\n\`${wallet.address}\` ➡️ [${wallet.name}](${acctPrefix}${wallet.address})`
+
         bot.telegram.sendPhoto(user.chat_id, photUrl, {
           caption: caption,
           parse_mode: 'Markdown'
