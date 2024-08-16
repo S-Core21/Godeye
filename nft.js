@@ -168,7 +168,6 @@ async function compressedNftTransfer(webhookEvent, wallet, Source, AW1, bot, use
     const txid = webhookEvent[0].signature
       const txidLink = `https://solscan.io/tx/${txid}`;
       const assetID = webhookEvent[0].events.compressed[0].assetId;
-    console.log('nft mint add', mint)
     const cNftData = await getcNftData(assetID)
     const acctPrefix = "https://solscan.io/account/";
     const photUrl = cNftData.image
