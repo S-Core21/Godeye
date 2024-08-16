@@ -185,6 +185,12 @@ async function compressedNftTransfer(webhookEvent, desc, Source, bot, user){
           caption: caption,
           parse_mode: 'Markdown'
         })
+        .then(()=>{
+          console.log('sent')
+        })
+        .catch((err)=>{
+          console.log(err)
+        })
       } 
   }catch(e){
     console.log('error',e)
