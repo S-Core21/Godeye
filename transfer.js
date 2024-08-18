@@ -15,6 +15,7 @@ async function transferMessage(webhookEvent, wallet, wallet2, sig, Source, solcA
     const isMoonshotId = checkProgramId(instructions, moonshotProgramID);
     const isDegenId = checkProgramId(instructions, degenFundProgramID);
     const sourceofTx = isPumpId ? 'PUMP FUN' : isMoonshotId ? 'MOONSHOT' : isDegenId ? 'DEGEN FUND' : 'UNKNOWN'
+    const isSwap = isPumpId ? true : isDegenId ? true : isMoonshotId ? true : false
     const accountData = webhookEvent[0].accountData
     const senderAcctData = accountData.find(
       (accountInfo) => accountInfo.account === address1
@@ -90,7 +91,7 @@ async function transferMessage(webhookEvent, wallet, wallet2, sig, Source, solcA
             },
           });
       }else {
-          if(ReceiverAcctData.nativeBalanceChange !== 0 && Source === 'SYSTEM_PROGRAM'){
+          if(ReceiverAcctData.nativeBalanceChange !== 0 && isSwap){
             const quantitySol = Math.abs(ReceiverAcctData.nativeBalanceChange / 1000000000) 
             console.log(quantitySol)
             const quantitytoken = webhookEvent[0].tokenTransfers[0].tokenAmount 
@@ -151,7 +152,7 @@ async function transferMessage(webhookEvent, wallet, wallet2, sig, Source, solcA
           disable_web_page_preview: true,
         });
       } else {
-        if(senderAcctData.nativeBalanceChange !== 0 && Source === 'SYSTEM_PROGRAM'){
+        if(senderAcctData.nativeBalanceChange !== 0 && isSwap){
           const quantitySol = senderAcctData.nativeBalanceChange / 1000000000
           console.log(quantitySol)
           const quantitytoken = webhookEvent[0].tokenTransfers[0].tokenAmount 

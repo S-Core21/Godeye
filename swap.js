@@ -55,7 +55,7 @@ async function swapMessage(webhookEvent, Source, wallet, desc, sol, AW1, sig, so
            },
          });
       }
-    }else if(Mint1swap !== 'So11111111111111111111111111111111111111112' && Mintswap !== 'So11111111111111111111111111111111111111112'){
+    }else if(desc[3] !== 'SOL' || desc[6]!=='SOL'){
       const quantitytoken1 = desc[2] 
       const quantitytoken2 = desc[5]
       const dexresult = await fetchData(Mint1swap);
