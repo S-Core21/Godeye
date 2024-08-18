@@ -1,7 +1,7 @@
 const { formatNumber, formatMcap, shortenString } = require("./formatNumber");
 const soldollarvalue = require("./dollarvalue");
 const {walletgroup} = require("./wallets");
-const {fetchData, checkProgramId} = require("./metadata");
+const {fetchData, checkProgramId, nftMetaData} = require("./metadata");
 
 
 
@@ -122,18 +122,37 @@ async function transferMessage(webhookEvent, wallet, wallet2, sig, Source, solcA
             });
         }else{
           const tmint = webhookEvent[0].tokenTransfers[0].mint;
-          console.log('pumpp', tmint);
-  
           const dexresult = await fetchData(tmint);
-  
-        const messageToSend = `${walletgroup(wallet2.group)} ALERT\n👤*ANON* transferred *${formatNumber(desc[2])} ${desc[3]}*(${await soldollarvalue(tmint, desc[2])}) to *${wallet2.name}*\n\n*💡${dexresult.ticker} | MC: ${dexresult.mcap}*\n\`${tmint}\`\n🔎 DYOR: [SOLC](${sig}) | [X](${dexresult.twitter}) | [RICK](${dexresult.rick}) | [DS](${dexresult.Dexscreener}) | [DT](${dexresult.Dextools}) | [BE](${dexresult.Birdeye}) | [Pump](${dexresult.pump})\n\n🕵️‍♂️ Analyse Wallet: [W1](${AW1}${address1})\n\`${address1}\` ➡️ [ANON](${solcAcct}${wallet2.address}) \n🕵️‍♂️ Analyse Wallet: [W2](${AW1}${address2})\n\`${wallet2.address}\` ➡️ [${wallet2.name}](${solcAcct}${wallet2.address}) `
-          bot.telegram.sendMessage(user.chat_id, messageToSend, {
-            parse_mode: "Markdown",
-            disable_web_page_preview: true,
-            reply_markup: {
-              inline_keyboard: buyButtons(tmint),
-            },
-          });
+          const nftresult = await nftMetaData(tmint);
+          if(dexresult){
+            const messageToSend = `${walletgroup(wallet2.group)} ALERT\n👤*ANON* transferred *${formatNumber(desc[2])} ${desc[3]}*(${await soldollarvalue(tmint, desc[2])}) to *${wallet2.name}*\n\n*💡${dexresult.ticker} | MC: ${dexresult.mcap}*\n\`${tmint}\`\n🔎 DYOR: [SOLC](${sig}) | [X](${dexresult.twitter}) | [RICK](${dexresult.rick}) | [DS](${dexresult.Dexscreener}) | [DT](${dexresult.Dextools}) | [BE](${dexresult.Birdeye}) | [Pump](${dexresult.pump})\n\n🕵️‍♂️ Analyse Wallet: [W1](${AW1}${address1})\n\`${address1}\` ➡️ [ANON](${solcAcct}${wallet2.address}) \n🕵️‍♂️ Analyse Wallet: [W2](${AW1}${address2})\n\`${wallet2.address}\` ➡️ [${wallet2.name}](${solcAcct}${wallet2.address}) `
+            bot.telegram.sendMessage(user.chat_id, messageToSend, {
+              parse_mode: "Markdown",
+              disable_web_page_preview: true,
+              reply_markup: {
+                inline_keyboard: buyButtons(tmint),
+              },
+            });
+          }else if(nftresult){
+            const tokenAmt = webhookEvent[0].tokenTransfers[0].tokenAmount
+            const caption = `${walletgroup(wallet2.group)} ALERT \n🎨 NFT SELL \n\n👤*ANON* *TRANSFERRED* ${tokenAmt} ${nftData.name} to ${wallet2.name} on ${Source.replace(/_/g, " ")} \n\n🖼 ${nftData.name} | ${Source.replace(/_/g, " ")} [SOLC](${txidLink})\n\n${nftData.attributes.map(item=>{
+              return `\n*${item.trait_type ? item.trait_type.toString().replace(/_/g, " ") : item.traitType.toString().replace(/_/g, " ")}*: ${item.value.toString().replace(/_/g, " ")}`
+            })}\n\n\`${wallet2.address}\` ➡️ [${wallet2.name}](${acctPrefix}${wallet2.address})\n\`${address1}\` ➡️ [ANON](${acctPrefix}${address1})`
+            bot.telegram.sendPhoto(user.chat_id, photUrl, {
+              caption: caption,
+              parse_mode: 'Markdown'
+            })
+            .then(()=>{
+              console.log('sent')
+            })
+            .catch((err)=>{
+              console.log(err)
+              bot.telegram.sendMessage(user.chat_id, caption, {
+                parse_mode: "Markdown",
+                disable_web_page_preview: true
+              });
+            })
+          }
         }
       }
     }
