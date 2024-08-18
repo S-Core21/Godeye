@@ -664,14 +664,13 @@ async function main() {
             }else if(Type === 'BURN'){
               const txid = webhookEvent[0].signature;
               const txidLink = `https://solscan.io/tx/${txid}`;
-              const acctPrefix = "https://solscan.io/account/";
-              const tokenName = desc[3]?.replace(".", "")
               const mint = webhookEvent[0].tokenTransfers[0].mint;
+              const tokenAmt = webhookEvent[0].tokenTransfers[0].tokenAmount;
               console.log(mint);
               const dexresult = await fetchData(mint);
   
               if(wallet){
-                const messageToSend = `${walletgroup(wallet.group)} ALERT \n👤*${wallet.name}* *BURNED 🔥* *${formatMcap(desc[2])} ${dexresult.ticker}*(${await soldollarvalue(mint, tokenName)})\n\n*💡${dexresult.ticker} | MC: ${dexresult.mcap}*\n\`${mint}\`\n🔎 DYOR: [SOLC](${txidLink}) | [X](${dexresult.twitter}) | [RICK](${dexresult.rick})| [DS](${dexresult.Dexscreener}) | [DT](${dexresult.Dextools}) | [BE](${dexresult.Birdeye})\n\n🕵️‍♂️ *Analyse Wallet:* [W1](${AW1}${wallet.address})\n\`${wallet.address}\` ➡️ [${wallet.name}](${solcAcct}${wallet.address})`
+                const messageToSend = `${walletgroup(wallet.group)} ALERT \n👤*${wallet.name}* *BURNED 🔥* *${formatMcap(desc[2])} ${dexresult.ticker}*(${await soldollarvalue(mint, tokenAmt)})\n\n*💡${dexresult.ticker} | MC: ${dexresult.mcap}*\n\`${mint}\`\n🔎 DYOR: [SOLC](${txidLink}) | [X](${dexresult.twitter}) | [RICK](${dexresult.rick})| [DS](${dexresult.Dexscreener}) | [DT](${dexresult.Dextools}) | [BE](${dexresult.Birdeye})\n\n🕵️‍♂️ *Analyse Wallet:* [W1](${AW1}${wallet.address})\n\`${wallet.address}\` ➡️ [${wallet.name}](${solcAcct}${wallet.address})`
                 bot.telegram.sendMessage(user.chat_id, messageToSend, {
                   parse_mode: "Markdown",
                   disable_web_page_preview: true,
