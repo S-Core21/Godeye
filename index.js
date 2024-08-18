@@ -642,6 +642,7 @@ async function main() {
           const wallet = user.wallets.find(
             (wallet) => wallet.address === address1,
           );
+          console.log(wallet)
           const wallet2 = user.wallets.find(
             (wallet2) => wallet2.address === address2,
           );
