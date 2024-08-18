@@ -7,7 +7,7 @@ async function testData(){
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          transactions: ['236s57QT18HpbupSyB9BxMTWekgPk8UavoumScNUZKzBaXLZU4UwMFkqbMLfreC64ATRb1g88qFtUm6LzJnTeNyc', '4gfSqrE7MpBdAeHuGgqSArjG4VtyP3ETZHvsjP4sdYMSDHPAyzrcyMKPDFi7MTsE83wWECZLiY9zvxQGvpiXspDa'],
+          transactions: ['4gfSqrE7MpBdAeHuGgqSArjG4VtyP3ETZHvsjP4sdYMSDHPAyzrcyMKPDFi7MTsE83wWECZLiY9zvxQGvpiXspDa'],
         }),
       });
       const data = await response.json();
