@@ -4,6 +4,7 @@ async function soldollarvalue(mint, value){
   try{
     const response = await axios.get(`https://price.jup.ag/v6/price?ids=${mint}`)
     const priceData = response.data
+    console.log(priceData)
     const price = priceData.data[mint].price
     const dollarValue = price * value
     const data = '$' + dollarValue.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 2 })
