@@ -52,7 +52,7 @@ async function fetchData(Mint1, quantitySol, quantitytoken){
       console.log('helius', mcap)
       const MetaData = {
          ticker: data[0].onChainMetadata.metadata.data.symbol,
-         mcap: formatMcap(mcap),
+         mcap: mcapcalc ? formatMcap(mcapcalc) : formatMcap(mcap),
          // pump : data[0].offChainMetadata.metadata.createdOn,
          Dextools : `https://dextools.io/app/en/solana/pair-explorer/${Mint1}`,
          Dexscreener : `https://dexscreener.com/solana/${Mint1}`,
