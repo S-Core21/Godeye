@@ -136,6 +136,7 @@ async function transferMessage(webhookEvent, wallet, wallet2, sig, Source, solcA
             });
           }else if(tokenStandard === 'NonFungible'){
             const tokenAmt = webhookEvent[0].tokenTransfers[0].tokenAmount
+            const photUrl = nftData.image
             const caption = `${walletgroup(wallet2.group)} ALERT \n🎨 NFT SELL \n\n👤*ANON* *TRANSFERRED* ${tokenAmt} ${nftData.name} to ${wallet2.name} on ${Source.replace(/_/g, " ")} \n\n🖼 ${nftData.name} | ${Source.replace(/_/g, " ")} [SOLC](${sig})\n\n${nftData.attributes.map(item=>{
               return `\n*${item.trait_type ? item.trait_type.toString().replace(/_/g, " ") : item.traitType.toString().replace(/_/g, " ")}*: ${item.value.toString().replace(/_/g, " ")}`
             })}\n\n\`${wallet2.address}\` ➡️ [${wallet2.name}](${solcAcct}${wallet2.address})\n\`${address1}\` ➡️ [ANON](${solcAcct}${address1})`
