@@ -653,6 +653,7 @@ async function main() {
           const solToken = "https://solscan.io/token/";
           if (wallet || wallet2) {
             const Type = webhookEvent[0].type;
+            console.log(Type)
             const Source = webhookEvent[0].source;
   
             if (Type === "SWAP") {
