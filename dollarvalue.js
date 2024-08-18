@@ -4,7 +4,7 @@ async function soldollarvalue(mint, value){
   try{
     const response = await axios.get(`https://price.jup.ag/v6/price?ids=${mint}`)
     const priceData = response.data
-    const response2 = await axios.get(`https://api.dexscreener.com/latest/dex/tokens/${Mint1}`)
+    const response2 = await axios.get(`https://api.dexscreener.com/latest/dex/tokens/${mint}`)
     const priceData2 = response2.data.pairs
     console.log(priceData)
     if(priceData){
