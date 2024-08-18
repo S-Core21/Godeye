@@ -7,12 +7,12 @@ async function soldollarvalue(mint, value){
     const response2 = await axios.get(`https://api.dexscreener.com/latest/dex/tokens/${mint}`)
     const priceData2 = response2.data.pairs
     console.log(priceData)
-    if(priceData){
+    if(priceData.data[mint]){
       const price = priceData.data[mint].price
     const dollarValue = price * value
     const data = '$' + dollarValue.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 2 })
     return data
-    }else if(priceData2){
+    }else if(priceData2[0].priceUsd){
       const price = priceData2[0].priceUsd
       const dollarValue = price * value
     const data = '$' + dollarValue.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 2 })
