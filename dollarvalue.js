@@ -9,7 +9,7 @@ async function soldollarvalue(mint, value){
     const data = '$' + dollarValue.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 2 })
     return data
   }catch(e){ 
-    console.log('error fetching dollar value')
+    console.log('error fetching dollar value', e)
     const data = '$'
     return data
   }
