@@ -82,8 +82,7 @@ async function nftMintMessage(webhookEvent, desc, Source, bot, user){
     const txid = webhookEvent[0].signature
       const txidLink = `https://solscan.io/tx/${txid}`;
       const mint = webhookEvent[0].events.nft.nfts[0].mint;
-      const address1 =  webhookEvent[0].events.nft.seller
-      const address2 =  webhookEvent[0].events.nft.buyer
+      const address1 =  webhookEvent[0].events.nft.buyer
        const sol = 'So11111111111111111111111111111111111111112'
       const wallet = user.wallets.find(
         (wallet) => wallet.address === address1,
@@ -94,7 +93,6 @@ async function nftMintMessage(webhookEvent, desc, Source, bot, user){
       const solPlacement = desc.indexOf('SOL')
     const acctPrefix = "https://solscan.io/account/";
     const photUrl = nftData.image
-
       if(wallet){
         const caption = `${walletgroup(wallet.group)} ALERT \n🎨 NFT MINT\n\n👤${wallet.name} *MINTED* ${nftData.name} for ${formatNumber(desc[solPlacement - 1])} SOL(${await soldollarvalue(sol, desc[solPlacement - 1])}) on ${Source.replace(/_/g, " ")}\n\n🖼 ${nftData.name} | ${Source.replace(/_/g, " ")} [SOLC](${txidLink})\n\n${nftData.attributes.map(item=>{
           return `\n*${item.trait_type ? item.trait_type.replace(/_/g, " ") : item.traitType.replace(/_/g, " ")}*: ${item.value.replace(/_/g, " ")}`
