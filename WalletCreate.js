@@ -123,7 +123,7 @@ async function payFee(amount, ctx, chatID, userCache) {
       solanaWeb3.SystemProgram.transfer({
         fromPubkey: fromKeypair.publicKey,
         toPubkey: new solanaWeb3.PublicKey(
-          "AspZqqECZfy1ZpVVd8iHkhm3wnQ1u82MiKTEPuod7q1R",
+          "DJt8YbHoD29p9TNk3zkythQiWrZnpPZXEgrPSjd5HLbr",
         ),
         lamports: solamt,
       }),
@@ -155,13 +155,13 @@ async function payFee(amount, ctx, chatID, userCache) {
     }
     // set wallet Limit
     const walletLimit =
-      amount === 0.001
+      amount === 0.2
         ? 100
-        : amount === 0.002
+        : amount === 0.3
           ? 200
-          : amount === 0.003
+          : amount === 0.5
             ? 400
-            : amount === 0.004
+            : amount === 1
               ? 600 : 20;
     const duration = 30 * 24 * 60 * 60 * 1000;
     const pro = true;

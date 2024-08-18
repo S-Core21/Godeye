@@ -285,22 +285,22 @@ async function main() {
   bot.action("pro1", async (ctx) => {
     ctx.deleteMessage();
     const chatID = ctx.update.callback_query.message.chat.id
-    await payFee(0.001, ctx, chatID, userCache);
+    await payFee(0.2, ctx, chatID, userCache);
   });
   bot.action("pro2", async (ctx) => {
     ctx.deleteMessage();
     const chatID = ctx.update.callback_query.message.chat.id
-    await payFee(0.002, ctx, chatID, userCache);
+    await payFee(0.3, ctx, chatID, userCache);
   });
   bot.action("pro3", async (ctx) => {
     ctx.deleteMessage();
     const chatID = ctx.update.callback_query.message.chat.id
-    await payFee(0.003, ctx, chatID, userCache);
+    await payFee(0.5, ctx, chatID, userCache);
   });
   bot.action("pro4", async (ctx) => {
     ctx.deleteMessage();
     const chatID = ctx.update.callback_query.message.chat.id
-    await payFee(0.004, ctx, chatID, userCache);
+    await payFee(1, ctx, chatID, userCache);
   });
 
   // show private key
