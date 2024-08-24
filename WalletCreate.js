@@ -197,7 +197,7 @@ async function payFee(amount, ctx, chatID, userCache) {
     );
   } catch (e) {
     console.log("insufficient balance", e);
-    ctx.reply(`🚫Insufficient sol balance, kindly deposit at least 0.21 sol in your godeye wallet to begin.\n\nSee /tutorials\n\n` + `[Click to watch video turorial](https://youtube.com)`);
+    ctx.reply(`Insufficient sol balance, kindly deposit at least 0.21 sol in your godeye wallet to begin.\n\n[Click to watch video turorial](https://youtube.com) \n\nSee /tutorials`);
   }
 }
 
