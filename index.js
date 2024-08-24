@@ -429,17 +429,14 @@ async function main() {
   bot.action("manage", async (ctx) => {
     ctx.deleteMessage();
     const chatID = ctx.update.callback_query.message.chat.id
-    const activeWallets = await getActiveWalletsbyUser(chatID);
-    const inActiveWallets = await getInactiveWalletsbyUser(chatID);
-    const allWallets = await getAllWalletsbyUser(chatID)
     ctx.reply(manageMessage, {
       parse_mode: "Markdown",
       disable_web_page_preview: true,
       reply_markup: {
         inline_keyboard: [
-          [{ text: `🗂️ You are currently tracking ${allWallets.total.length} wallets`, callback_data: "all" }], 
-          [{ text: `🟩 You are currently tracking ${activeWallets.total.length} active wallets`, callback_data: "active" }], 
-          [{ text: `🟥 You are currently tracking ${inActiveWallets.total.length} active wallets`, callback_data: "inactive" }],
+          [{ text: `🗂️ All wallets`, callback_data: "all" }], 
+          [{ text: `🟩 Active wallets`, callback_data: "active" }], 
+          [{ text: `🟥 Inactive wallets`, callback_data: "inactive" }],
           [{ text: "Back", callback_data: "Back" }]
         ],
       },
@@ -454,7 +451,7 @@ async function main() {
     console.log(userData)
     if (userData) {
        await ctx.sendMessage(
-        `🗂️ You are currently tracking ${userData.total.length} wallets`,
+        `🟩 You are currently tracking ${userData.total.length} Active wallets`,
       )
       .then((result) => { 
         ctx.pinChatMessage(result.message_id)
@@ -508,7 +505,7 @@ async function main() {
     console.log(userData)
     if (userData) {
        await ctx.sendMessage(
-        `🗂️ You are currently not tracking ${userData.total.length}`,
+        `🟥 You are currently tracking ${userData.total.length} Inactive wallets`,
       )
       .then((result) => { 
         ctx.pinChatMessage(result.message_id)
@@ -562,7 +559,7 @@ async function main() {
     console.log(userData)
     if (userData) {
        await ctx.sendMessage(
-        `🗂️ You are currently tracking ${userData.total.length}`,
+        `🗂️ You are currently tracking ${userData.total.length} wallets`,
       )
       .then((result) => { 
         ctx.pinChatMessage(result.message_id)
