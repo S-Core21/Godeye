@@ -157,9 +157,7 @@ async function transferMessage(webhookEvent, wallet, wallet2, sig, Source, solcA
           const quantitySol = senderAcctData.nativeBalanceChange / 1000000000
           console.log(quantitySol)
           const quantitytoken = webhookEvent[0].tokenTransfers[0].tokenAmount 
-          const tmintData = webhookEvent[0].tokenTransfers[0].mint;
-          const tmint = tmintData === "" ? webhookEvent[0].tokenTransfers[1].mint: tmintData
-          const solmint = "So11111111111111111111111111111111111111112"
+          const tmint = webhookEvent[0].tokenTransfers[0].mint;
           const dexresult = await fetchData(tmint, quantitySol, quantitytoken);
             const messageToSend = `🟢 ${walletgroup(wallet2.group)} ALERT\n👤*${wallet2.name}* [BOUGHT](${sig}) ${formatMcap(quantitytoken)} [${dexresult.ticker}](${solToken}${tmint}) for ${formatNumber(quantitySol)} [SOL](${solToken}${sol}) (${await soldollarvalue(solmint, quantitySol)}) on *${sourceofTx}*\n\n*💡${dexresult.ticker} | MC: ${dexresult.mcap}*\n\`${tmint}\`\n🔎 DYOR: [SOLC](${sig}) | [X](${dexresult.twitter}) | [RICK](${dexresult.rick}) | [DS](${dexresult.Dexscreener}) | [DT](${dexresult.Dextools}) | [BE](${dexresult.Birdeye}) | ${sourceofTx === 'PUMP FUN' ? `[Pump](https://pump.fun/${tmint})`: '' }\n\n🕵️‍♂️ *Analyse Wallet2:* [W1](${AW1}${wallet2.address})\n\`${wallet2.address}\` ➡️ [${wallet2.name}](${solcAcct}${wallet2.address})`
             bot.telegram.sendMessage(user.chat_id, messageToSend, {
