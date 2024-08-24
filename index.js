@@ -734,7 +734,7 @@ async function main() {
             }
                 
             }else if(Type === 'NFT_MINT'){
-              await nftMintMessage(webhookEvent, desc, Source, bot, user)
+              // await nftMintMessage(webhookEvent, desc, Source, bot, user)
             }else if(Type === 'NFT_SALE'){
                 await nftSaleMessage(webhookEvent, desc, Source, bot, user)
             }else if(Type === 'NFT_LISTING'){
