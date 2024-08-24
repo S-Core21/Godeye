@@ -683,7 +683,7 @@ async function main() {
                   },
                 });
               }
-          }else if(Type === 'NFT_MINT'){
+          }else if(Type === 'TOKEN_MINT'){
             try{
               const txid = webhookEvent[0].signature;
               const txidLink = `https://solscan.io/tx/${txid}`;
@@ -734,7 +734,7 @@ async function main() {
             }
                 
             }else if(Type === 'NFT_MINT'){
-              // await nftMintMessage(webhookEvent, desc, Source, bot, user)
+              await nftMintMessage(webhookEvent, desc, Source, bot, user)
             }else if(Type === 'NFT_SALE'){
                 await nftSaleMessage(webhookEvent, desc, Source, bot, user)
             }else if(Type === 'NFT_LISTING'){
