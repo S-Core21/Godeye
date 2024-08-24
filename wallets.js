@@ -159,13 +159,13 @@ function deleteAddressesAndNames(input, ctx) {
 function walletgroup(walletData) {
   const groupname =
     walletData === "A"
-      ? "🟢 ALPHA"
+      ? "ALPHA"
       : walletData === "B"
-        ? "🔵 BETA"
+        ? "BETA"
         : walletData === "D"
-          ? "🟡 DELTA"
+          ? "DELTA"
           : walletData === "G"
-            ? "🔴 GAMMA"
+            ? "GAMMA"
             : "DEFAULT";
   return groupname;
 }

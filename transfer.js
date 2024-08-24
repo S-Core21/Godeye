@@ -25,10 +25,10 @@ async function transferMessage(webhookEvent, wallet, wallet2, sig, Source, solcA
       (accountInfo) => accountInfo.account === address2
     )
     console.log(senderAcctData)
-    console.log(ReceiverAcctData) 
+    console.log(ReceiverAcctData)
     if (wallet && wallet2) {
       if (desc[3] === "SOL") {
-        const messageToSend = `${walletgroup(wallet.group)} ALERT\n👤*${wallet.name}* [transferred](${sig}) ${formatNumber(desc[2])} [SOL](${solToken}${sol}) (${await soldollarvalue(sol, desc[2])}) to *${wallet2.name}*\n\n🕵️‍♂️ Analyse Wallet: [W1](${AW1}${wallet})\n\`${wallet.address}\` ➡️ [${wallet.name}](${solcAcct}${wallet.address}) \n\n🕵️‍♂️ Analyse Wallet: [W2](${AW1}${address2})\n\`${wallet2.address}\` ➡️ [${wallet2.name}](${solcAcct}${wallet2.address}) `;
+        const messageToSend = `🚀 ${walletgroup(wallet.group)} ALERT\n👤*${wallet.name}* [transferred](${sig}) ${formatNumber(desc[2])} [SOL](${solToken}${sol}) (${await soldollarvalue(sol, desc[2])}) to *${wallet2.name}*\n\n🕵️‍♂️ Analyse Wallet: [W1](${AW1}${wallet})\n\`${wallet.address}\` ➡️ [${wallet.name}](${solcAcct}${wallet.address}) \n\n🕵️‍♂️ Analyse Wallet: [W2](${AW1}${address2})\n\`${wallet2.address}\` ➡️ [${wallet2.name}](${solcAcct}${wallet2.address}) `;
         bot.telegram.sendMessage(user.chat_id, messageToSend, {
           parse_mode: "Markdown",
           disable_web_page_preview: true,
@@ -39,7 +39,7 @@ async function transferMessage(webhookEvent, wallet, wallet2, sig, Source, solcA
         const dexresult = await fetchData(tmint);
         const nftData = await nftMetaData(tmint);
         if(tokenStandard === 'Fungible'){
-          const messageToSend = `${walletgroup(wallet.group)} ALERT\n👤*${wallet.name}* [transferred](${sig}) ${formatNumber(desc[2])} [${desc[3]}](${solToken}${tmint}) (${await soldollarvalue(tmint, desc[2])}) to *${wallet2.name}*\n\n*💡${dexresult.ticker} | MC: ${dexresult.mcap}*\n\`${tmint}\`\n🔎 DYOR: [SOLC](${sig}) | [X](${dexresult.twitter}) | [RICK](${dexresult.rick}) | [DS](${dexresult.Dexscreener}) | [DT](${dexresult.Dextools}) | [BE](${dexresult.Birdeye}) | [Pump](${dexresult.pump})\n\n🕵️‍♂️ Analyse Wallet: [W1](${AW1}${address1})\n\`${wallet.address}\` ➡️ [${wallet.name}](${solcAcct}${wallet.address}) \n🕵️‍♂️ Analyse Wallet: [W2](${AW1}${address2})\n\`${wallet2.address}\` ➡️ [${wallet2.name}](${solcAcct}${wallet.address}) `
+          const messageToSend = `🚀 ${walletgroup(wallet.group)} ALERT\n👤*${wallet.name}* [transferred](${sig}) ${formatNumber(desc[2])} [${desc[3]}](${solToken}${tmint}) (${await soldollarvalue(tmint, desc[2])}) to *${wallet2.name}*\n\n*💡${dexresult.ticker} | MC: ${dexresult.mcap}*\n\`${tmint}\`\n🔎 DYOR: [SOLC](${sig}) | [X](${dexresult.twitter}) | [RICK](${dexresult.rick}) | [DS](${dexresult.Dexscreener}) | [DT](${dexresult.Dextools}) | [BE](${dexresult.Birdeye}) | [Pump](${dexresult.pump})\n\n🕵️‍♂️ Analyse Wallet: [W1](${AW1}${address1})\n\`${wallet.address}\` ➡️ [${wallet.name}](${solcAcct}${wallet.address}) \n🕵️‍♂️ Analyse Wallet: [W2](${AW1}${address2})\n\`${wallet2.address}\` ➡️ [${wallet2.name}](${solcAcct}${wallet.address}) `
           bot.telegram.sendMessage(user.chat_id, messageToSend, {
             parse_mode: "Markdown",
             disable_web_page_preview: true,
@@ -50,7 +50,7 @@ async function transferMessage(webhookEvent, wallet, wallet2, sig, Source, solcA
         }else if(tokenStandard === 'NonFungible'){
           const tokenAmt = webhookEvent[0].tokenTransfers[0].tokenAmount
           const photUrl = nftData.image
-          const caption = `${walletgroup(wallet.group)} ALERT \n🎨 NFT SELL \n\n👤*${wallet.name}* [TRANSFERRED](${sig}) ${tokenAmt} ${nftData.name} to *${wallet2.name}* on ${Source.replace(/_/g, " ")} \n\n🖼 ${nftData.name} | ${Source.replace(/_/g, " ")} [SOLC](${sig})\n\n${nftData.attributes.map(item=>{
+          const caption = `🚀 ${walletgroup(wallet.group)} ALERT \n🎨 NFT SELL \n\n👤*${wallet.name}* [TRANSFERRED](${sig}) ${tokenAmt} ${nftData.name} to *${wallet2.name}* on ${Source.replace(/_/g, " ")} \n\n🖼 ${nftData.name} | ${Source.replace(/_/g, " ")} [SOLC](${sig})\n\n${nftData.attributes.map(item=>{
             return `\n*${item.trait_type ? item.trait_type.toString().replace(/_/g, " ") : item.traitType.toString().replace(/_/g, " ")}*: ${item.value.toString().replace(/_/g, " ")}`
           })}\n\n\`${wallet.address}\` ➡️ [${wallet.name}](${solcAcct}${wallet.address})\n\`${address2}\` ➡️ [${wallet2.name}](${solcAcct}${wallet2.address})`
           bot.telegram.sendPhoto(user.chat_id, photUrl, {
@@ -71,7 +71,7 @@ async function transferMessage(webhookEvent, wallet, wallet2, sig, Source, solcA
       }
     } else if (wallet && !wallet2) {
       if (desc[3] === "SOL" && webhookEvent[0].tokenTransfers.length !== 2 ) {
-        const messageToSend = `${walletgroup(wallet.group)} ALERT\n👤*${wallet.name}* [transferred](${sig}) ${formatNumber(desc[2])} [SOL](${solToken}${sol}) (${await soldollarvalue(sol, desc[2])}) to *ANON*\n\n🕵️‍♂️ Analyse Wallet: [W1](${AW1}${address1})\n\`${wallet.address}\` ➡️ [${wallet.name}](${solcAcct}${wallet.address}) \n\n🕵️‍♂️ Analyse Wallet: [W2](${AW1}${address2})\n\`${address2}\` ➡️ [ANON](${solcAcct}${address2}) `;
+        const messageToSend = `🚀 ${walletgroup(wallet.group)} ALERT\n👤*${wallet.name}* [transferred](${sig}) ${formatNumber(desc[2])} [SOL](${solToken}${sol}) (${await soldollarvalue(sol, desc[2])}) to *ANON*\n\n🕵️‍♂️ Analyse Wallet: [W1](${AW1}${address1})\n\`${wallet.address}\` ➡️ [${wallet.name}](${solcAcct}${wallet.address}) \n\n🕵️‍♂️ Analyse Wallet: [W2](${AW1}${address2})\n\`${address2}\` ➡️ [ANON](${solcAcct}${address2}) `;
         bot.telegram.sendMessage(user.chat_id, messageToSend, {
           parse_mode: "Markdown",
           disable_web_page_preview: true,
@@ -83,7 +83,7 @@ async function transferMessage(webhookEvent, wallet, wallet2, sig, Source, solcA
         const txsource = await checksource(tmint)
         const solmint = "So11111111111111111111111111111111111111112"
         const dexresult = await fetchData(tmint, quantitySol, quantitytoken);
-          const messageToSend = `${walletgroup(wallet.group)} ALERT\n👤*${wallet.name}* [BOUGHT](${sig}) ${formatMcap(quantitytoken)} [${dexresult.ticker}](${solToken}${tmint}) for ${formatNumber(quantitySol)} [SOL](${solToken}${sol}) (${await soldollarvalue(solmint, quantitySol)}) on *${Source.replace(/_/g, " ")}*\n\n*💡${dexresult.ticker} | MC: ${dexresult.mcap}*\n\`${tmint}\`\n🔎 DYOR: [SOLC](${sig}) | [X](${dexresult.twitter}) | [RICK](${dexresult.rick}) | [DS](${dexresult.Dexscreener}) | [DT](${dexresult.Dextools}) | [BE](${dexresult.Birdeye}) | [Pump](${dexresult.pump})\n\n🕵️‍♂️ *Analyse wallet:* [W1](${AW1}${wallet.address})\n\`${wallet.address}\` ➡️ [${wallet.name}](${solcAcct}${wallet.address})`
+          const messageToSend = `🚀 ${walletgroup(wallet.group)} ALERT\n👤*${wallet.name}* [BOUGHT](${sig}) ${formatMcap(quantitytoken)} [${dexresult.ticker}](${solToken}${tmint}) for ${formatNumber(quantitySol)} [SOL](${solToken}${sol}) (${await soldollarvalue(solmint, quantitySol)}) on *${Source.replace(/_/g, " ")}*\n\n*💡${dexresult.ticker} | MC: ${dexresult.mcap}*\n\`${tmint}\`\n🔎 DYOR: [SOLC](${sig}) | [X](${dexresult.twitter}) | [RICK](${dexresult.rick}) | [DS](${dexresult.Dexscreener}) | [DT](${dexresult.Dextools}) | [BE](${dexresult.Birdeye}) | [Pump](${dexresult.pump})\n\n🕵️‍♂️ *Analyse wallet:* [W1](${AW1}${wallet.address})\n\`${wallet.address}\` ➡️ [${wallet.name}](${solcAcct}${wallet.address})`
           bot.telegram.sendMessage(user.chat_id, messageToSend, {
             parse_mode: "Markdown",
             disable_web_page_preview: true,
@@ -99,7 +99,7 @@ async function transferMessage(webhookEvent, wallet, wallet2, sig, Source, solcA
             const tmint = webhookEvent[0].tokenTransfers[0].mint;
             const solmint = "So11111111111111111111111111111111111111112"
             const dexresult = await fetchData(tmint, quantitySol, quantitytoken);
-              const messageToSend = `${walletgroup(wallet.group)} ALERT\n👤*${wallet.name}* [SOLD](${sig}) ${formatMcap(quantitytoken)} [${dexresult.ticker}](${solToken}${tmint}) for ${formatNumber(quantitySol)} [SOL](${solToken}${sol}) (${await soldollarvalue(solmint, quantitySol)}) on *${sourceofTx}*\n\n*💡${dexresult.ticker} | MC: ${dexresult.mcap}*\n\`${tmint}\`\n🔎 DYOR: [SOLC](${sig}) | [X](${dexresult.twitter}) | [RICK](${dexresult.rick}) | [DS](${dexresult.Dexscreener}) | [DT](${dexresult.Dextools}) | [BE](${dexresult.Birdeye}) | ${sourceofTx === 'PUMP FUN' ? `[Pump](https://pump.fun/${tmint})`: '' }\n\n🕵️‍♂️ *Analyse Wallet:* [W1](${AW1}${wallet.address})\n\`${wallet.address}\` ➡️ [${wallet.name}](${solcAcct}${wallet.address})`
+              const messageToSend = `🚀 ${walletgroup(wallet.group)} ALERT\n👤*${wallet.name}* [SOLD](${sig}) ${formatMcap(quantitytoken)} [${dexresult.ticker}](${solToken}${tmint}) for ${formatNumber(quantitySol)} [SOL](${solToken}${sol}) (${await soldollarvalue(solmint, quantitySol)}) on *${sourceofTx}*\n\n*💡${dexresult.ticker} | MC: ${dexresult.mcap}*\n\`${tmint}\`\n🔎 DYOR: [SOLC](${sig}) | [X](${dexresult.twitter}) | [RICK](${dexresult.rick}) | [DS](${dexresult.Dexscreener}) | [DT](${dexresult.Dextools}) | [BE](${dexresult.Birdeye}) | ${sourceofTx === 'PUMP FUN' ? `[Pump](https://pump.fun/${tmint})`: '' }\n\n🕵️‍♂️ *Analyse Wallet:* [W1](${AW1}${wallet.address})\n\`${wallet.address}\` ➡️ [${wallet.name}](${solcAcct}${wallet.address})`
               bot.telegram.sendMessage(user.chat_id, messageToSend, {
                 parse_mode: "Markdown",
                 disable_web_page_preview: true,
@@ -114,7 +114,7 @@ async function transferMessage(webhookEvent, wallet, wallet2, sig, Source, solcA
             const nftData = await nftMetaData(tmint);
             console.log('ca:', tmint)
             if(tokenStandard === 'Fungible'){
-              const messageToSend = `${walletgroup(wallet.group)} ALERT\n👤*${wallet.name}* [transferred](${sig}) ${formatNumber(desc[2])} [${desc[3]}](${solToken}${tmint}) (${await soldollarvalue(tmint, desc[2])}) to *ANON*\n\n*💡${dexresult.ticker} | MC: ${dexresult.mcap}*\n\`${tmint}\`\n🔎 DYOR: [SOLC](${sig}) | [X](${dexresult.twitter}) | [RICK](${dexresult.rick}) | [DS](${dexresult.Dexscreener}) | [DT](${dexresult.Dextools}) | [BE](${dexresult.Birdeye}) | [Pump](${dexresult.pump})\n\n🕵️‍♂️ Analyse Wallet: [W1](${AW1}${address1})\n\`${wallet.address}\` ➡️ [${wallet.name}](${solcAcct}${wallet.address}) \n🕵️‍♂️ Analyse Wallet: [W2](${AW1}${address2})\n\`${address2}\` ➡️ [ANON](${solcAcct}${address2}) `
+              const messageToSend = `🚀 ${walletgroup(wallet.group)} ALERT\n👤*${wallet.name}* [transferred](${sig}) ${formatNumber(desc[2])} [${desc[3]}](${solToken}${tmint}) (${await soldollarvalue(tmint, desc[2])}) to *ANON*\n\n*💡${dexresult.ticker} | MC: ${dexresult.mcap}*\n\`${tmint}\`\n🔎 DYOR: [SOLC](${sig}) | [X](${dexresult.twitter}) | [RICK](${dexresult.rick}) | [DS](${dexresult.Dexscreener}) | [DT](${dexresult.Dextools}) | [BE](${dexresult.Birdeye}) | [Pump](${dexresult.pump})\n\n🕵️‍♂️ Analyse Wallet: [W1](${AW1}${address1})\n\`${wallet.address}\` ➡️ [${wallet.name}](${solcAcct}${wallet.address}) \n🕵️‍♂️ Analyse Wallet: [W2](${AW1}${address2})\n\`${address2}\` ➡️ [ANON](${solcAcct}${address2}) `
               bot.telegram.sendMessage(user.chat_id, messageToSend, {
                 parse_mode: "Markdown",
                 disable_web_page_preview: true,
@@ -125,7 +125,7 @@ async function transferMessage(webhookEvent, wallet, wallet2, sig, Source, solcA
             }else if(tokenStandard === 'NonFungible'){
               const tokenAmt = webhookEvent[0].tokenTransfers[0].tokenAmount
               const photUrl = nftData.image
-              const caption = `${walletgroup(wallet.group)} ALERT \n🎨 NFT SELL \n\n👤*${wallet.name}* [TRANSFERRED](${sig}) ${tokenAmt} ${nftData.name} to *ANON* on ${Source.replace(/_/g, " ")} \n\n🖼 ${nftData.name} | ${Source.replace(/_/g, " ")} [SOLC](${sig})\n\n${nftData.attributes.map(item=>{
+              const caption = `🚀 ${walletgroup(wallet.group)} ALERT \n🎨 NFT SELL \n\n👤*${wallet.name}* [TRANSFERRED](${sig}) ${tokenAmt} ${nftData.name} to *ANON* on ${Source.replace(/_/g, " ")} \n\n🖼 ${nftData.name} | ${Source.replace(/_/g, " ")} [SOLC](${sig})\n\n${nftData.attributes.map(item=>{
                 return `\n*${item.trait_type ? item.trait_type.toString().replace(/_/g, " ") : item.traitType.toString().replace(/_/g, " ")}*: ${item.value.toString().replace(/_/g, " ")}`
               })}\n\n\`${wallet.address}\` ➡️ [${wallet.name}](${solcAcct}${wallet.address})\n\`${address2}\` ➡️ [ANON](${solcAcct}${address2})`
               bot.telegram.sendPhoto(user.chat_id, photUrl, {

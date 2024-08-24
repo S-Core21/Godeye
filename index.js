@@ -246,7 +246,7 @@ async function main() {
     deleteWallets = false;
     importTransferKey = true 
     console.log(ctx.from.username)
-    ctx.reply('Send me the transfer key of the account you want to import', {
+    ctx.reply('Send me the *transfer key* of the account you want to import', {
       parse_mode: "Markdown",
       disable_web_page_preview: true,
     });
@@ -429,14 +429,17 @@ async function main() {
   bot.action("manage", async (ctx) => {
     ctx.deleteMessage();
     const chatID = ctx.update.callback_query.message.chat.id
+    const activeWallets = await getActiveWalletsbyUser(chatID);
+    const inActiveWallets = await getInactiveWalletsbyUser(chatID);
+    const allWallets = await getAllWalletsbyUser(chatID)
     ctx.reply(manageMessage, {
       parse_mode: "Markdown",
       disable_web_page_preview: true,
       reply_markup: {
         inline_keyboard: [
-          [{ text: "🏦 All wallets", callback_data: "all" }], 
-          [{ text: "🟩 Active wallets", callback_data: "active" }], 
-          [{ text: "🟥 Inactive wallets", callback_data: "inactive" }], 
+          [{ text: `🗂️ You are currently tracking ${allWallets.total.length} wallets`, callback_data: "all" }], 
+          [{ text: `🟩 You are currently tracking ${activeWallets.total.length} active wallets`, callback_data: "active" }], 
+          [{ text: `🟥 You are currently tracking ${inActiveWallets.total.length} active wallets`, callback_data: "inactive" }]
           [{ text: "Back", callback_data: "Back" }]
         ],
       },

@@ -9,9 +9,9 @@ const {convertDate} = require('./formatNumber')
 const startMessage =
   "🤖 GODEYE | wallet tracker\n\nI'm Godeye, a wallet tracker bot on Solana that helps you maximize your potential. 🏆\n\nGodeye lets you effortlessly monitor all your Solana wallets. Simply add them, relax, and let me handle the rest. You'll receive instant alerts for every transaction.⚡️";
 const addMessage =
-  'Yay! A new wallet. Now send me your wallet details in this format👇\n\n“Wallet nickname group”\nExample:\n“HsDjdEk8RdyZqHCj9x2RLZuQxG6VW5Bugstcb1QXYDSR Sixth✅ A”\n\n“Wallet1 nickname group”\n“Wallet2 nickname group”\n\n📥Grouping helps categorize good or bad wallets,groups include: \nALPHA,BETA,DELTA,GAMMA with abbreviations A,B,D,G.';
+  'Yay! A new wallet. Now send me your wallet details in this format👇\n\n“Wallet nickname group”\nExample:\n“HsDjdEk8RdyZqHCj9x2RLZuQxG6VW5Bugstcb1QXYDSR Sixth✅ A”\n\n*“Wallet1 nickname group”*\n\n📝Tips: You can group wallets with abbreviations *A* (Alpha), *B* (Beta), *D* (Delta), and *G* (Gamma), based on their win rate.\n\n👋To *add multiple wallets* send me each wallet on a new line in this format 👇\n\n*“Wallet1 nickname group”*\n*“Wallet2 nickname group”*';
 const deleteMessage = 'send me the wallet you want to unalive?☠️\n\nTo unalive multiple wallets send me each wallet on a new line in this format👇 \n\nWallet 1\nWallet 2\nWallet 3'
-const transferKeyMsg = 'You can move your wallet data to a new Telegram account if you lose your device or your telegram gets banned\n\n📝 Tips: We would never ask for your transfer key via phone, email, or text. Protect yourself from scams because anyone who has this key can access your wallets.\n\n➡️Import wallet\n⬅️Export wallet'
+const transferKeyMsg = '🥳 You can move your wallet data to a new Telegram account if you lose your device or your telegram gets banned\n\n📝 Tips: We would never ask for your transfer key via phone, email, or text. Protect yourself from scams because anyone who has this key can access your wallet'
 const supportMessage = '☎️ For complaints, support, or feedback, kindly contact\n\n👇👇👇'
 const manageMessage = 'WALLET SUMMARY \n\n🏦All wallets: A list of all your saved wallets \n🟩Active wallets : A list of wallets sending notifications depending on your subscription \n🟥Inactive wallets : a list of wallets not sending notifications due to expired subscription.\n\n📝 Tips: upgrade plan to use inactive wallets'
 
@@ -57,14 +57,14 @@ const supportKeys = [
 function buyButtons(mint){
   const inlineButtons = [
     [
-      {text: 'Bonk', url: `t.me/bonkbot_bot?start=${mint}`},
-      {text: 'Trojan', url: `t.me/solana_trojanbot?start=${mint}`},
-      {text: 'STB', url: `t.me/solanaTradingBot?start=${mint}`},
+      {text: '🐶 Bonk', url: `t.me/bonkbot_bot?start=${mint}`},
+      {text: '🐴 Trojan', url: `t.me/solana_trojanbot?start=${mint}`},
+      {text: '🤖 STB', url: `t.me/solanaTradingBot?start=${mint}`},
     ],
     [
-      {text: 'Pepe', url: `t.me/pepeboost_sol_bot?start=${mint}`},
-      {text: 'Bullx', url: `https://bullx.io/terminal?chainId=1399811149&address=${mint}`},
-      {text: 'PH', url: `https://photon-sol.tinyastro.io/en/lp/${mint}`}
+      {text: '🐸 Pepe', url: `t.me/pepeboost_sol_bot?start=${mint}`},
+      {text: '🐃 Bullx', url: `https://bullx.io/terminal?chainId=1399811149&address=${mint}`},
+      {text: '⚛ PH', url: `https://photon-sol.tinyastro.io/en/lp/${mint}`}
     ]
   ]
   return inlineButtons
@@ -107,23 +107,23 @@ async function upgradePro(chatID){
       if(WalletLimitData === 100){
         const proinlineKeys = [
           [
-            {text: '🎠 Valkyrie 0.3 SOL 1M/200W', callback_data: 'pro2'}
+            {text: '🎠 Valkyrie 200W 0.3SOL/mo', callback_data: 'pro2'}
           ],
           [
-            {text: '🪬 Odin 0.5 SOL 1M/400W', callback_data: 'pro3'}
+            {text: '🪬 Odin 400W 0.5SOL/mo', callback_data: 'pro3'}
           ],
           [
-            {text: '⚡️ Zeus 1 SOL 1M/600W', callback_data: 'pro4'}
+            {text: '⚡️ Zeus 600W 1SOL/mo', callback_data: 'pro4'}
           ]
         ] 
         return proinlineKeys
       }else if(WalletLimitData === 200){
         const proinlineKeys = [
           [
-            {text: '🪬 Odin 0.5 SOL 1M/400W', callback_data: 'pro3'}
+            {text: '🪬 Odin 400W 0.5SOL/mo', callback_data: 'pro3'}
           ],
           [
-            {text: '⚡️ Zeus 1 SOL 1M/600W', callback_data: 'pro4'}
+            {text: '⚡️ Zeus 600W 1SOL/mo', callback_data: 'pro4'}
           ],
           [
             {text: 'Back', callback_data: 'Back'}
@@ -133,7 +133,7 @@ async function upgradePro(chatID){
       }else if(WalletLimitData === 400){
         const proinlineKeys = [
           [
-            {text: '⚡️ Zeus 1 SOL 1M/600W', callback_data: 'pro4'}
+            {text: '⚡️ Zeus 600W 1SOL/mo', callback_data: 'pro4'}
           ],
           [
             {text: 'Back', callback_data: 'Back'}
@@ -150,34 +150,34 @@ async function upgradePro(chatID){
       }else if(pro === false){
         const proinlineKeys = [
           [
-            {text: '🐦‍🔥 Phoenix 0.2 SOL 1M/100W', callback_data: 'pro1'}
+            {text: '🐦‍🔥 Phoenix 100W 0.2SOL/mo', callback_data: 'pro1'}
           ],
           [
-            {text: '🎠 Valkyrie 0.3 SOL 1M/200W', callback_data: 'pro2'}
+            {text: '🎠 Valkyrie 200W 0.3SOL/mo', callback_data: 'pro2'}
           ],
           [
-            {text: '🪬 Odin 0.5 SOL 1M/400W', callback_data: 'pro3'}
+            {text: '🪬 Odin 400W 0.5SOL/mo', callback_data: 'pro3'}
           ],
           [
-            {text: '⚡️ Zeus 1 SOL 1M/600W', callback_data: 'pro4'}
+            {text: '⚡️ Zeus 600W 1SOL/mo', callback_data: 'pro4'}
           ]
         ] 
         return proinlineKeys
       }
     }else{
      const proinlineKeys = [
-          [
-            {text: '🐦‍🔥 Phoenix 0.2 SOL 1M/100W', callback_data: 'pro1'}
-          ],
-          [
-            {text: '🎠 Valkyrie 0.3 SOL 1M/200W', callback_data: 'pro2'}
-          ],
-          [
-            {text: '🪬 Odin 0.5 SOL 1M/400W', callback_data: 'pro3'}
-          ],
-          [
-            {text: '⚡️ Zeus 1 SOL 1M/600W', callback_data: 'pro4'}
-          ]
+      [
+        {text: '🐦‍🔥 Phoenix 100W 0.2SOL/mo', callback_data: 'pro1'}
+      ],
+      [
+        {text: '🎠 Valkyrie 200W 0.3SOL/mo', callback_data: 'pro2'}
+      ],
+      [
+        {text: '🪬 Odin 400W 0.5SOL/mo', callback_data: 'pro3'}
+      ],
+      [
+        {text: '⚡️ Zeus 600W 1SOL/mo', callback_data: 'pro4'}
+      ]
         ] 
         return proinlineKeys
     }
