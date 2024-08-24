@@ -125,7 +125,7 @@ async function main() {
     deleteWallets = false;
     importTransferKey = false
     ctx.reply(addMessage, {
-      parse_mode: "HTML",
+      parse_mode: "Markdown",
       reply_markup: {
         inline_keyboard: [[{ text: "Back", callback_data: "Back" }]],
       },
@@ -137,7 +137,7 @@ async function main() {
     deleteWallets = false;
     importTransferKey = false
     sendMessage(ctx.message.chat.id, addMessage, {
-      parse_mode: "HTML",
+      parse_mode: "Markdown",
       reply_markup: {
         inline_keyboard: [[{ text: "Back", callback_data: "Back" }]],
       },
