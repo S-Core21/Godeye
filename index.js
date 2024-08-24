@@ -439,7 +439,7 @@ async function main() {
         inline_keyboard: [
           [{ text: `🗂️ You are currently tracking ${allWallets.total.length} wallets`, callback_data: "all" }], 
           [{ text: `🟩 You are currently tracking ${activeWallets.total.length} active wallets`, callback_data: "active" }], 
-          [{ text: `🟥 You are currently tracking ${inActiveWallets.total.length} active wallets`, callback_data: "inactive" }]
+          [{ text: `🟥 You are currently tracking ${inActiveWallets.total.length} active wallets`, callback_data: "inactive" }],
           [{ text: "Back", callback_data: "Back" }]
         ],
       },
