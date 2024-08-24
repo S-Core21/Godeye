@@ -246,7 +246,7 @@ async function main() {
     deleteWallets = false;
     importTransferKey = true 
     console.log(ctx.from.username)
-    ctx.reply('Send me the *transfer key* of the account you want to import', {
+    ctx.reply('👋 Send me the *transfer key* of the account you want to import', {
       parse_mode: "Markdown",
       disable_web_page_preview: true,
     });

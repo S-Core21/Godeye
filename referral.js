@@ -23,6 +23,7 @@ async function createReferralLink(ctx, chatID){
               const referralMessage = `💸 Refer your friends and earn up to 25% of their monthly PRO subscription, it's simple \n\n Share the love! 🫶❤️\n\n🔗Referral link: ${referralLink} \n🔢Referrals: ${referralCount} \n\n📝Tip: Your referral bonus will be credited to your Godeye account automatically upon successful referrals.\n\n🪽1-10 referrals: 15% of their monthly sub\n🪽10+ referrals: 25% of their monthly sub`
             ctx.reply(referralMessage,{
                        parse_mode: "Markdown",
+                       disable_web_page_preview: true,
                        reply_markup: {
                          inline_keyboard: [[{ text: "Back", callback_data: "Back" }]]
                        },
@@ -42,6 +43,7 @@ async function createReferralLink(ctx, chatID){
             const referralMessage = `💸 Refer your friends and earn up to 25% of their monthly PRO subscription, it's simple \n\n Share the love! 🫶❤️\n\n🔗Referral link: ${referralLink} \n🔢Referrals: ${referralCount} \n\n📝Tip: Your referral bonus will be credited to your Godeye account automatically upon successful referrals.\n\n🪽1-10 referrals: 15% of their monthly sub\n🪽10+ referrals: 25% of their monthly sub`
             ctx.reply(referralMessage,{
                        parse_mode: "Markdown",
+                       disable_web_page_preview: true,
                        reply_markup: {
                          inline_keyboard: [[{ text: "Back", callback_data: "Back" }]]
                        },

@@ -206,7 +206,15 @@ async function addRemoveWallet(
   const walletLimit = WalletLimitData ? WalletLimitData : 20
   const totalWallets = user.wallets.length 
   if(totalWallets >= walletLimit && addNewWallets){ 
-    ctx.reply('You have reached the maximum number of wallets allowed.')
+    ctx.reply('You have reached the maximum number of wallets allowed.\n\nPlease upgrade to a higher plan to enjoy more benefits', {
+      reply_markup: {
+        inline_keyboard: [
+          [
+            { text: "🔼 Upgrade", callback_data: "Pro" }
+          ]
+        ],
+      },
+    })
   }else{
     if (addNewWallets) {
       const walletsData = parseAddressesAndNames(text, ctx);
