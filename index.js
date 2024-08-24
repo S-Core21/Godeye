@@ -687,20 +687,49 @@ async function main() {
                 const txid = webhookEvent[0].signature;
                 const txidLink = `https://solscan.io/tx/${txid}`;
                 const acctPrefix = "https://solscan.io/account/";
-                const tokenName = desc[3]?.replace(".", "")
-                const mint = webhookEvent[0].tokenTransfers[0].mint;
-                console.log(mint);
-                const dexresult = await tokenMintData(mint);
   
                 if(wallet){
-                  const messageToSend = `${walletgroup(wallet.group)} ALERT \n[TOKEN MINT](${txidLink}) on ${Source.replace(/_/g, " ")} \n\`${wallet.address}\` (${wallet.name})\n\n🔹[${wallet.name}](${acctPrefix}${wallet.address}) *minted* ${formatNumber(desc[2])} ${tokenName}\n\n*🔗${dexresult.ticker}(MC: $${formatMcap(dexresult.mcap)})*\nDYOR: [SOT](${dexresult.twitter})| [PH](${dexresult.Photon})| [BE](${dexresult.Birdeye})| [Rick](${dexresult.rick})\nAnalyse Wallet: [W1](${AW1}${wallet})\n\`${mint}\` `;
-                  bot.telegram.sendMessage(user.chat_id, messageToSend, {
-                    parse_mode: "Markdown",
-                    disable_web_page_preview: true,
-                    reply_markup: {
-                      inline_keyboard: buyButtons(mint),
-                    },
-                  });
+                  if(webhookEvent[0].events.nft){
+                    const mint = webhookEvent[0].events.nft.nfts[0].mint;
+                    const sol = 'So11111111111111111111111111111111111111112'
+                    const txid = webhookEvent[0].signature
+                    const txidLink = `https://solscan.io/tx/${txid}`;
+                    const nftData = await nftMetaData(mint)
+                    console.log(nftData)
+                      const solPlacement = desc.indexOf('SOL')
+                    const acctPrefix = "https://solscan.io/account/";
+                    const photUrl = nftData.image
+                    const caption = `${walletgroup(wallet.group)} ALERT \n🎨 NFT MINT\n\n👤${wallet.name} *MINTED* ${nftData.name} for ${formatNumber(desc[solPlacement - 1])} SOL(${await soldollarvalue(sol, desc[solPlacement - 1])}) on ${Source.replace(/_/g, " ")}\n\n🖼 ${nftData.name} | ${Source.replace(/_/g, " ")} [SOLC](${txidLink})\n\n${nftData.attributes.map(item=>{
+                      return `\n*${item.trait_type ? item.trait_type.toString().replace(/_/g, " ") : item.traitType.toString().replace(/_/g, " ")}*: ${item.value.toString().replace(/_/g, " ")}`
+                    })}\n\n\`${wallet.address}\` ➡️ [${wallet.name}](${acctPrefix}${wallet.address})`
+                    bot.telegram.sendPhoto(user.chat_id, photUrl, {
+                      caption: caption,
+                      parse_mode: 'Markdown'
+                    })
+                    .then(()=>{
+                      console.log('sent')
+                    })
+                    .catch((err)=>{
+                      console.log(err)
+                      bot.telegram.sendMessage(user.chat_id, caption, {
+                        parse_mode: "Markdown",
+                        disable_web_page_preview: true
+                      });
+                    })
+                  }else{
+                    const tokenName = desc[3]?.replace(".", "")
+                    const mint = webhookEvent[0].tokenTransfers[0].mint;
+                    console.log(mint);
+                    const dexresult = await tokenMintData(mint);
+                    const messageToSend = `${walletgroup(wallet.group)} ALERT \n[TOKEN MINT](${txidLink}) on ${Source.replace(/_/g, " ")} \n\`${wallet.address}\` (${wallet.name})\n\n🔹[${wallet.name}](${acctPrefix}${wallet.address}) *minted* ${formatNumber(desc[2])} ${tokenName}\n\n*🔗${dexresult.ticker}(MC: $${formatMcap(dexresult.mcap)})*\nDYOR: [SOT](${dexresult.twitter})| [PH](${dexresult.Photon})| [BE](${dexresult.Birdeye})| [Rick](${dexresult.rick})\nAnalyse Wallet: [W1](${AW1}${wallet})\n\`${mint}\` `;
+                    bot.telegram.sendMessage(user.chat_id, messageToSend, {
+                      parse_mode: "Markdown",
+                      disable_web_page_preview: true,
+                      reply_markup: {
+                        inline_keyboard: buyButtons(mint),
+                      },
+                    });
+                  }
                 }
             }else if(Type === 'NFT_MINT'){
               await nftMintMessage(webhookEvent, desc, Source, bot, user)
