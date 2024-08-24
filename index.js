@@ -639,8 +639,8 @@ async function main() {
         const Transferdescription = webhookEvent[0].description;
       console.log(Transferdescription);
       const desc = Transferdescription.split(" ");
-      const address1 = desc[0];
-      const address2 = webhookEvent[0].tokenTransfers.length > 0 ? webhookEvent[0].tokenTransfers[0].toUserAccount: desc[5];
+      const address1 = webhookEvent[0].tokenTransfers.length > 0 ? webhookEvent[0].tokenTransfers[0].fromUserAccount : desc[0];
+      const address2 = webhookEvent[0].tokenTransfers.length > 0 ? webhookEvent[0].tokenTransfers[0].toUserAccount: desc[5].replace(/./g, "");
         userCache.forEach(async (user) => {
           const wallet = user.wallets.find(
             (wallet) => wallet.address === address1,
